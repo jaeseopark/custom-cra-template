@@ -1,0 +1,5 @@
+const REDUCER_ACTIONS = {
+	ABILITIES: "ABILITIES",
+};
+
+export default REDUCER_ACTIONS;
