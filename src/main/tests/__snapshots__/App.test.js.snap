@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders the app 1`] = `
+<div>
+  <div
+    class="App"
+  >
+    <header
+      class="App-header"
+    >
+      <img
+        alt="logo"
+        class="App-logo"
+        src="test-file-stub"
+      />
+      <p>
+        Edit
+      </p>
+      <a
+        class="App-link"
+        href="https://reactjs.org"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Learn React
+      </a>
+    </header>
+  </div>
+</div>
+`;
