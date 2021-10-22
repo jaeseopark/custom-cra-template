@@ -9,6 +9,8 @@ import dayjs from "dayjs";
 
 const TIMESTAMP_CLEAR = 1500;
 
+const ENTER_KEY = "Enter";
+
 const ContactContainer = (props) => {
 	const { contactName } = props;
 
@@ -16,7 +18,7 @@ const ContactContainer = (props) => {
 	const [lastSuccessfulSend, setLastSuccessfulSend] = useState();
 
 	function handleTextChange(e) {
-		if (e.key === "Enter" && !e.shiftKey) {
+		if (e.key === ENTER_KEY && !e.shiftKey) {
 			return;
 		}
 		setText(e.target.value);
