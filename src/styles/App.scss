@@ -1,3 +1,53 @@
 .App {
-	// text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.chatContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: fit-content;
+	width: 50%;
+	margin: 3rem;
+	border: 0.1rem solid black;
+}
+
+.contactContainer {
+	min-height: 10rem;
+	height: fit-content;
+
+	.chatInput {
+		width: 85%;
+	}
+
+	.textInput {
+		width: 100%;
+	}
+
+	.timeStamp {
+		color: gray;
+		margin-right: 1rem;
+		white-space: nowrap;
+	}
+
+	.textContainer {
+		display: flex;
+		justify-content: space-between;
+		padding: 0.2rem 0.7rem;
+		width: 85%;
+
+		.textInput {
+			width: 100%;
+		}
+
+		.timeStamp {
+			align-self: center;
+			color: gray;
+			margin-right: 1rem;
+			white-space: nowrap;
+		}
+	}
 }
