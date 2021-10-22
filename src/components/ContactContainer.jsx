@@ -24,11 +24,7 @@ const ContactContainer = (props) => {
 
 	function handleSend(e) {
 		// Clicking send doesn't have a key but pressing enter does
-		if (e.key && e.key !== "Enter") {
-			return;
-		}
-
-		if (e.shiftKey) {
+		if ((e.key && e.key !== "Enter") || e.shiftKey) {
 			return;
 		}
 
