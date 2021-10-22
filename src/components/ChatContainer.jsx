@@ -10,10 +10,12 @@ const ChatContainer = () => {
 
 	function getContactContainers() {
 		const contactContainers = contacts.map((contact, index) => {
+			const divider = index < contacts.length - 1 ? <Divider /> : null;
+
 			return (
 				<React.Fragment key={index}>
 					<ContactContainer contactName={contact} />
-					{index < contacts.length - 1 ? <Divider /> : null}
+					{divider}
 				</React.Fragment>
 			);
 		});
