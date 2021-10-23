@@ -12,7 +12,7 @@ const TIMESTAMP_CLEAR = 1500;
 const ENTER_KEY = "Enter";
 
 const ContactContainer = (props) => {
-	const { contactName } = props;
+	const { contactName, sendMessage } = props;
 
 	const [text, setText] = useState("");
 	const [lastSuccessfulSend, setLastSuccessfulSend] = useState();
@@ -34,7 +34,8 @@ const ContactContainer = (props) => {
 
 		const dateAndTime = dayjs().format("h:mm");
 
-		// Insert api call here
+		sendMessage(text);
+		
 		setText("");
 		setLastSuccessfulSend(dateAndTime);
 
