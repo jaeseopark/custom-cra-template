@@ -5,11 +5,9 @@ import ContactCard from "component/contact/card/ContactCard";
 
 const StylizedContactContainer = styled.div`
     background-color: rgb(245, 245, 245);
-    width: 350px;
     padding: 10px;
     overflow-y: scroll;
     overflow-x: hidden;
-    /* resize: horizontal; // gotta learn how to use this */
 `;
 
 type ContactCardContainerProps = {

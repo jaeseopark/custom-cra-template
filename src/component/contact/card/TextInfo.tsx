@@ -1,6 +1,10 @@
 import dayjs from "dayjs";
 import styled from "styled-components";
 import IMFMessage from "typedef/IMFMessage";
+import Snippet from "./Snippet";
+
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
+const WEEK_IN_MS = 7 * DAY_IN_MS;
 
 type TextInfoProps = {
     name: string;
@@ -19,8 +23,6 @@ const Header = styled.div`
     flex-flow: row nowrap;
 `;
 
-const Snippet = styled.div``;
-
 const Spacer = styled.div`
     flex-grow: 1;
 `;
@@ -29,7 +31,16 @@ const Timestamp = styled.span``;
 
 const getHumanTime = (timestamp?: number) => {
     if (!timestamp) return null;
-    return dayjs(timestamp).format("h:mm A");
+
+    if (Date.now() - timestamp < DAY_IN_MS) {
+        return dayjs(timestamp).format("h:mm A");
+    }
+
+    if (Date.now() - timestamp < WEEK_IN_MS) {
+        return dayjs(timestamp).format("dddd");
+    }
+
+    return dayjs(timestamp).format("MMM. D");
 };
 
 const TextInfo = ({ name, lastMessage }: TextInfoProps) => (
@@ -39,7 +50,7 @@ const TextInfo = ({ name, lastMessage }: TextInfoProps) => (
             <Spacer />
             <Timestamp>{getHumanTime(lastMessage?.timestamp)}</Timestamp>
         </Header>
-        <Snippet>{lastMessage?.content.text}</Snippet>
+        <Snippet lastMessage={lastMessage} />
     </StylizedTextInfo>
 );
 

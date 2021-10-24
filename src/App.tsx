@@ -9,23 +9,15 @@ import ContactCardContainer from "component/contact/ContactCardContainer";
 
 const StylizedApp = styled.div`
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     height: 100vh;
 `;
 
-const InteractivePanels = styled.div`
-    order: 1;
-    flex-grow: 1;
+const LeftSideBar = styled.div`
     display: flex;
-    flex-flow: row nowrap;
-    max-height: calc(100vh - 30px);
-`;
-
-const StatusBar = styled.div`
-    order: 2;
-    min-height: 30px;
-    max-height: 30px;
-    overflow: hidden;
+    flex-flow: column nowrap;
+    width: 350px;
+    /* resize: horizontal; */
 `;
 
 const App = () => {
@@ -38,13 +30,11 @@ const App = () => {
 
     return (
         <StylizedApp>
-            <InteractivePanels>
-                <ContactCardContainer onClickName={selectName} selectedName={selectedName} />
-                {selectedName && <ChatContainer name={selectedName} />}
-            </InteractivePanels>
-            <StatusBar>
+            <LeftSideBar>
                 <ConnectivityProvider />
-            </StatusBar>
+                <ContactCardContainer onClickName={selectName} selectedName={selectedName} />
+            </LeftSideBar>
+            {selectedName && <ChatContainer name={selectedName} />}
         </StylizedApp>
     );
 };

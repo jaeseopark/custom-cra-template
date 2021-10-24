@@ -6,14 +6,15 @@ import { updateConnectivity } from "redux/mdlwr";
 
 const CONNECTIVITY_CHECK_INTERVAL = 500; // ms
 
+const StylizedConnectivityProvider = styled.div`
+    display: flex;
+`;
+
 const OnlineIndicator = styled.div`
     width: 10px;
     height: 10px;
     border-radius: 100%;
-    background-color: ${(props: { isOnline: boolean }) => {
-        const { isOnline } = props;
-        return isOnline ? "green" : "red";
-    }};
+    background-color: ${({ isOnline }: { isOnline: boolean }) => (isOnline ? "green" : "red")};
 `;
 
 const ConnectivityProvider = () => {
@@ -27,10 +28,10 @@ const ConnectivityProvider = () => {
     }, [dispatch]);
 
     return (
-        <div className="connectivity-provider">
+        <StylizedConnectivityProvider>
             <OnlineIndicator isOnline={isOnline} />
             <span>You are {isOnline ? "online" : "offline"}</span>
-        </div>
+        </StylizedConnectivityProvider>
     );
 };
 
