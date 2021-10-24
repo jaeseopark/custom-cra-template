@@ -5,9 +5,12 @@ import styled from "styled-components";
 import { selectOnePhoneOrEmailByName, selectTranscript } from "redux/transcript/slice";
 import MessageComposeView from "./MessageComposeView";
 import TranscriptView from "./TranscriptView";
+import TitleBar from "./TitleBar";
 
 const StylizedChatContainer = styled.div`
     flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
 `;
 
 type ChatContainerProps = {
@@ -29,6 +32,7 @@ const ChatContainer = ({ name }: ChatContainerProps) => {
 
     return (
         <StylizedChatContainer>
+            <TitleBar name={name} />
             <TranscriptView transcript={transcript} />
             <MessageComposeView phoneOrEmail={phoneOrEmail} />
         </StylizedChatContainer>

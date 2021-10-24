@@ -1,8 +1,12 @@
 import ReconnectingWebSocket from "reconnecting-websocket";
+
+import IMFError from "typedef/IMFError";
 import IMFMessage from "typedef/IMFMessage";
 import Person from "typedef/Person";
+import { getHuman } from "util/rand";
 
 type OnMessageType = (msg: IMFMessage) => void;
+type OnErrorType = (error: IMFError) => void;
 
 class IMFClient {
     private host: string;
@@ -10,18 +14,49 @@ class IMFClient {
 
     private messageSocket: ReconnectingWebSocket;
 
+    private onMessage?: OnMessageType;
+    private onError?: OnErrorType;
+
     constructor(host: string, port: string) {
         this.host = host;
         this.port = port;
 
         const url = `ws://${this.host}:${this.port}/msg`;
         this.messageSocket = new ReconnectingWebSocket(url);
+        this.messageSocket.onmessage = ({ data }) => {
+            let dataJson;
+            try {
+                dataJson = JSON.parse(data);
+            } catch (error) {
+                console.error(data);
+                return;
+            }
+            if (dataJson.error && this.onError) this.onError(dataJson as IMFError);
+            else if (this.onMessage) this.onMessage(dataJson as IMFMessage);
+            else console.log(dataJson);
+        };
     }
+
+    setOnMessage = (onMessage: OnMessageType) => {
+        this.onMessage = onMessage;
+    };
+
+    setOnError = (onError: OnErrorType) => {
+        this.onError = onError;
+    };
 
     fetchContacts(): Promise<Person[]> {
         const url = `http://${this.host}:${this.port}/contacts`;
         return fetch(url)
             .then((res) => res.json())
+            .then((resJson) => {
+                // this block is mock
+                for (let index = 0; index < 25; index++) {
+                    const randomName = `${getHuman()} ${getHuman()}`;
+                    resJson[randomName] = `${index}-${randomName}`;
+                }
+                return resJson;
+            })
             .then((resJson) => {
                 return Object.keys(resJson).map((name) => ({
                     name,
@@ -37,13 +72,6 @@ class IMFClient {
     isOnline(): boolean {
         return this.messageSocket.readyState === WebSocket.OPEN;
     }
-
-    setOnMessage = (onMessage: OnMessageType) => {
-        this.messageSocket.onmessage = (event) => {
-            const message: IMFMessage = JSON.parse(event.data);
-            onMessage(message);
-        };
-    };
 }
 
 export default IMFClient;

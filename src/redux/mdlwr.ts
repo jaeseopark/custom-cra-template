@@ -18,6 +18,9 @@ export const initializeClient = () => (dispatch: Dispatch) => {
             dispatch(updateMessage(msg));
         }
     });
+    client.setOnError((error) => {
+        // TODO: deal with this
+    });
 
     client.fetchContacts().then((people) => dispatch(addPeople(people)));
 
@@ -25,8 +28,13 @@ export const initializeClient = () => (dispatch: Dispatch) => {
 };
 
 export const sendMessage = (msg: IMFMessage) => (dispatch: Dispatch) => {
-    imfClient.sendMessage(msg);
     dispatch(addMessage(msg));
+
+    const sendToServer = () => {
+        if (imfClient) imfClient.sendMessage(msg);
+        else setTimeout(sendToServer, 1000);
+    };
+    sendToServer();
 };
 
 export const updateConnectivity = () => (dispatch: Dispatch) => {

@@ -6,6 +6,12 @@ type MessageViewProps = {
 };
 
 const StylizedMessageView = styled.div`
+    display: flex;
+    justify-content: flex-end; // TODO: make this dynamic
+    margin: 0 10px 0 10px;
+`;
+
+const MessageBubble = styled.div`
     ${({ message }: MessageViewProps) => {
         const isReceived = message.status === "received";
         if (isReceived) {
@@ -19,12 +25,18 @@ const StylizedMessageView = styled.div`
             `;
         }
     }}
-    border-radius: 20px;
+    max-width: 400px;
+    border-radius: 12px;
     padding: 3px;
 `;
 
 const MessageView = ({ message }: MessageViewProps) => {
-    return <StylizedMessageView message={message}>{message.content.text}</StylizedMessageView>;
+    return (
+        <StylizedMessageView>
+            <MessageBubble message={message}>{message.content.text}</MessageBubble>
+            {message.status}
+        </StylizedMessageView>
+    );
 };
 
 export default MessageView;
