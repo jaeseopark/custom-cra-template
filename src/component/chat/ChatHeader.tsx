@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StylizedTitleBar = styled.div`
+const StylizedHeader = styled.div`
     height: 50px;
     font-weight: 200;
 `;
@@ -14,13 +14,13 @@ type TitleBarProps = {
     name: string;
 };
 
-const TitleBar = ({ name }: TitleBarProps) => {
+const ChatHeader = ({ name }: TitleBarProps) => {
     return (
-        <StylizedTitleBar>
+        <StylizedHeader>
             <span>To:</span>
             <PersonName>{name}</PersonName>
-        </StylizedTitleBar>
+        </StylizedHeader>
     );
 };
 
-export default TitleBar;
+export default ChatHeader;

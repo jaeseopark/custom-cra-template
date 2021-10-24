@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import Transcript from "typedef/Transcript";
-import MessageView from "./MessageView";
+import Message from "./MessageView";
 
 const StylizedTranscriptView = styled.div`
     flex-grow: 1;
@@ -19,7 +19,7 @@ const TranscriptView = ({ transcript }: TranscriptViewProps) => {
     return (
         <StylizedTranscriptView>
             {transcript.messages.map((msg) => (
-                <MessageView key={msg.id} message={msg} />
+                <Message key={msg.id} message={msg} />
             ))}
         </StylizedTranscriptView>
     );

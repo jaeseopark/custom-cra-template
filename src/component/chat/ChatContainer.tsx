@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { selectOnePhoneOrEmailByName, selectTranscript } from "redux/transcript/slice";
-import MessageComposeView from "./MessageComposeView";
-import TranscriptView from "./TranscriptView";
-import TitleBar from "./TitleBar";
+import MessageInput from "./MessageInput";
+import TranscriptView from "component/chat/transcript/TranscriptView";
+import ChatHeader from "./ChatHeader";
 
 const StylizedChatContainer = styled.div`
     flex-grow: 1;
@@ -32,9 +32,9 @@ const ChatContainer = ({ name }: ChatContainerProps) => {
 
     return (
         <StylizedChatContainer>
-            <TitleBar name={name} />
+            <ChatHeader name={name} />
             <TranscriptView transcript={transcript} />
-            <MessageComposeView phoneOrEmail={phoneOrEmail} />
+            <MessageInput phoneOrEmail={phoneOrEmail} />
         </StylizedChatContainer>
     );
 };

@@ -30,7 +30,7 @@ const MessageBubble = styled.div`
     padding: 3px;
 `;
 
-const MessageView = ({ message }: MessageViewProps) => {
+const Message = ({ message }: MessageViewProps) => {
     return (
         <StylizedMessageView>
             <MessageBubble message={message}>{message.content.text}</MessageBubble>
@@ -39,4 +39,4 @@ const MessageView = ({ message }: MessageViewProps) => {
     );
 };
 
-export default MessageView;
+export default Message;

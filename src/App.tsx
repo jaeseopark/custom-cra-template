@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { initializeClient } from "redux/mdlwr";
-import ChatContainer from "component/transcript/ChatContainer";
+import ChatContainer from "component/chat/ChatContainer";
 import ConnectivityProvider from "component/ConnectivityProvider";
 import ContactCardContainer from "component/contact/ContactCardContainer";
 

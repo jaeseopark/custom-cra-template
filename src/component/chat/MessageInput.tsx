@@ -11,7 +11,7 @@ type MessageComposeViewProps = {
     phoneOrEmail: string;
 };
 
-const MessageComposeView = ({ phoneOrEmail }: MessageComposeViewProps) => {
+const MessageInput = ({ phoneOrEmail }: MessageComposeViewProps) => {
     const dispatch = useDispatch();
     const [text, setText] = useState("");
 
@@ -65,7 +65,6 @@ const MessageComposeView = ({ phoneOrEmail }: MessageComposeViewProps) => {
                 minRows={4}
                 multiline
             />
-            {/* {lastSuccessfulSend && <p className="timeStamp">{timestampString}</p>} */}
             <IconButton type="submit" onClick={handleSend}>
                 <SendIcon />
             </IconButton>
@@ -73,4 +72,4 @@ const MessageComposeView = ({ phoneOrEmail }: MessageComposeViewProps) => {
     );
 };
 
-export default MessageComposeView;
+export default MessageInput;
