@@ -7,10 +7,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ".:/app"
-      - "/app/node_modules"
     ports:
-      - 3001:3000
+      - 3000:3000
     environment:
+      TZ: America/Denver
       CHOKIDAR_USEPOLLING: true
     stdin_open: true
     networks:
