@@ -6,11 +6,12 @@ import { InputBase } from "@mui/material";
 
 import { sendMessage } from "redux/mdlwr";
 import { APPLE_BIGSUR_GRAY_OUTLINE } from "style/const";
+import { Conversation } from "typedef/IMFMessage";
 
 const ENTER_KEY = "Enter";
 
 type MessageComposeViewProps = {
-    phoneOrEmail: string;
+    conversation: Conversation;
 };
 
 const StylizedMessageInput = styled.div`
@@ -27,14 +28,14 @@ const StylizedInputBox = styled(InputBase)`
     // TODO: make the font size with that of the search bar.
 `;
 
-const MessageInput = ({ phoneOrEmail }: MessageComposeViewProps) => {
+const MessageInput = ({ conversation }: MessageComposeViewProps) => {
     const dispatch = useDispatch();
     const [text, setText] = useState("");
 
     useEffect(() => {
         // TODO remember draft message when switching tabs
         setText("");
-    }, [phoneOrEmail]);
+    }, [conversation]);
 
     function handleTextChange(e: React.ChangeEventHandler) {
         // @ts-ignore
@@ -60,7 +61,7 @@ const MessageInput = ({ phoneOrEmail }: MessageComposeViewProps) => {
                 content: {
                     text,
                 },
-                phoneOrEmail,
+                conversation,
                 timestamp: Date.now(),
                 status: "sending",
             })

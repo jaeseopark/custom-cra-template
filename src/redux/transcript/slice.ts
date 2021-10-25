@@ -12,7 +12,7 @@ type TranscriptState = {
         [name: string]: string[];
     };
     contactReverseMap: {
-        [phoneOrEmail: string]: PersonName;
+        [handle: string]: PersonName;
     };
 
     transcripts: {
@@ -26,27 +26,26 @@ const initialState: TranscriptState = {
     transcripts: {},
 };
 
-/**
- * Pre-condition: transcript already exists
- */
-const getTranscript = (state: TranscriptState, msg: IMFMessage) => {
-    const personName = state.contactReverseMap[msg.phoneOrEmail];
-    return state.transcripts[personName];
-};
-
 const initTranscript = (state: TranscriptState, msg: IMFMessage) => {
     const newTranscript = {
         messages: [],
         messageIndex: {},
     };
 
-    const name = getHuman();
-    state.contactMap[name] = [msg.phoneOrEmail];
-    state.contactReverseMap[msg.phoneOrEmail] = name;
-    state.transcripts.Unknown = newTranscript;
+    state.contactMap[msg.conversation.alias] = [msg.conversation.handle];
+    state.contactReverseMap[msg.conversation.handle] = msg.conversation.alias;
+    state.transcripts[msg.conversation.alias] = newTranscript;
 
     return newTranscript;
 };
+
+const getOrInitTranscript = (state: TranscriptState, msg: IMFMessage) => {
+    let transcript =  state.transcripts[msg.conversation.alias];
+    if (transcript) return transcript;
+
+    console.log("Could not find transcript for alias:", msg.conversation.alias);
+    return initTranscript(state, msg);
+}
 
 export const transcriptSlice = createSlice({
     name: "transcript",
@@ -54,40 +53,40 @@ export const transcriptSlice = createSlice({
     reducers: {
         addPeople: (state, action: PayloadAction<Person[]>) => {
             action.payload.forEach((person) => {
-                person.phoneOrEmail.forEach((poe) => {
+                person.handle.forEach((poe) => {
                     state.contactReverseMap[poe] = person.name;
                 });
-                state.contactMap[person.name] = person.phoneOrEmail;
+                state.contactMap[person.name] = person.handle;
                 state.transcripts[person.name] = {
                     messages: [],
                     messageIndex: {},
                 };
             });
         },
-        addMessage: (state, action: PayloadAction<IMFMessage>) => {
-            const transcript = getTranscript(state, action.payload) || initTranscript(state, action.payload);
-            transcript.messages.push(action.payload);
-            transcript.messageIndex[action.payload.id] = transcript.messages.length - 1;
-        },
-        updateMessage: (state, action: PayloadAction<IMFMessage>) => {
-            const transcript = getTranscript(state, action.payload);
+        upsertMessage: (state, action: PayloadAction<IMFMessage>) => {
+            const transcript = getOrInitTranscript(state, action.payload);
             const i = transcript.messageIndex[action.payload.id];
-            transcript.messages.splice(i, 1, action.payload);
+            if (i >= 0) {
+                transcript.messages.splice(i, 1, action.payload);
+            } else {
+                transcript.messages.push(action.payload);
+                transcript.messageIndex[action.payload.id] = transcript.messages.length - 1;
+            }
         },
     },
 });
 
-export const { addPeople, addMessage, updateMessage } = transcriptSlice.actions;
+export const { addPeople, upsertMessage } = transcriptSlice.actions;
 
 export const selectNames = (state: RootState) => {
     const mayContainDups = Object.values(state.transcript.contactReverseMap);
     return Array.from(new Set(mayContainDups));
 };
 
-export const selectTranscript = (name: string) => (state: RootState) => state.transcript.transcripts[name];
+export const selectTranscript = (name: string) => (state: RootState) =>
+    state.transcript.transcripts[name];
 
-export const selectPhoneOrEmailByName = (name: string) => (state: RootState) => state.transcript.contactMap[name];
-
-export const selectOnePhoneOrEmailByName = (name: string) => (state: RootState) => state.transcript.contactMap[name][0];
+export const selectOneHandleByName = (name: string) => (state: RootState) =>
+    state.transcript.contactMap[name][0];
 
 export default transcriptSlice.reducer;

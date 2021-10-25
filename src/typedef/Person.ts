@@ -1,6 +1,6 @@
 type Person = {
     name: string;
-    phoneOrEmail: string[];
+    handle: string[];
 };
 
 export default Person;

@@ -8,6 +8,14 @@ import { getHuman } from "util/rand";
 type OnMessageType = (msg: IMFMessage) => void;
 type OnErrorType = (error: IMFError) => void;
 
+// @ts-ignore
+const addRandomContacts = (resJson) => {
+    for (let index = 0; index < 25; index++) {
+        const randomName = `${getHuman()} ${getHuman()}`;
+        resJson[randomName] = `${index}-${randomName}`;
+    }
+    return resJson;
+};
 class IMFClient {
     private host: string;
     private port: string;
@@ -49,18 +57,11 @@ class IMFClient {
         const url = `http://${this.host}:${this.port}/contacts`;
         return fetch(url)
             .then((res) => res.json())
-            .then((resJson) => {
-                // this block is mock
-                for (let index = 0; index < 25; index++) {
-                    const randomName = `${getHuman()} ${getHuman()}`;
-                    resJson[randomName] = `${index}-${randomName}`;
-                }
-                return resJson;
-            })
+            // .then(addRandomContacts)
             .then((resJson) => {
                 return Object.keys(resJson).map((name) => ({
                     name,
-                    phoneOrEmail: [resJson[name]],
+                    handle: [resJson[name]],
                 }));
             });
     }

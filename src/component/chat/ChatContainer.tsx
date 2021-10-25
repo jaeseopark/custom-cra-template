@@ -2,10 +2,11 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { selectOnePhoneOrEmailByName, selectTranscript } from "redux/transcript/slice";
+import { selectOneHandleByName, selectTranscript } from "redux/transcript/slice";
 import MessageInput from "./MessageInput";
 import TranscriptView from "component/chat/transcript/TranscriptView";
 import ChatHeader from "./ChatHeader";
+import { Conversation } from "typedef/IMFMessage";
 
 const StylizedChatContainer = styled.div`
     flex-grow: 1;
@@ -19,22 +20,30 @@ type ChatContainerProps = {
 
 const ChatContainer = ({ name }: ChatContainerProps) => {
     const transcript = useSelector(selectTranscript(name));
-    const defaultPhoneOrEmail = useSelector(selectOnePhoneOrEmailByName(name));
+    const defaultHandle = useSelector(selectOneHandleByName(name));
 
-    const phoneOrEmail = useMemo<string>(() => {
-        if (transcript && transcript.messages.length > 0) {
-            // there is a previous chat history. use the most recent number/email.
-            return transcript.messages[transcript.messages.length - 1].phoneOrEmail;
-        }
+    const conversation = useMemo<Conversation>(() => {
+        const getHandle = () => {
+            if (transcript && transcript.messages.length > 0) {
+                // there is a previous chat history. use the most recent number/email.
+                return transcript.messages[transcript.messages.length - 1].conversation.handle;
+            }
 
-        return defaultPhoneOrEmail;
-    }, [defaultPhoneOrEmail, transcript]);
+            return defaultHandle;
+        };
+
+        return {
+            handle: getHandle(),
+            alias: name,
+            isGroup: false,
+        };
+    }, [defaultHandle, name, transcript]);
 
     return (
         <StylizedChatContainer>
             <ChatHeader name={name} />
             <TranscriptView transcript={transcript} />
-            <MessageInput phoneOrEmail={phoneOrEmail} />
+            <MessageInput conversation={conversation} />
         </StylizedChatContainer>
     );
 };
