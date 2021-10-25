@@ -1,6 +1,6 @@
 type Person = {
     name: string;
-    handle: string[];
+    handles: string[];
 };
 
 export default Person;

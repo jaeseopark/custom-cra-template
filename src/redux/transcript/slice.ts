@@ -53,10 +53,10 @@ export const transcriptSlice = createSlice({
     reducers: {
         addPeople: (state, action: PayloadAction<Person[]>) => {
             action.payload.forEach((person) => {
-                person.handle.forEach((poe) => {
+                person.handles.forEach((poe) => {
                     state.contactReverseMap[poe] = person.name;
                 });
-                state.contactMap[person.name] = person.handle;
+                state.contactMap[person.name] = person.handles;
                 state.transcripts[person.name] = {
                     messages: [],
                     messageIndex: {},

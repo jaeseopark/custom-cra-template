@@ -61,7 +61,7 @@ class IMFClient {
             .then((resJson) => {
                 return Object.keys(resJson).map((name) => ({
                     name,
-                    handle: [resJson[name]],
+                    handles: [resJson[name]],
                 }));
             });
     }
