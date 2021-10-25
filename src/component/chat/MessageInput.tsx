@@ -1,15 +1,31 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { sendMessage } from "redux/mdlwr";
+import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { IconButton, InputBase, Paper } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import { InputBase } from "@mui/material";
+
+import { sendMessage } from "redux/mdlwr";
+import { APPLE_BIGSUR_GRAY_OUTLINE } from "style/const";
 
 const ENTER_KEY = "Enter";
 
 type MessageComposeViewProps = {
     phoneOrEmail: string;
 };
+
+const StylizedMessageInput = styled.div`
+    background-color: white;
+    padding: 1rem;
+`;
+
+const StylizedInputBox = styled(InputBase)`
+    width: 100%;
+    font-size: 1rem;
+    border: ${APPLE_BIGSUR_GRAY_OUTLINE} solid 1px;
+    border-radius: 15px;
+    padding: 5px 0 0 0;
+    // TODO: make the font size with that of the search bar.
+`;
 
 const MessageInput = ({ phoneOrEmail }: MessageComposeViewProps) => {
     const dispatch = useDispatch();
@@ -54,21 +70,18 @@ const MessageInput = ({ phoneOrEmail }: MessageComposeViewProps) => {
     }
 
     return (
-        <Paper className="textContainer">
-            <InputBase
+        <StylizedMessageInput>
+            <StylizedInputBox
                 className="textInput"
-                placeholder="Type your message"
+                placeholder="Message"
                 onKeyPress={handleSend}
                 // @ts-ignore
                 onChange={handleTextChange}
                 value={text}
-                minRows={4}
+                // minRows={4}
                 multiline
             />
-            <IconButton type="submit" onClick={handleSend}>
-                <SendIcon />
-            </IconButton>
-        </Paper>
+        </StylizedMessageInput>
     );
 };
 

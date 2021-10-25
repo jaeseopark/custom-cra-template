@@ -1,3 +1,4 @@
+import { APPLE_BIGSUR_BLUE, APPLE_BIGSUR_GRAY_BACKGROUND } from "style/const";
 import styled from "styled-components";
 import IMFMessage from "typedef/IMFMessage";
 
@@ -16,11 +17,11 @@ const MessageBubble = styled.div`
         const isReceived = message.status === "received";
         if (isReceived) {
             return `
-                background-color: gray;
+                background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
             `;
         } else {
             return `
-                background-color: blue;
+                background-color: ${APPLE_BIGSUR_BLUE};
                 color: white;
             `;
         }
@@ -30,7 +31,7 @@ const MessageBubble = styled.div`
     padding: 3px;
 `;
 
-const Message = ({ message }: MessageViewProps) => {
+const MessageView = ({ message }: MessageViewProps) => {
     return (
         <StylizedMessageView>
             <MessageBubble message={message}>{message.content.text}</MessageBubble>
@@ -39,4 +40,4 @@ const Message = ({ message }: MessageViewProps) => {
     );
 };
 
-export default Message;
+export default MessageView;

@@ -2,10 +2,10 @@ import { useSelector } from "react-redux";
 import { selectNames } from "redux/transcript/slice";
 import styled from "styled-components";
 import ContactCard from "component/contact/card/ContactCard";
+import { APPLE_BIGSUR_GRAY_BACKGROUND } from "style/const";
 
 const StylizedContactContainer = styled.div`
-    background-color: rgb(245, 245, 245);
-    padding: 10px;
+    background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
     overflow-y: scroll;
     overflow-x: hidden;
 `;

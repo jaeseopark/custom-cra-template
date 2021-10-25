@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 import Transcript from "typedef/Transcript";
-import Message from "./MessageView";
+import MessageView from "./MessageView";
 
 const StylizedTranscriptView = styled.div`
     flex-grow: 1;
     overflow-y: scroll;
     overflow-x: hidden;
+    background-color: white;
+    padding: 10px 0 10px 0;
 `;
 
 type TranscriptViewProps = {
@@ -19,7 +21,7 @@ const TranscriptView = ({ transcript }: TranscriptViewProps) => {
     return (
         <StylizedTranscriptView>
             {transcript.messages.map((msg) => (
-                <Message key={msg.id} message={msg} />
+                <MessageView key={msg.id} message={msg} />
             ))}
         </StylizedTranscriptView>
     );

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { selectTranscript } from "redux/transcript/slice";
 import TextInfo from "component/contact/card/TextInfo";
 import Initials from "component/contact/card/Initials";
+import { APPLE_BIGSUR_BLUE } from "style/const";
 
 type TranscriptPreviewProps = {
     name: string;
@@ -17,7 +18,7 @@ const StylizedContactCard = styled.div`
         const { isSelected } = props;
         if (isSelected) {
             return `
-                background-color: rgb(30, 114, 228);
+                background-color: ${APPLE_BIGSUR_BLUE};
                 color: white;
             `;
         }
