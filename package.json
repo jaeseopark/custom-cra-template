@@ -27,8 +27,7 @@
     "sass": "^1.43.3",
     "sass-loader": "^12.2.0",
     "styled-components": "^5.3.3",
-    "typescript": "^4.5.0-dev.20211023",
-    "unique-names-generator": "^4.6.0"
+    "typescript": "^4.5.0-dev.20211023"
   },
   "scripts": {
     "start": "react-scripts start",

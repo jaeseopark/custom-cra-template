@@ -34,7 +34,7 @@ const LeftSideBar = styled.div`
 
 const App = () => {
     const dispatch = useDispatch();
-    const [selectedName, selectName] = useState<string>();
+    const [selectedAlias, selectAlias] = useState<string>();
 
     useEffect(() => {
         dispatch(initializeClient());
@@ -45,10 +45,10 @@ const App = () => {
             <LeftSideBar>
                 <ConnectivityProvider />
                 <SearchBar />
-                <ContactCardContainer onClickName={selectName} selectedName={selectedName} />
+                <ContactCardContainer onClickAlias={selectAlias} selectedAlias={selectedAlias} />
             </LeftSideBar>
             <VerticalLine />
-            {selectedName && <ChatContainer name={selectedName} />}
+            {selectedAlias && <ChatContainer alias={selectedAlias} />}
         </StylizedApp>
     );
 };

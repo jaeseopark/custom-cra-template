@@ -1,25 +1,30 @@
 export type IMFMessageStatus = "sending" | "sent" | "read" | "received";
 
-export type AttachmentType = "photo" | "video";
+export type IMFAttachmentType = "photo" | "video";
 
-export type Conversation = {
-    alias: string; // friend name or group name
-    handle: string; // one of: group id, phone number, and email address
-    isGroup: boolean;
-};
+export type IMFService = "iMessage" | "SMS";
 
-type IMFMessage = {
-    id: string;
-    timestamp: number;
-    status: IMFMessageStatus;
-    conversation: Conversation;
+type IMFBaseMessage = {
+    handle: string;
     content: {
         text?: string;
         attachment?: {
-            type: AttachmentType;
+            type: IMFAttachmentType;
             data: string; // placeholder
         };
     };
+};
+
+export type IMFOutgoingMessage = IMFBaseMessage & {
+    service?: IMFService;
+};
+
+type IMFMessage = IMFBaseMessage & {
+    id: number;
+    service: IMFService;
+    alias: string;
+    status: IMFMessageStatus;
+    timestamp: number;
 };
 
 export default IMFMessage;

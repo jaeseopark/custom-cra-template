@@ -5,7 +5,7 @@ import { getHumanTime } from "util/datetime";
 import Snippet from "component/contact/card/Snippet";
 
 type TextInfoProps = {
-    name: string;
+    alias: string;
     lastMessage?: IMFMessage;
 };
 
@@ -25,10 +25,10 @@ const Spacer = styled.div`
     flex-grow: 1;
 `;
 
-const TextInfo = ({ name, lastMessage }: TextInfoProps) => (
+const TextInfo = ({ alias, lastMessage }: TextInfoProps) => (
     <StylizedTextInfo>
         <Header>
-            <span>{name}</span>
+            <span>{alias}</span>
             <Spacer />
             <span>{getHumanTime(lastMessage?.timestamp)}</span>
         </Header>

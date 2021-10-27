@@ -2,13 +2,14 @@ import { HorizontallyAlignedDiv, VerticallyAlignedDiv } from "component/common/A
 import styled from "styled-components";
 
 type InitialsProps = {
-    name: string;
+    alias: string;
 };
 
 // TODO center align
 
 const HorizontallyAlignedIcon = styled(HorizontallyAlignedDiv)`
     width: 50px;
+    min-width: 50px;
     height: 50px;
     border-radius: 100%;
     background-color: gainsboro;
@@ -17,15 +18,15 @@ const HorizontallyAlignedIcon = styled(HorizontallyAlignedDiv)`
     display: flex;
 `;
 
-const getPersonInitials = (name: string) =>
+const getInitials = (name: string) =>
     name
         .split(" ")
         .map((word) => word.substr(0, 1).toUpperCase())
         .join("");
 
-const Initials = ({ name }: InitialsProps) => (
+const Initials = ({ alias }: InitialsProps) => (
     <HorizontallyAlignedIcon>
-        <VerticallyAlignedDiv>{getPersonInitials(name)}</VerticallyAlignedDiv>
+        <VerticallyAlignedDiv>{getInitials(alias)}</VerticallyAlignedDiv>
     </HorizontallyAlignedIcon>
 );
 

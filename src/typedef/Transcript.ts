@@ -2,7 +2,7 @@ import IMFMessage from "./IMFMessage";
 
 type Transcript = {
     messages: IMFMessage[];
-    messageIndex: { [messageId: string]: number };
+    lastMessage?: IMFMessage;
     // to disply activity labels
     // lastSent: number;
     // lastReceived: number;

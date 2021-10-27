@@ -1,16 +1,16 @@
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { selectTranscript } from "redux/transcript/slice";
 import TextInfo from "component/contact/card/TextInfo";
 import Initials from "component/contact/card/Initials";
 import { APPLE_BIGSUR_BLUE } from "style/const";
+import Transcript from "typedef/Transcript";
 
 type TranscriptPreviewProps = {
-    name: string;
+    alias: string;
+    transcript: Transcript;
     isSelected: boolean;
-    onClickName: (n: string) => void;
+    onClickAlias: (n: string) => void;
 };
 
 const StylizedContactCard = styled.div`
@@ -32,8 +32,7 @@ const StylizedContactCard = styled.div`
 
 const UnreadIndicator = styled.div``;
 
-const ContactCard = ({ name, isSelected, onClickName }: TranscriptPreviewProps) => {
-    const transcript = useSelector(selectTranscript(name));
+const ContactCard = ({ alias, transcript, isSelected, onClickAlias: onClickName }: TranscriptPreviewProps) => {
     const lastMessage = useMemo(() => {
         if (!transcript) return;
         if (transcript.messages.length) {
@@ -42,14 +41,14 @@ const ContactCard = ({ name, isSelected, onClickName }: TranscriptPreviewProps) 
     }, [transcript]);
 
     const onClick = () => {
-        onClickName(name);
+        onClickName(alias);
     };
 
     return (
         <StylizedContactCard isSelected={isSelected} onClick={onClick}>
             <UnreadIndicator />
-            <Initials name={name} />
-            <TextInfo name={name} lastMessage={lastMessage} />
+            <Initials alias={alias} />
+            <TextInfo alias={alias} lastMessage={lastMessage} />
         </StylizedContactCard>
     );
 };

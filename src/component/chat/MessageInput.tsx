@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { v4 as uuidv4 } from "uuid";
 import { InputBase } from "@mui/material";
 
 import { sendMessage } from "redux/mdlwr";
 import { APPLE_BIGSUR_GRAY_OUTLINE } from "style/const";
-import { Conversation } from "typedef/IMFMessage";
+import { IMFService } from "typedef/IMFMessage";
 
 const ENTER_KEY = "Enter";
 
-type MessageComposeViewProps = {
-    conversation: Conversation;
+export type MessageComposeViewProps = {
+    handle: string;
+    service: IMFService;
 };
 
 const StylizedMessageInput = styled.div`
@@ -28,14 +27,13 @@ const StylizedInputBox = styled(InputBase)`
     // TODO: make the font size with that of the search bar.
 `;
 
-const MessageInput = ({ conversation }: MessageComposeViewProps) => {
-    const dispatch = useDispatch();
+const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
     const [text, setText] = useState("");
 
     useEffect(() => {
         // TODO remember draft message when switching tabs
         setText("");
-    }, [conversation]);
+    }, [handle]);
 
     function handleTextChange(e: React.ChangeEventHandler) {
         // @ts-ignore
@@ -55,17 +53,13 @@ const MessageInput = ({ conversation }: MessageComposeViewProps) => {
 
         e.preventDefault();
 
-        dispatch(
-            sendMessage({
-                id: uuidv4().toString(),
-                content: {
-                    text,
-                },
-                conversation,
-                timestamp: Date.now(),
-                status: "sending",
-            })
-        );
+        sendMessage({
+            content: {
+                text,
+            },
+            handle,
+            service,
+        });
 
         setText("");
     }

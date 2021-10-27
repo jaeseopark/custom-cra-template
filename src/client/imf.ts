@@ -1,35 +1,27 @@
 import ReconnectingWebSocket from "reconnecting-websocket";
 
 import IMFError from "typedef/IMFError";
-import IMFMessage from "typedef/IMFMessage";
+import IMFEvent from "typedef/IMFEvent";
+import { IMFOutgoingMessage } from "typedef/IMFMessage";
 import Person from "typedef/Person";
-import { getHuman } from "util/rand";
 
-type OnMessageType = (msg: IMFMessage) => void;
-type OnErrorType = (error: IMFError) => void;
+type IMFEventHandler = (msg: IMFEvent) => void;
+type IMFErrorHandler = (error: IMFError) => void;
 
-// @ts-ignore
-const addRandomContacts = (resJson) => {
-    for (let index = 0; index < 25; index++) {
-        const randomName = `${getHuman()} ${getHuman()}`;
-        resJson[randomName] = `${index}-${randomName}`;
-    }
-    return resJson;
-};
 class IMFClient {
     private host: string;
     private port: string;
 
     private messageSocket: ReconnectingWebSocket;
 
-    private onMessage?: OnMessageType;
-    private onError?: OnErrorType;
+    private onEventHandler?: IMFEventHandler;
+    private onError?: IMFErrorHandler;
 
     constructor(host: string, port: string) {
         this.host = host;
         this.port = port;
 
-        const url = `ws://${this.host}:${this.port}/msg`;
+        const url = `ws://${this.host}:${this.port}/`;
         this.messageSocket = new ReconnectingWebSocket(url);
         this.messageSocket.onmessage = ({ data }) => {
             let dataJson;
@@ -40,33 +32,35 @@ class IMFClient {
                 return;
             }
             if (dataJson.error && this.onError) this.onError(dataJson as IMFError);
-            else if (this.onMessage) this.onMessage(dataJson as IMFMessage);
+            else if (this.onEventHandler) this.onEventHandler(dataJson as IMFEvent);
             else console.log(dataJson);
         };
     }
 
-    setOnMessage = (onMessage: OnMessageType) => {
-        this.onMessage = onMessage;
+    onEvent = (onEventHandler: IMFEventHandler) => {
+        this.onEventHandler = onEventHandler;
     };
 
-    setOnError = (onError: OnErrorType) => {
+    setOnError = (onError: IMFErrorHandler) => {
         this.onError = onError;
     };
 
     fetchContacts(): Promise<Person[]> {
         const url = `http://${this.host}:${this.port}/contacts`;
-        return fetch(url)
-            .then((res) => res.json())
-            // .then(addRandomContacts)
-            .then((resJson) => {
-                return Object.keys(resJson).map((name) => ({
-                    name,
-                    handles: [resJson[name]],
-                }));
-            });
+        return (
+            fetch(url)
+                .then((res) => res.json())
+                // .then(addRandomContacts)
+                .then((resJson) => {
+                    return Object.keys(resJson).map((name) => ({
+                        name,
+                        handles: [resJson[name]],
+                    }));
+                })
+        );
     }
 
-    sendMessage(msg: IMFMessage) {
+    sendMessage(msg: IMFOutgoingMessage) {
         this.messageSocket.send(JSON.stringify(msg));
     }
 
