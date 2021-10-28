@@ -27,7 +27,7 @@ const StylizedApp = styled.div`
     background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
 `;
 
-const LeftSideBar = styled.div`
+const Sidebar = styled.div`
     display: flex;
     flex-flow: column nowrap;
     width: 350px;
@@ -46,11 +46,11 @@ const App = () => {
 
     return (
         <StylizedApp>
-            <LeftSideBar>
+            <Sidebar>
                 <ConnectivityProvider />
                 <SearchBar />
                 <ContactCardContainer onClickAlias={selectAlias} selectedAlias={selectedAlias} />
-            </LeftSideBar>
+            </Sidebar>
             <ChatContainer alias={selectedAlias} />
         </StylizedApp>
     );
