@@ -2,7 +2,7 @@
 
 A React implementation of [imessageforwarder](https://github.com/jaeseopark/imessageforwarder) client.
 
-<img src="https://user-images.githubusercontent.com/20038316/139201946-1f775d3c-d49e-493a-930f-44e77b1901c8.png" />
+<img src="https://user-images.githubusercontent.com/20038316/139202363-12cc4710-4632-4172-8c3f-f736b9140816.png" />
 
 ## Usage
 
