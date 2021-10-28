@@ -4,7 +4,7 @@ react-imf is an iMessage client you can run in your browser. The app is targeted
 
 <img src="https://user-images.githubusercontent.com/20038316/139202363-12cc4710-4632-4172-8c3f-f736b9140816.png" />
 
-## Supported use cases
+## Features
 
 * Continue where you left off on your Mac.
 * Send and receive iMessage/SMS.
@@ -16,7 +16,7 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/react-imf
 
 ### Pre-requisite
 
-[imessageforwarder](https://github.com/jaeseopark/imessageforwarder) must be already running on your Mac. imessageforwarder and react-imf can be hosted on the same device, if you choose so. If you are hosting the apps on separate devices, make sure to update `.env` accordingly.
+[imessageforwarder](https://github.com/jaeseopark/imessageforwarder) must be already running on your Mac. It is recommended that imessageforwarder and react-imf are hosted on the same device. If you are hosting the apps on separate devices, make sure to update `.env` accordingly.
 
 ### Run the app
 
