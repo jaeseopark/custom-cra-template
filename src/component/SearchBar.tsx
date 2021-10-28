@@ -20,9 +20,10 @@ const MagnifierIcon = styled.img`
 
 const Input = styled.input`
     border: none;
-    /* background-color: transparent; */
+    background-color: unset;
     outline: none;
     flex-grow: 1;
+    margin-left: 3px;
 `;
 
 const SearchBar = () => (

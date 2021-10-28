@@ -25,6 +25,11 @@ const StylizedInputBox = styled(InputBase)`
     border-radius: 15px;
     padding: 5px 0 0 0;
     // TODO: make the font size with that of the search bar.
+
+    textarea {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 `;
 
 const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
