@@ -16,8 +16,8 @@ const HorizontallyAlignedIcon = styled(HorizontallyAlignedDiv)`
     display: flex;
 `;
 
-const getInitials = (name: string) =>
-    name
+const getInitials = (alias: string) =>
+    alias
         .split(" ")
         .map((word) => word.substr(0, 1).toUpperCase())
         .join("");
