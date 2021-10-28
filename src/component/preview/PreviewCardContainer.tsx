@@ -12,34 +12,35 @@ const StylizedPreviewContainer = styled.div`
     overflow-x: hidden;
 `;
 
-export type PreviewCardContainerProps = {
+type PreviewCardContainerProps = {
     onClickAlias: (n: string) => void;
     selectedAlias?: string;
 };
 
-type ATCompound = {
+type Compound = {
     alias: string;
     transcript: Transcript;
 };
+
+const newToOld = (c1: Compound, c2: Compound) =>
+    -1 * compareChronologically(c1.transcript, c2.transcript);
 
 const PreviewCardContainer = ({ onClickAlias, selectedAlias }: PreviewCardContainerProps) => {
     const aliases = useSelector(selectNames);
     const transcripts = useSelector(selectTranscripts);
 
-    const toATCompound = (alias: string): ATCompound => ({
+    const toCompound = (alias: string): Compound => ({
         alias,
         transcript: transcripts[alias],
     });
 
-    const reverseSort = (o1: ATCompound, o2: ATCompound) =>
-        -1 * compareChronologically(o1.transcript, o2.transcript);
+    const compounds = aliases.map(toCompound);
 
     return (
         <StylizedPreviewContainer>
-            {aliases
-                .map(toATCompound)
-                .sort(reverseSort)
-                .map(({ alias, transcript }) => (
+            {compounds.sort(newToOld).map((props) => {
+                const { alias, transcript } = props;
+                return (
                     <PreviewCard
                         key={alias}
                         transcript={transcript}
@@ -47,7 +48,8 @@ const PreviewCardContainer = ({ onClickAlias, selectedAlias }: PreviewCardContai
                         isSelected={selectedAlias === alias}
                         onClickAlias={onClickAlias}
                     />
-                ))}
+                );
+            })}
         </StylizedPreviewContainer>
     );
 };
