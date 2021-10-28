@@ -8,7 +8,7 @@ import { IMFService } from "typedef/IMFMessage";
 
 const ENTER_KEY = "Enter";
 
-export type MessageComposeViewProps = {
+type MessageComposeViewProps = {
     handle: string;
     service: IMFService;
 };

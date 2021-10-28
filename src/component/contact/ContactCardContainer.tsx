@@ -12,7 +12,7 @@ const StylizedContactContainer = styled.div`
     overflow-x: hidden;
 `;
 
-type ContactCardContainerProps = {
+export type ContactCardContainerProps = {
     onClickAlias: (n: string) => void;
     selectedAlias?: string;
 };

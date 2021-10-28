@@ -1,9 +1,8 @@
-import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { selectTranscript } from "redux/transcript/slice";
-import MessageInput, { MessageComposeViewProps } from "./MessageInput";
+import MessageInput from "./MessageInput";
 import TranscriptView from "component/chat/transcript/TranscriptView";
 import ChatHeader from "./ChatHeader";
 
@@ -17,27 +16,26 @@ type ChatContainerProps = {
     alias: string;
 };
 
-const ChatContainer = ({ alias: name }: ChatContainerProps) => {
-    const transcript = useSelector(selectTranscript(name));
+const ChatContainer = ({ alias }: ChatContainerProps) => {
+    const transcript = useSelector(selectTranscript(alias));
 
-    const mcvp = useMemo<MessageComposeViewProps>(() => {
-        if (transcript && transcript.lastMessage) {
-            return {
-                handle: transcript.lastMessage.handle,
-                service: transcript.lastMessage.service,
-            };
-        }
-
-        throw new Error("Unsupported: creating a new transcript");
-    }, [transcript]);
+    if (!transcript || !transcript.lastMessage) return null;
 
     return (
         <StylizedChatContainer>
-            <ChatHeader name={name} />
+            <ChatHeader name={alias} />
             <TranscriptView transcript={transcript} />
-            <MessageInput handle={mcvp.handle} service={mcvp.service} />
+            <MessageInput
+                handle={transcript.lastMessage.handle}
+                service={transcript.lastMessage.service}
+            />
         </StylizedChatContainer>
     );
 };
 
-export default ChatContainer;
+const WithInputValidation = ({ alias }: { alias?: string }) => {
+    if (!alias) return null;
+    return <ChatContainer alias={alias} />;
+};
+
+export default WithInputValidation;

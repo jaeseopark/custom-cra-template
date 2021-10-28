@@ -8,7 +8,8 @@ const StylizedTranscriptView = styled.div`
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: white;
-    padding: 10px 0 10px 0;
+    padding-bottom: 10px;
+    padding-top: 7px; // the remaining 3px comes from the message bubble, which has a 3px top-margin.
 `;
 
 type TranscriptViewProps = {

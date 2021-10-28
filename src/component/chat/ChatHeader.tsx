@@ -2,6 +2,8 @@ import Spacer from "component/common/FlexSpacer";
 import { BOX_SHADOW_COLOR } from "style/const";
 import styled from "styled-components";
 
+import infoIcon from "asset/info.svg";
+
 const StylizedHeader = styled.div`
     font-weight: 200;
     font-size: 1rem;
@@ -17,20 +19,14 @@ const PersonName = styled.span`
     font-weight: 600;
 `;
 
-const InfoIcon = styled.span`
-    border-radius: 100%;
-    width: 15px;
-    height: 15px;
-    border: gray 1.5px solid;
-    color: gray;
-    font-family: monospace;
-    // TODO: text align and circle size
-    // maybe just slap a SVG...
-`;
-
 type TitleBarProps = {
     name: string;
 };
+
+const InfoIcon = styled.img`
+    width: 18px;
+    height: 18px;
+`;
 
 const ChatHeader = ({ name }: TitleBarProps) => {
     return (
@@ -38,7 +34,7 @@ const ChatHeader = ({ name }: TitleBarProps) => {
             <span>To:</span>
             <PersonName>{name}</PersonName>
             <Spacer />
-            <InfoIcon>i</InfoIcon>
+            <InfoIcon src={infoIcon} />
         </StylizedHeader>
     );
 };

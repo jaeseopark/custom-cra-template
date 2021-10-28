@@ -1,42 +1,25 @@
-import { APPLE_BIGSUR_BLUE, APPLE_BIGSUR_GRAY_BACKGROUND } from "style/const";
 import styled from "styled-components";
+import cls from "classnames";
+
 import IMFMessage from "typedef/IMFMessage";
+
+import "style/MessageView.scss";
 
 type MessageViewProps = {
     message: IMFMessage;
 };
 
-const StylizedMessageView = styled.div`
-    display: flex;
-    justify-content: flex-end; // TODO: make this dynamic
-    margin: 0 10px 0 10px;
-`;
-
-const MessageBubble = styled.div`
-    ${({ message }: MessageViewProps) => {
-        const isReceived = message.status === "received";
-        if (isReceived) {
-            return `
-                background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
-            `;
-        } else {
-            return `
-                background-color: ${APPLE_BIGSUR_BLUE};
-                color: white;
-            `;
-        }
-    }}
-    max-width: 400px;
-    border-radius: 12px;
-    padding: 3px;
-`;
+const MessageBubble = styled.div``;
 
 const MessageView = ({ message }: MessageViewProps) => {
+    const isReceivedObj = { "is-received": message.status === "received" };
+    const clsView = cls("message-view", isReceivedObj);
+    const clsBubble = cls("message-bubble", isReceivedObj);
+
     return (
-        <StylizedMessageView>
-            <MessageBubble message={message}>{message.content.text}</MessageBubble>
-            {message.status}
-        </StylizedMessageView>
+        <div className={clsView}>
+            <MessageBubble className={clsBubble}>{message.content.text}</MessageBubble>
+        </div>
     );
 };
 
