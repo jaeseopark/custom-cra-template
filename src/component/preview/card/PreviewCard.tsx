@@ -32,7 +32,7 @@ const StylizedPreviewCard = styled.div`
 
 const UnreadIndicator = styled.div``;
 
-const PreviewCard = ({ alias, transcript, isSelected, onClickAlias: onClickName }: TranscriptPreviewProps) => {
+const PreviewCard = ({ alias, transcript, isSelected, onClickAlias }: TranscriptPreviewProps) => {
     const lastMessage = useMemo(() => {
         if (!transcript) return;
         if (transcript.messages.length) {
@@ -41,7 +41,7 @@ const PreviewCard = ({ alias, transcript, isSelected, onClickAlias: onClickName 
     }, [transcript]);
 
     const onClick = () => {
-        onClickName(alias);
+        onClickAlias(alias);
     };
 
     return (
