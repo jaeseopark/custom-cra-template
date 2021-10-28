@@ -16,16 +16,12 @@ type TranscriptViewProps = {
     transcript: Transcript;
 };
 
-const TranscriptView = ({ transcript }: TranscriptViewProps) => {
-    // TODO: timestamp logic
-
-    return (
-        <StylizedTranscriptView>
-            {transcript.messages.map((msg) => (
-                <MessageView key={msg.id} message={msg} />
-            ))}
-        </StylizedTranscriptView>
-    );
-};
+const TranscriptView = ({ transcript }: TranscriptViewProps) => (
+    <StylizedTranscriptView>
+        {transcript.messages.map((msg) => (
+            <MessageView key={msg.id} message={msg} />
+        ))}
+    </StylizedTranscriptView>
+);
 
 export default TranscriptView;
