@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { initializeClient } from "redux/mdlwr";
 import ChatContainer from "component/chat/ChatContainer";
 import ConnectivityProvider from "component/ConnectivityProvider";
-import ContactCardContainer from "component/contact/ContactCardContainer";
+import PreviewCardContainer from "component/preview/PreviewCardContainer";
 import SearchBar from "component/SearchBar";
 import {
     APPLE_BIGSUR_GRAY_BACKGROUND,
@@ -49,7 +49,7 @@ const App = () => {
             <Sidebar>
                 <ConnectivityProvider />
                 <SearchBar />
-                <ContactCardContainer onClickAlias={selectAlias} selectedAlias={selectedAlias} />
+                <PreviewCardContainer onClickAlias={selectAlias} selectedAlias={selectedAlias} />
             </Sidebar>
             <ChatContainer alias={selectedAlias} />
         </StylizedApp>

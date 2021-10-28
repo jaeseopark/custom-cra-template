@@ -1,18 +1,18 @@
 import { useSelector } from "react-redux";
 import { selectNames, selectTranscripts } from "redux/transcript/slice";
 import styled from "styled-components";
-import ContactCard from "component/contact/card/ContactCard";
+import PreviewCard from "component/preview/card/PreviewCard";
 import { APPLE_BIGSUR_GRAY_BACKGROUND } from "style/const";
 import { compareChronologically } from "util/transcripts";
 import Transcript from "typedef/Transcript";
 
-const StylizedContactContainer = styled.div`
+const StylizedPreviewContainer = styled.div`
     background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
     overflow-y: scroll;
     overflow-x: hidden;
 `;
 
-export type ContactCardContainerProps = {
+export type PreviewCardContainerProps = {
     onClickAlias: (n: string) => void;
     selectedAlias?: string;
 };
@@ -22,7 +22,7 @@ type ATCompound = {
     transcript: Transcript;
 };
 
-const ContactCardContainer = ({ onClickAlias, selectedAlias }: ContactCardContainerProps) => {
+const PreviewCardContainer = ({ onClickAlias, selectedAlias }: PreviewCardContainerProps) => {
     const aliases = useSelector(selectNames);
     const transcripts = useSelector(selectTranscripts);
 
@@ -35,12 +35,12 @@ const ContactCardContainer = ({ onClickAlias, selectedAlias }: ContactCardContai
         -1 * compareChronologically(o1.transcript, o2.transcript);
 
     return (
-        <StylizedContactContainer>
+        <StylizedPreviewContainer>
             {aliases
                 .map(toATCompound)
                 .sort(reverseSort)
                 .map(({ alias, transcript }) => (
-                    <ContactCard
+                    <PreviewCard
                         key={alias}
                         transcript={transcript}
                         alias={alias}
@@ -48,8 +48,8 @@ const ContactCardContainer = ({ onClickAlias, selectedAlias }: ContactCardContai
                         onClickAlias={onClickAlias}
                     />
                 ))}
-        </StylizedContactContainer>
+        </StylizedPreviewContainer>
     );
 };
 
-export default ContactCardContainer;
+export default PreviewCardContainer;

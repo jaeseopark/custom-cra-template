@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 
-import TextInfo from "component/contact/card/TextInfo";
-import Initials from "component/contact/card/Initials";
+import TextInfo from "component/preview/card/TextInfo";
+import Initials from "component/preview/card/Initials";
 import { APPLE_BIGSUR_BLUE } from "style/const";
 import Transcript from "typedef/Transcript";
 
@@ -13,7 +13,7 @@ type TranscriptPreviewProps = {
     onClickAlias: (n: string) => void;
 };
 
-const StylizedContactCard = styled.div`
+const StylizedPreviewCard = styled.div`
     ${(props: { isSelected: boolean }) => {
         const { isSelected } = props;
         if (isSelected) {
@@ -32,7 +32,7 @@ const StylizedContactCard = styled.div`
 
 const UnreadIndicator = styled.div``;
 
-const ContactCard = ({ alias, transcript, isSelected, onClickAlias: onClickName }: TranscriptPreviewProps) => {
+const PreviewCard = ({ alias, transcript, isSelected, onClickAlias: onClickName }: TranscriptPreviewProps) => {
     const lastMessage = useMemo(() => {
         if (!transcript) return;
         if (transcript.messages.length) {
@@ -45,12 +45,12 @@ const ContactCard = ({ alias, transcript, isSelected, onClickAlias: onClickName 
     };
 
     return (
-        <StylizedContactCard isSelected={isSelected} onClick={onClick}>
+        <StylizedPreviewCard isSelected={isSelected} onClick={onClick}>
             <UnreadIndicator />
             <Initials alias={alias} />
             <TextInfo alias={alias} lastMessage={lastMessage} />
-        </StylizedContactCard>
+        </StylizedPreviewCard>
     );
 };
 
-export default ContactCard;
+export default PreviewCard;

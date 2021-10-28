@@ -5,8 +5,6 @@ type InitialsProps = {
     alias: string;
 };
 
-// TODO center align
-
 const HorizontallyAlignedIcon = styled(HorizontallyAlignedDiv)`
     width: 50px;
     min-width: 50px;

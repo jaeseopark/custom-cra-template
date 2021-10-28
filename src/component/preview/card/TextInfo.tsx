@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import IMFMessage from "typedef/IMFMessage";
 import { getHumanTime } from "util/datetime";
-import Snippet from "component/contact/card/Snippet";
+import Snippet from "component/preview/card/Snippet";
 
 type TextInfoProps = {
     alias: string;
