@@ -5,17 +5,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # Uncomment for dev work
-    # volumes:
-    #   - ".:/app"
+    stdin_open: true
+    networks:
+      - bridge
     ports:
       - 3000:3000
     environment:
       TZ: America/Denver
       CHOKIDAR_USEPOLLING: "true"
-    stdin_open: true
-    networks:
-      - bridge
+      SERVER_HOST: localhost
+    # Uncomment for dev work
+    # volumes:
+    #   - ".:/app"
 
 networks:
   bridge:
