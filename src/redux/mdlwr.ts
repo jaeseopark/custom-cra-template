@@ -1,8 +1,8 @@
 // import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Dispatch } from "redux";
 import IMFClient from "../client/imf";
-import IMFMessage, { IMFOutgoingMessage } from "../typedef/IMFMessage";
-import { addPeople, upsertMessages } from "redux/transcript/slice";
+import { IMFOutgoingMessage } from "../typedef/IMFMessage";
+import { upsertMessages } from "redux/transcript/slice";
 import { updateConnectivity as updateSliceConnectivity } from "redux/connectivity/slice";
 
 let imfClient: IMFClient;
