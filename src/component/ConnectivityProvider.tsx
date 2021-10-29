@@ -16,6 +16,8 @@ const StylizedConnectivityProvider = styled.div`
 `;
 
 const Label = styled.span`
+    display: inline-flex;
+    align-items: center;
     margin-left: 5px;
 `;
 
