@@ -1,4 +1,6 @@
 import {
+    APPLE_BIGSUR_BLUE,
+    APPLE_BIGSUR_BLUE_OUTLINE,
     APPLE_BIGSUR_GRAY_BACKGROUND,
     APPLE_BIGSUR_GRAY_OUTLINE,
     APPLE_BIGSUR_GREEN,
@@ -24,4 +26,9 @@ export const GreenCircle = styled(Circle)`
 export const RedCircle = styled(Circle)`
     background-color: ${APPLE_BIGSUR_RED};
     border-color: ${APPLE_BIGSUR_RED_OUTLINE};
+`;
+
+export const BlueCircle = styled(Circle)`
+    background-color: ${APPLE_BIGSUR_BLUE};
+    border-color: ${APPLE_BIGSUR_BLUE_OUTLINE};
 `;

@@ -1,10 +1,13 @@
-import { useMemo } from "react";
 import styled from "styled-components";
+import cls from "classnames";
 
 import TextInfo from "component/preview/card/TextInfo";
 import Initials from "component/preview/card/Initials";
-import { APPLE_BIGSUR_BLUE } from "style/const";
 import Transcript from "typedef/Transcript";
+
+import "style/PreviewCard.scss";
+import { BlueCircle } from "component/common/Circle";
+import { VerticallyAlignedDiv } from "component/common/AlignedDiv";
 
 type TranscriptPreviewProps = {
     alias: string;
@@ -13,43 +16,24 @@ type TranscriptPreviewProps = {
     onClickAlias: (n: string) => void;
 };
 
-const StylizedPreviewCard = styled.div`
-    ${(props: { isSelected: boolean }) => {
-        const { isSelected } = props;
-        if (isSelected) {
-            return `
-                background-color: ${APPLE_BIGSUR_BLUE};
-                color: white;
-            `;
-        }
-        return null;
-    }}
-
-    border-radius: 10px;
-    display: flex;
-    padding: 5px;
+const StylizedUnreadIndicator = styled(VerticallyAlignedDiv)`
+    width: 15px;
 `;
 
-const UnreadIndicator = styled.div``;
+const UnreadIndicator = ({ isEnabled }: { isEnabled: boolean }) => (
+    <StylizedUnreadIndicator>{isEnabled && <BlueCircle />}</StylizedUnreadIndicator>
+);
 
 const PreviewCard = ({ alias, transcript, isSelected, onClickAlias }: TranscriptPreviewProps) => {
-    const lastMessage = useMemo(() => {
-        if (!transcript) return;
-        if (transcript.messages.length) {
-            return transcript.messages[transcript.messages.length - 1];
-        }
-    }, [transcript]);
-
-    const onClick = () => {
-        onClickAlias(alias);
-    };
+    const clsCard = cls("preview-card", { "is-selected": isSelected });
+    const onClick = () => onClickAlias(alias);
 
     return (
-        <StylizedPreviewCard isSelected={isSelected} onClick={onClick}>
-            <UnreadIndicator />
+        <div className={clsCard} onClick={onClick}>
+            <UnreadIndicator isEnabled={transcript.hasUnreadMessages} />
             <Initials alias={alias} />
-            <TextInfo alias={alias} lastMessage={lastMessage} />
-        </StylizedPreviewCard>
+            <TextInfo alias={alias} lastMessage={transcript.lastMessage} />
+        </div>
     );
 };
 

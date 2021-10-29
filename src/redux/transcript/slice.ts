@@ -13,7 +13,6 @@ type TranscriptState = {
     contactReverseMap: {
         [handle: string]: PersonName;
     };
-
     transcripts: {
         [personName: string]: Transcript;
     };
@@ -55,7 +54,10 @@ export const transcriptSlice = createSlice({
         upsertMessages: (state, action: PayloadAction<IMFMessage[]>) => {
             action.payload.forEach((message) => {
                 const transcript = getOrInitTranscript(state, message);
-                transcript.hasUnreadMessages = true;
+                if (message.status === "received") {
+                    transcript.hasUnreadMessages = true;
+                }
+
                 const shouldAppend =
                     !transcript.lastMessage || transcript.lastMessage!.id < message.id;
                 if (shouldAppend) {
