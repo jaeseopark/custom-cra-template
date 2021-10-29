@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 import IMFMessage from "typedef/IMFMessage";
-import Person from "typedef/Person";
 import Transcript from "typedef/Transcript";
 import { insertAt } from "util/arrays";
 
@@ -26,10 +25,13 @@ const initialState: TranscriptState = {
     transcripts: {},
 };
 
+const createTranscript = (): Transcript => ({
+    messages: [],
+    hasUnreadMessages: false,
+});
+
 const initTranscript = (state: TranscriptState, msg: IMFMessage): Transcript => {
-    const newTranscript = {
-        messages: [],
-    };
+    const newTranscript = createTranscript();
 
     state.contactMap[msg.alias] = [msg.handle];
     state.contactReverseMap[msg.handle] = msg.alias;
@@ -50,20 +52,10 @@ export const transcriptSlice = createSlice({
     name: "transcript",
     initialState,
     reducers: {
-        addPeople: (state, action: PayloadAction<Person[]>) => {
-            action.payload.forEach((person) => {
-                person.handles.forEach((poe) => {
-                    state.contactReverseMap[poe] = person.name;
-                });
-                state.contactMap[person.name] = person.handles;
-                state.transcripts[person.name] = {
-                    messages: [],
-                };
-            });
-        },
         upsertMessages: (state, action: PayloadAction<IMFMessage[]>) => {
             action.payload.forEach((message) => {
                 const transcript = getOrInitTranscript(state, message);
+                transcript.hasUnreadMessages = true;
                 const shouldAppend =
                     !transcript.lastMessage || transcript.lastMessage!.id < message.id;
                 if (shouldAppend) {
@@ -86,10 +78,14 @@ export const transcriptSlice = createSlice({
                 }
             });
         },
+        markTranscriptAsRead: (state, action: PayloadAction<string>) => {
+            const alias = action.payload;
+            state.transcripts[alias].hasUnreadMessages = false;
+        },
     },
 });
 
-export const { addPeople, upsertMessages } = transcriptSlice.actions;
+export const { upsertMessages, markTranscriptAsRead } = transcriptSlice.actions;
 
 export const selectNames = (state: RootState) => {
     const mayContainDups = Object.values(state.transcript.contactReverseMap);
