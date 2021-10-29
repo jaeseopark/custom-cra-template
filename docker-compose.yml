@@ -2,6 +2,7 @@ version: "3.7"
 services:
   react-imf:
     container_name: react-imf
+    env_file: .env
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,8 +14,6 @@ services:
     environment:
       - TZ=America/Denver
       - CHOKIDAR_USEPOLLING=true
-      - IMF_HOST=localhost
-      - IMF_PORT=5000
     # Uncomment for dev work
     # volumes:
     #   - .:/app
