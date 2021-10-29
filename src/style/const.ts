@@ -2,6 +2,7 @@ export const APPLE_BIGSUR_GREEN = "#61c454";
 export const APPLE_BIGSUR_GREEN_OUTLINE = "#4fa53b";
 
 export const APPLE_BIGSUR_BLUE = "#2f7cf6";
+export const APPLE_BIGSUR_BLUE_OUTLINE = "#216fea";
 
 export const APPLE_BIGSUR_RED = "#ed6a5e";
 export const APPLE_BIGSUR_RED_OUTLINE = "#d14d40";
