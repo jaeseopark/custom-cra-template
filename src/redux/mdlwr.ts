@@ -4,13 +4,14 @@ import IMFClient from "../client/imf";
 import { IMFOutgoingMessage } from "../typedef/IMFMessage";
 import { upsertMessages } from "redux/transcript/slice";
 import { updateConnectivity as updateSliceConnectivity } from "redux/connectivity/slice";
+import { getReactEnv } from "util/env";
 
 let imfClient: IMFClient;
 
 export const initializeClient = () => (dispatch: Dispatch) => {
-    const host = process.env.SERVER_HOST || process.env.REACT_APP_SERVER_HOST!;
-    const port = process.env.SERVER_PORT || process.env.REACT_APP_SERVER_PORT!;
-    const client = new IMFClient(host, port);
+    const host = getReactEnv("IMF_HOST");
+    const port = getReactEnv("IMF_PORT");
+    const client = new IMFClient(host!, port!);
     client.onEvent((event) => {
         if (event.messages) {
             dispatch(upsertMessages(event.messages));

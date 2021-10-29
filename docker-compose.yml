@@ -11,12 +11,13 @@ services:
     ports:
       - 3000:3000
     environment:
-      TZ: America/Denver
-      CHOKIDAR_USEPOLLING: "true"
-      SERVER_HOST: localhost
+      - TZ=America/Denver
+      - CHOKIDAR_USEPOLLING=true
+      - IMF_HOST=localhost
+      - IMF_PORT=5000
     # Uncomment for dev work
     # volumes:
-    #   - ".:/app"
+    #   - .:/app
 
 networks:
   bridge:
