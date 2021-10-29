@@ -8,7 +8,6 @@ import { updateConnectivity as updateSliceConnectivity } from "redux/connectivit
 let imfClient: IMFClient;
 
 export const initializeClient = () => (dispatch: Dispatch) => {
-    console.log(process.env);
     const host = process.env.REACT_APP_IMF_HOST!;
     const port = process.env.REACT_APP_IMF_PORT!;
     const client = new IMFClient(host, port);
