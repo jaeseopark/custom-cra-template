@@ -11,13 +11,17 @@
 # production
 /build
 
-# misc
-.DS_Store
+# dotenv files
 .env.local
 .env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
+
+# misc
+.DS_Store
 src/react-app-env.d.ts
 
 npm-debug.log*

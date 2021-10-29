@@ -28,4 +28,4 @@ yarn install && yarn start
 docker-compose up --build -d
 ```
 
-Note: for Docker Compose users, the default timezone is [America/Denver](docker-compose.yml#L13). Update it to match your local timezone.
+Note: for Docker Compose users, the default timezone is [America/Denver](docker-compose.yml#L23). Update it to match your local timezone.

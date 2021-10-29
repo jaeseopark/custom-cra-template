@@ -2,20 +2,29 @@ version: "3.7"
 services:
   react-imf:
     container_name: react-imf
+    env_file:
+      - .env
+      - .env.local
+      - .env.development
+      - .env.development.local
+      - .env.test
+      - .env.test.local
+      - .env.production
+      - .env.production.local
     build:
       context: .
       dockerfile: Dockerfile
-    # Uncomment for dev work
-    # volumes:
-    #   - ".:/app"
-    ports:
-      - 3000:3000
-    environment:
-      TZ: America/Denver
-      CHOKIDAR_USEPOLLING: "true"
     stdin_open: true
     networks:
       - bridge
+    ports:
+      - 3000:3000
+    environment:
+      - TZ=America/Denver
+      - CHOKIDAR_USEPOLLING=true
+    # Uncomment for dev work
+    # volumes:
+    #   - .:/app
 
 networks:
   bridge:

@@ -1,15 +1,15 @@
 // import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Dispatch } from "redux";
 import IMFClient from "../client/imf";
-import IMFMessage, { IMFOutgoingMessage } from "../typedef/IMFMessage";
-import { addPeople, upsertMessages } from "redux/transcript/slice";
+import { IMFOutgoingMessage } from "../typedef/IMFMessage";
+import { upsertMessages } from "redux/transcript/slice";
 import { updateConnectivity as updateSliceConnectivity } from "redux/connectivity/slice";
 
 let imfClient: IMFClient;
 
 export const initializeClient = () => (dispatch: Dispatch) => {
-    const host = process.env.REACT_APP_SERVER_HOST!;
-    const port = process.env.REACT_APP_SERVER_PORT!;
+    const host = process.env.REACT_APP_IMF_HOST!;
+    const port = process.env.REACT_APP_IMF_PORT!;
     const client = new IMFClient(host, port);
     client.onEvent((event) => {
         if (event.messages) {
