@@ -24,4 +24,4 @@ RUN mv /tmp/install/build .
 RUN rm -rf /tmp/install
 
 # start app
-CMD serve -s build
+CMD env | grep IMF && serve -s build
