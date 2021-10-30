@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import Transcript from "typedef/Transcript";
-import MessageView from "./MessageView";
-import QuickscrollButton from "./QucikscrollButton";
+import MessageStream from "./MessageStream";
+import QuickscrollButton from "./QuickscrollButton";
 
 const IS_BOTTOM_OFFSET_THRESHOLD = 1; // px
 
@@ -56,9 +56,7 @@ const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
 
     return (
         <StyledTranscriptView onScroll={onScroll}>
-            {transcript.messages.map((msg) => (
-                <MessageView key={msg.id} message={msg} />
-            ))}
+            <MessageStream messages={transcript.messages} />
             <ScrollTarget ref={scrollTargetRef} />
             <QuickscrollButton scroll={scrollToBottom} hasUnreadMessages={transcript.hasUnreadMessages} isAtBottom />
         </StyledTranscriptView>

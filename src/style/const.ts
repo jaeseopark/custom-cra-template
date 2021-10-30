@@ -10,5 +10,4 @@ export const APPLE_BIGSUR_RED_OUTLINE = "#d14d40";
 export const APPLE_BIGSUR_GRAY_BACKGROUND = "#fafafa";
 export const APPLE_BIGSUR_GRAY_OUTLINE = "#c5c0c2";
 
-export const BOX_SHADOW_COLOR = "#b4b4b4";
-export const BOX_SHADOW_COLOR_SUBTLE = "#d2d2d2";
+export const BOX_SHADOW_COLOR = "rgba(0, 0, 0, 0.2)";

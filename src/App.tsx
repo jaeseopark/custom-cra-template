@@ -5,13 +5,10 @@ import styled from "styled-components";
 import { initializeClient } from "redux/mdlwr";
 import ChatContainer from "component/chat/ChatContainer";
 import ConnectivityProvider from "component/ConnectivityProvider";
+import NotificationProvider from "component/NotificationProvider";
 import PreviewCardContainer from "component/preview/PreviewCardContainer";
 import SearchBar from "component/SearchBar";
-import {
-    APPLE_BIGSUR_GRAY_BACKGROUND,
-    APPLE_BIGSUR_GRAY_OUTLINE,
-    BOX_SHADOW_COLOR,
-} from "style/const";
+import { APPLE_BIGSUR_GRAY_BACKGROUND, APPLE_BIGSUR_GRAY_OUTLINE, BOX_SHADOW_COLOR } from "style/const";
 
 const APP_MARGIN = 40; // pixels
 
@@ -47,6 +44,7 @@ const App = () => {
     return (
         <StyledApp>
             <Sidebar>
+                <NotificationProvider />
                 <ConnectivityProvider />
                 <SearchBar />
                 <PreviewCardContainer onClickAlias={selectAlias} selectedAlias={selectedAlias} />
