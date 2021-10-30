@@ -6,6 +6,8 @@ import { sendMessage } from "redux/mdlwr";
 import { APPLE_BIGSUR_GRAY_OUTLINE } from "style/const";
 import { IMFService } from "typedef/IMFMessage";
 
+import EmojiPicker from "./EmojiPicker";
+
 const ENTER_KEY = "Enter";
 
 type MessageComposeViewProps = {
@@ -31,8 +33,14 @@ const StyledInputBox = styled(InputBase)`
     }
 `;
 
+var isAlpha = function (ch: string) {
+    return /^[A-Z]$/i.test(ch);
+};
+
 const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
     const [text, setText] = useState("");
+    const [keylogger] = useState({ last: "" });
+    const [isEmojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
     useEffect(() => {
         // TODO remember draft message when switching tabs
@@ -68,18 +76,39 @@ const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
         setText("");
     }
 
+    // @ts-ignore
+    const onKeyUp = (e) => {
+        const { last } = keylogger;
+        const { key } = e;
+
+        if (key === "Shift") return;
+
+        keylogger.last = key;
+
+        console.log("key", key, "last", last);
+        if (last === ":" && isAlpha(e.key)) {
+            // Need to display the emoji picker
+            setEmojiPickerOpen(true);
+            console.log("yea");
+        }
+    };
+
     return (
         <StyledMessageInput>
             <StyledInputBox
                 className="textInput"
                 placeholder="Message"
                 onKeyPress={handleSend}
+                onKeyUp={onKeyUp}
                 // @ts-ignore
                 onChange={handleTextChange}
                 value={text}
                 // minRows={4}
                 multiline
             />
+            {isEmojiPickerOpen && (
+                <EmojiPicker onSelect={(e: string) => console.log("received emoji:", e)} onCancel={() => {}} />
+            )}
         </StyledMessageInput>
     );
 };
