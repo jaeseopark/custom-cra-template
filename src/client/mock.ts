@@ -87,6 +87,7 @@ class IMFMockClient implements IMFClient {
                     msg.status = isSometimesTrue(0.5) ? "sent" : "received";
                     msg.id = msg.id - msSinceLastMessage - randomInt(0, DAY_IN_MS);
                     msg.timestamp = msg.id;
+                    msg.isPreloaded = true;
                     return msg;
                 }),
             });
@@ -111,6 +112,7 @@ class IMFMockClient implements IMFClient {
                 id: timestamp,
                 service: "iMessage",
                 status: "received",
+                isPreloaded: false,
                 alias: recipient.alias,
                 handle: recipient.handles[0],
                 content: {
@@ -138,6 +140,7 @@ class IMFMockClient implements IMFClient {
                     alias: recipient.alias,
                     handle: recipient.handles[0],
                     status: "sent",
+                    isPreloaded: false,
                     timestamp: Date.now(),
                     content: msg.content,
                 },

@@ -16,12 +16,14 @@ type TranscriptState = {
     transcripts: {
         [personName: string]: Transcript;
     };
+    lastNotified: number;
 };
 
 const initialState: TranscriptState = {
     contactMap: {},
     contactReverseMap: {},
     transcripts: {},
+    lastNotified: 0,
 };
 
 const createTranscript = (): Transcript => ({
@@ -54,12 +56,12 @@ export const transcriptSlice = createSlice({
         upsertMessages: (state, action: PayloadAction<IMFMessage[]>) => {
             action.payload.forEach((message) => {
                 const transcript = getOrInitTranscript(state, message);
-                if (message.status === "received") {
+                if (message.status === "received" && !message.isPreloaded) {
                     transcript.hasUnreadMessages = true;
+                    state.lastNotified = Date.now();
                 }
 
-                const shouldAppend =
-                    !transcript.lastMessage || transcript.lastMessage!.id < message.id;
+                const shouldAppend = !transcript.lastMessage || transcript.lastMessage!.id < message.id;
                 if (shouldAppend) {
                     transcript.messages.push(message);
                     transcript.lastMessage = message;
@@ -96,10 +98,10 @@ export const selectNames = (state: RootState) => {
 
 export const selectTranscripts = (state: RootState) => state.transcript.transcripts;
 
-export const selectTranscript = (name: string) => (state: RootState) =>
-    state.transcript.transcripts[name];
+export const selectTranscript = (name: string) => (state: RootState) => state.transcript.transcripts[name];
 
-export const selectOneHandleByName = (name: string) => (state: RootState) =>
-    state.transcript.contactMap[name][0];
+export const selectOneHandleByName = (name: string) => (state: RootState) => state.transcript.contactMap[name][0];
+
+export const selectLastNotified = (state: RootState) => state.transcript.lastNotified;
 
 export default transcriptSlice.reducer;
