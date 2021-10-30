@@ -59,7 +59,7 @@ const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
     // @ts-ignore
     function handleSend(e) {
         // Clicking send doesn't have a key but pressing enter does
-        if ((e.key && e.key !== "Enter") || e.shiftKey) {
+        if ((e.key && e.key !== ENTER_KEY) || e.shiftKey) {
             return;
         }
 
