@@ -14,6 +14,7 @@ const NotificationProvider = () => {
     const unmountAudio = () => setAudioComponent(undefined);
 
     useEffect(() => {
+        if (!lastNotified) return;
         setAudioComponent(<audio src={mp3} autoPlay />);
         setTimeout(unmountAudio, AUDIO_RESET_INTERVAL);
     }, [lastNotified]);

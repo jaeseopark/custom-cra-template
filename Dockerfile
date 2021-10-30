@@ -16,5 +16,12 @@ RUN yarn install
 COPY . ./
 RUN yarn build
 
+# move build artifact to the permanent location
+WORKDIR /app
+RUN mv /tmp/install/build .
+
+# cleanup temporary files
+RUN rm -rf /tmp/install
+
 # start app
 CMD serve -s build
