@@ -1,6 +1,10 @@
 @use "style/color";
 
 .preview-card {
+    * {
+        cursor: default;
+    }
+
     border-radius: 10px;
     display: flex;
     padding: 5px;
