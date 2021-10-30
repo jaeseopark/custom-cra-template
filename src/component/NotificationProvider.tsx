@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { selectLastNotified } from "redux/transcript/slice"; // ms
+import { selectLastNotified } from "redux/transcript/slice";
 
 import mp3 from "asset/notify.mp3";
 
-const AUDIO_RESET_INTERVAL = 1500;
+const AUDIO_RESET_INTERVAL = 1500; // ms
 
 const NotificationProvider = () => {
     const lastNotified = useSelector(selectLastNotified);
