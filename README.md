@@ -37,7 +37,7 @@ yarn start
 docker-compose --file docker-compose-dev.yml --build up
 ```
 
-## Configuration
+## Configurations
 
 |Environment Variable|Values|Notes|
 |---|---|---|
@@ -48,3 +48,7 @@ docker-compose --file docker-compose-dev.yml --build up
 |`REACT_APP_IMF_PRELOADED_MESSAGES_PER_RECIPIENT`|50|<p>_Only in the mock mode_</p>The number of preloaded messages per recipient.|
 |`REACT_APP_IMF_RESPONSE_DELAY`|2500|<p>_Only in the mock mode_</p>How long it will take for someone to respond to your message.|
 |`REACT_APP_IMF_PING_INTERVAL`|10000|<p>_Only in the mock mode_</p>The frequency of the random messages.|
+
+## Credits
+
+* Sounds from [Notification Sounds](https://notificationsounds.com/)
