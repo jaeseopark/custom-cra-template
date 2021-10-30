@@ -1,4 +1,4 @@
-export const isSometimesTrue = (probability: number): boolean => Math.random() >= probability;
+export const isSometimesTrue = (probability: number): boolean => Math.random() <= probability;
 
 export function randomInt(min: number, maxExclusive: number) {
     min = Math.ceil(min);
