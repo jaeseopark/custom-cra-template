@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Transcript from "typedef/Transcript";
 import MessageView from "./MessageView";
-import QuickscrollButton from "./QucikscrollButton";
+import QuickscrollButton from "./QuickscrollButton";
 
 const IS_BOTTOM_OFFSET_THRESHOLD = 1; // px
 

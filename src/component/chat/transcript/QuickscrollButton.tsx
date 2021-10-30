@@ -1,5 +1,5 @@
 import { HorizontallyAlignedDiv } from "component/common/AlignedDiv";
-import { BOX_SHADOW_COLOR_SUBTLE } from "style/const";
+import { BOX_SHADOW_COLOR } from "style/const";
 import styled from "styled-components";
 
 type QuickscrollButtonProps = {
@@ -21,7 +21,7 @@ const Label = styled.span`
     backdrop-filter: blur(6px);
     padding: 5px 15px;
     border-radius: 15px;
-    box-shadow: 0px 5px 20px ${BOX_SHADOW_COLOR_SUBTLE};
+    box-shadow: 0px 5px 20px ${BOX_SHADOW_COLOR};
 `;
 
 const QuickscrollButton = ({ scroll, isAtBottom, hasUnreadMessages }: QuickscrollButtonProps) => {
@@ -31,7 +31,7 @@ const QuickscrollButton = ({ scroll, isAtBottom, hasUnreadMessages }: Quickscrol
 
     return (
         <StyledQuickscrollButton onClick={scroll}>
-            <Label>Unread message(s)</Label>
+            <Label>Jump to unread message(s)</Label>
         </StyledQuickscrollButton>
     );
 };
