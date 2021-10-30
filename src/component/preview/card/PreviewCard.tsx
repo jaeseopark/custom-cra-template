@@ -17,6 +17,7 @@ type TranscriptPreviewProps = {
 };
 
 const StylizedUnreadIndicator = styled(VerticallyAlignedDiv)`
+    min-width: 15px;
     width: 15px;
 `;
 
