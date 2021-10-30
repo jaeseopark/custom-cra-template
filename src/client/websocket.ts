@@ -4,17 +4,15 @@ import IMFError from "typedef/IMFError";
 import IMFEvent from "typedef/IMFEvent";
 import { IMFOutgoingMessage } from "typedef/IMFMessage";
 import Person from "typedef/Person";
+import IMFClient, { IMFErrorHandler, IMFEventHandler } from "./interface";
 
-type IMFEventHandler = (msg: IMFEvent) => void;
-type IMFErrorHandler = (error: IMFError) => void;
-
-class IMFClient {
+class IMFWebSocketClient implements IMFClient {
     private host: string;
     private port: string;
 
     private messageSocket: ReconnectingWebSocket;
 
-    private onEventHandler?: IMFEventHandler;
+    private onEvent?: IMFEventHandler;
     private onError?: IMFErrorHandler;
 
     constructor(host: string, port: string) {
@@ -32,17 +30,22 @@ class IMFClient {
                 return;
             }
             if (dataJson.error && this.onError) this.onError(dataJson as IMFError);
-            else if (this.onEventHandler) this.onEventHandler(dataJson as IMFEvent);
+            else if (this.onEvent) this.onEvent(dataJson as IMFEvent);
             else console.log(dataJson);
         };
     }
 
-    onEvent = (onEventHandler: IMFEventHandler) => {
-        this.onEventHandler = onEventHandler;
+    listen = (onEvent: IMFEventHandler, onError: IMFErrorHandler) => {
+        this.onEvent = onEvent;
+        this.onError = onError;
     };
 
-    setOnError = (onError: IMFErrorHandler) => {
-        this.onError = onError;
+    sendMessage = (msg: IMFOutgoingMessage) => {
+        this.messageSocket.send(JSON.stringify(msg));
+    };
+
+    isOnline = (): boolean => {
+        return this.messageSocket.readyState === WebSocket.OPEN;
     };
 
     fetchContacts(): Promise<Person[]> {
@@ -59,14 +62,6 @@ class IMFClient {
                 })
         );
     }
-
-    sendMessage(msg: IMFOutgoingMessage) {
-        this.messageSocket.send(JSON.stringify(msg));
-    }
-
-    isOnline(): boolean {
-        return this.messageSocket.readyState === WebSocket.OPEN;
-    }
 }
 
-export default IMFClient;
+export default IMFWebSocketClient;
