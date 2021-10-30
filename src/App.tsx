@@ -15,7 +15,7 @@ import {
 
 const APP_MARGIN = 40; // pixels
 
-const StylizedApp = styled.div`
+const StyledApp = styled.div`
     display: flex;
     flex-flow: row nowrap;
     height: calc(100vh - ${APP_MARGIN}px);
@@ -45,14 +45,14 @@ const App = () => {
     }, [dispatch]);
 
     return (
-        <StylizedApp>
+        <StyledApp>
             <Sidebar>
                 <ConnectivityProvider />
                 <SearchBar />
                 <PreviewCardContainer onClickAlias={selectAlias} selectedAlias={selectedAlias} />
             </Sidebar>
             <ChatContainer alias={selectedAlias} />
-        </StylizedApp>
+        </StyledApp>
     );
 };
 

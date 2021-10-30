@@ -6,7 +6,7 @@ import { APPLE_BIGSUR_GRAY_BACKGROUND } from "style/const";
 import { compareChronologically } from "util/transcripts";
 import Transcript from "typedef/Transcript";
 
-const StylizedPreviewContainer = styled.div`
+const StyledPreviewContainer = styled.div`
     background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
     overflow-y: scroll;
     overflow-x: hidden;
@@ -37,7 +37,7 @@ const PreviewCardContainer = ({ onClickAlias, selectedAlias }: PreviewCardContai
     const compounds = aliases.map(toCompound);
 
     return (
-        <StylizedPreviewContainer>
+        <StyledPreviewContainer>
             {compounds.sort(newToOld).map((props) => {
                 const { alias, transcript } = props;
                 return (
@@ -50,7 +50,7 @@ const PreviewCardContainer = ({ onClickAlias, selectedAlias }: PreviewCardContai
                     />
                 );
             })}
-        </StylizedPreviewContainer>
+        </StyledPreviewContainer>
     );
 };
 

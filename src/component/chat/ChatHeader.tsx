@@ -4,9 +4,8 @@ import styled from "styled-components";
 
 import infoIcon from "asset/info.svg";
 
-const StylizedHeader = styled.div`
+const StyledHeader = styled.div`
     font-weight: 200;
-    font-size: 1rem;
     padding: 1.5rem;
     display: flex;
     flex-flow: row nowrap;
@@ -30,12 +29,12 @@ const InfoIcon = styled.img`
 
 const ChatHeader = ({ name }: TitleBarProps) => {
     return (
-        <StylizedHeader>
+        <StyledHeader>
             <span>To:</span>
             <PersonName>{name}</PersonName>
             <Spacer />
             <InfoIcon src={infoIcon} />
-        </StylizedHeader>
+        </StyledHeader>
     );
 };
 

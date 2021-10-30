@@ -6,7 +6,7 @@ import MessageInput from "./MessageInput";
 import TranscriptView from "component/chat/transcript/TranscriptView";
 import ChatHeader from "./ChatHeader";
 
-const StylizedChatContainer = styled.div`
+const StyledChatContainer = styled.div`
     flex-grow: 1;
     display: flex;
     flex-flow: column nowrap;
@@ -23,7 +23,7 @@ const ChatContainer = ({ alias }: ChatContainerProps) => {
     if (!transcript || !transcript.lastMessage) return null;
 
     return (
-        <StylizedChatContainer>
+        <StyledChatContainer>
             <ChatHeader name={alias} />
             <TranscriptView
                 transcript={transcript}
@@ -33,7 +33,7 @@ const ChatContainer = ({ alias }: ChatContainerProps) => {
                 handle={transcript.lastMessage.handle}
                 service={transcript.lastMessage.service}
             />
-        </StylizedChatContainer>
+        </StyledChatContainer>
     );
 };
 

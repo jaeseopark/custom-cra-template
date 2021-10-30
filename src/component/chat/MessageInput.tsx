@@ -13,14 +13,13 @@ type MessageComposeViewProps = {
     service: IMFService;
 };
 
-const StylizedMessageInput = styled.div`
+const StyledMessageInput = styled.div`
     background-color: white;
     padding: 1rem;
 `;
 
-const StylizedInputBox = styled(InputBase)`
+const StyledInputBox = styled(InputBase)`
     width: 100%;
-    font-size: 1rem;
     border: ${APPLE_BIGSUR_GRAY_OUTLINE} solid 1px;
     border-radius: 15px;
     padding: 5px 0 0 0;
@@ -70,8 +69,8 @@ const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
     }
 
     return (
-        <StylizedMessageInput>
-            <StylizedInputBox
+        <StyledMessageInput>
+            <StyledInputBox
                 className="textInput"
                 placeholder="Message"
                 onKeyPress={handleSend}
@@ -81,7 +80,7 @@ const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
                 // minRows={4}
                 multiline
             />
-        </StylizedMessageInput>
+        </StyledMessageInput>
     );
 };
 

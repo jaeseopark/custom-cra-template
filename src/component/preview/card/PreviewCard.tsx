@@ -16,13 +16,13 @@ type TranscriptPreviewProps = {
     onClickAlias: (n: string) => void;
 };
 
-const StylizedUnreadIndicator = styled(VerticallyAlignedDiv)`
+const StyledUnreadIndicator = styled(VerticallyAlignedDiv)`
     min-width: 15px;
     width: 15px;
 `;
 
 const UnreadIndicator = ({ isEnabled }: { isEnabled: boolean }) => (
-    <StylizedUnreadIndicator>{isEnabled && <BlueCircle />}</StylizedUnreadIndicator>
+    <StyledUnreadIndicator>{isEnabled && <BlueCircle />}</StyledUnreadIndicator>
 );
 
 const PreviewCard = ({ alias, transcript, isSelected, onClickAlias }: TranscriptPreviewProps) => {

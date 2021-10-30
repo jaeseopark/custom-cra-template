@@ -9,7 +9,7 @@ type TextInfoProps = {
     lastMessage?: IMFMessage;
 };
 
-const StylizedTextInfo = styled.div`
+const StyledTextInfo = styled.div`
     display: flex;
     flex-flow: column nowrap;
     flex-grow: 1;
@@ -26,14 +26,14 @@ const Spacer = styled.div`
 `;
 
 const TextInfo = ({ alias, lastMessage }: TextInfoProps) => (
-    <StylizedTextInfo>
+    <StyledTextInfo>
         <Header>
             <span>{alias}</span>
             <Spacer />
             <span>{getHumanTime(lastMessage?.timestamp)}</span>
         </Header>
         <Snippet lastMessage={lastMessage} />
-    </StylizedTextInfo>
+    </StyledTextInfo>
 );
 
 export default TextInfo;

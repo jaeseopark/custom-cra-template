@@ -8,10 +8,9 @@ import { VerticallyAlignedDiv } from "./common/AlignedDiv";
 
 const CONNECTIVITY_CHECK_INTERVAL = 500; // ms
 
-const StylizedConnectivityProvider = styled.div`
+const StyledConnectivityProvider = styled.div`
     display: flex;
     height: 3rem;
-    font-size: 1rem;
     padding: 1.5rem 0 1.5rem 1rem;
 `;
 
@@ -35,10 +34,10 @@ const ConnectivityProvider = () => {
     const label = isOnline ? "Online" : "Offline";
 
     return (
-        <StylizedConnectivityProvider>
+        <StyledConnectivityProvider>
             <VerticallyAlignedDiv>{indicator}</VerticallyAlignedDiv>
             <Label>{label}</Label>
-        </StylizedConnectivityProvider>
+        </StyledConnectivityProvider>
     );
 };
 
