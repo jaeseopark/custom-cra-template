@@ -16,7 +16,7 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/react-imf
 
 ### Pre-requisite
 
-[imessageforwarder](https://github.com/jaeseopark/imessageforwarder) must be already running on your Mac. It is recommended that imessageforwarder and react-imf are hosted on the same device. If you are hosting the apps on separate devices, make sure to update [`REACT_APP_IMF_HOST`](docker-compose.yml#L17) accordingly.
+[imessageforwarder](https://github.com/jaeseopark/imessageforwarder) must be already running on your Mac. It is recommended that imessageforwarder and react-imf are hosted on the same device. If you are hosting the apps on separate devices, make sure to update [`REACT_APP_IMF_HOST`](docker-compose.yml#L15) accordingly.
 
 ### Run the app
 
@@ -24,7 +24,7 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/react-imf
 docker-compose up --build -d
 ```
 
-Note: the default timezone is [America/Denver](docker-compose.yml#L14). Update it to match your local timezone.
+Note: the default timezone is [America/Denver](docker-compose.yml#L13). Update it to match your local timezone.
 
 ### Development
 
