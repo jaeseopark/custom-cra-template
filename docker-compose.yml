@@ -5,14 +5,12 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        stdin_open: true
         networks:
             - bridge
         ports:
             - 3000:3000
         environment:
             - TZ=America/Denver
-            - CHOKIDAR_USEPOLLING=true
             - NODE_ENV=production
             - REACT_APP_IMF_HOST=localhost
             - REACT_APP_IMF_PORT=5000
