@@ -21,11 +21,18 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/react-imf
 ### Run the app
 
 ```bash
-yarn install && yarn start
-
-# or
-
 docker-compose up --build -d
 ```
 
-Note: for Docker Compose users, the default timezone is [America/Denver](docker-compose.yml#L14). Update it to match your local timezone.
+Note: the default timezone is [America/Denver](docker-compose.yml#L14). Update it to match your local timezone.
+
+### Development
+
+```bash
+yarn install
+yarn start
+
+# or
+
+docker-compose --file docker-compose-dev.yml --build up
+```
