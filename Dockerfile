@@ -2,17 +2,19 @@
 FROM node:14-alpine
 
 # set working directory
-WORKDIR /app
+WORKDIR /tmp/install
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+# add `/tmp/install/node_modules/.bin` to $PATH
+ENV PATH /tmp/install/node_modules/.bin:$PATH
+RUN yarn global add serve
 
 # install app dependencies
 COPY package*.json ./
 RUN yarn install
 
-# add app
+# build app
 COPY . ./
+RUN yarn build
 
 # start app
-CMD ["yarn", "start"]
+CMD serve -s build
