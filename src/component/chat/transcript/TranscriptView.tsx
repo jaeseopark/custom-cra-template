@@ -6,7 +6,7 @@ import MessageView from "./MessageView";
 
 const IS_BOTTOM_OFFSET_THRESHOLD = 1; // px
 
-const StylizedTranscriptView = styled.div`
+const StyledTranscriptView = styled.div`
     flex-grow: 1;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -52,12 +52,12 @@ const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
     const scrollTarget = <ScrollTarget ref={scrollTargetRef} />;
 
     return (
-        <StylizedTranscriptView onScroll={onScroll}>
+        <StyledTranscriptView onScroll={onScroll}>
             {transcript.messages.map((msg) => (
                 <MessageView key={msg.id} message={msg} />
             ))}
             {scrollTarget}
-        </StylizedTranscriptView>
+        </StyledTranscriptView>
     );
 };
 

@@ -5,7 +5,7 @@ import { APPLE_BIGSUR_GRAY_OUTLINE } from "style/const";
 // TODO: find a better looking magnifier
 import magnifierImgSrc from "asset/magnifier.svg";
 
-const StylizedSearchBar = styled.div`
+const StyledSearchBar = styled.div`
     margin-bottom: 1.5rem;
     border: solid 1px ${APPLE_BIGSUR_GRAY_OUTLINE};
     display: flex;
@@ -27,10 +27,10 @@ const Input = styled.input`
 `;
 
 const SearchBar = () => (
-    <StylizedSearchBar>
+    <StyledSearchBar>
         <MagnifierIcon src={magnifierImgSrc} />
         <Input type="text" placeholder="Search" />
-    </StylizedSearchBar>
+    </StyledSearchBar>
 );
 
 export default SearchBar;
