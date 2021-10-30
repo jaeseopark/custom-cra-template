@@ -11,6 +11,6 @@ services:
         environment:
             - TZ=America/Denver
             - CHOKIDAR_USEPOLLING=true
-            - REACT_APP_IMF_MOCK=1
+            - REACT_APP_IMF_MOCK=ON
         volumes:
             - .:/app

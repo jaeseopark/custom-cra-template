@@ -1,8 +1,4 @@
-import {
-    uniqueNamesGenerator as generateName,
-    Config as GeneratorConfig,
-    names,
-} from "unique-names-generator";
+import { uniqueNamesGenerator as generateName, Config as GeneratorConfig, names } from "unique-names-generator";
 
 // @ts-ignore
 import generateSentence from "random-sentence";
@@ -11,16 +7,14 @@ import IMFMessage, { IMFOutgoingMessage } from "typedef/IMFMessage";
 import IMFClient, { IMFErrorHandler, IMFEventHandler } from "./interface";
 import { initializeWithLength } from "util/arrays";
 import { isSometimesTrue, randomInt } from "util/rand";
-import { getEnvAsNumberOrDefault } from "util/env";
+import { getEnvAsNumber } from "util/env";
 
-// Constants for the initial data population
-const MOCK_ALIAS_COUNT = getEnvAsNumberOrDefault("REACT_APP_IMF_MOCK_ALIAS_COUNT", 20);
-const LOOKBACK_COUNT = getEnvAsNumberOrDefault("REACT_APP_IMF_LOOKBACK_COUNT", 1000);
-const MAX_MESSAGE_AGE = getEnvAsNumberOrDefault("REACT_APP_IMF_MAX_MESSAGE_AGE", 864000000); // 10 days
+const DAY_IN_MS = 86400000; // 1000ms * 60s * 60m * 24h
 
-// Contants forthe ongoing event handling
-const RESPONSE_DELAY = getEnvAsNumberOrDefault("REACT_APP_IMF_RESPONSE_DELAY", 2500); // ms
-const PING_INTERVAL = getEnvAsNumberOrDefault("REACT_APP_IMF_PING_INTERVAL", 10000); // ms
+const PRELOADED_RECIPIENT_COUNT = getEnvAsNumber("REACT_APP_IMF_PRELOADED_RECIPIENT_COUNT");
+const PRELOADED_MESSAGES_PER_RECIPIENT = getEnvAsNumber("REACT_APP_IMF_PRELOADED_MESSAGES_PER_RECIPIENT");
+const RESPONSE_DELAY = getEnvAsNumber("REACT_APP_IMF_RESPONSE_DELAY"); // ms
+const PING_INTERVAL = getEnvAsNumber("REACT_APP_IMF_PING_INTERVAL"); // ms
 
 const RANDOM_NAME_CONFIG: GeneratorConfig = {
     dictionaries: [names],
@@ -51,12 +45,7 @@ const generateHandles = (count: number): string[] =>
 const generateRecipients = (count: number): Recipient[] =>
     initializeWithLength(() => {
         const alias = generateAlias();
-        const isGroup = false;
-        // TODO:
-        // const isGroup = isSometimesTrue(0.2);
-        // if (isGroup) {
-        //     alias += " and others";
-        // }
+        const isGroup = false; // TODO: sprinkle some group recipients.
         return {
             alias,
             handles: generateHandles(1),
@@ -71,13 +60,14 @@ class IMFMockClient implements IMFClient {
     recipients: Recipient[];
 
     constructor() {
-        this.recipients = generateRecipients(MOCK_ALIAS_COUNT);
+        this.recipients = generateRecipients(PRELOADED_RECIPIENT_COUNT);
         this.sendMessagePeriodically();
     }
 
     sendMessagePeriodically = () => {
         if (this.onEvent) {
-            const messages = this.generateIMFMessages(1);
+            const recipient = this.pickRandomRecipient();
+            const messages = this.generateIMFMessages(recipient, 1);
             this.onEvent({ messages });
         }
 
@@ -88,13 +78,18 @@ class IMFMockClient implements IMFClient {
         this.onEvent = onEvent;
         this.onError = onError;
 
-        onEvent({
-            messages: this.generateIMFMessages(LOOKBACK_COUNT).map((msg) => {
-                msg.status = isSometimesTrue(0.5) ? "sent" : "received";
-                msg.id -= randomInt(0, MAX_MESSAGE_AGE);
-                msg.timestamp = msg.id;
-                return msg;
-            }),
+        this.recipients.forEach((recipient) => {
+            const daysSinceLastMessage = randomInt(0, 10);
+            const msSinceLastMessage = daysSinceLastMessage * 24 * 3600 * 1000;
+
+            onEvent({
+                messages: this.generateIMFMessages(recipient, PRELOADED_MESSAGES_PER_RECIPIENT).map((msg) => {
+                    msg.status = isSometimesTrue(0.5) ? "sent" : "received";
+                    msg.id = msg.id - msSinceLastMessage - randomInt(0, DAY_IN_MS);
+                    msg.timestamp = msg.id;
+                    return msg;
+                }),
+            });
         });
     };
 
@@ -106,12 +101,10 @@ class IMFMockClient implements IMFClient {
         this.scheduleMockResponse(recipient);
     };
 
-    pickRandomRecipient = (): Recipient =>
-        this.recipients[Math.floor(Math.random() * this.recipients.length)];
+    pickRandomRecipient = (): Recipient => this.recipients[Math.floor(Math.random() * this.recipients.length)];
 
-    generateIMFMessages = (count: number): IMFMessage[] =>
+    generateIMFMessages = (recipient: Recipient, count: number): IMFMessage[] =>
         initializeWithLength(() => {
-            const recipient = this.pickRandomRecipient();
             const timestamp = Date.now();
             return {
                 timestamp,
@@ -154,9 +147,7 @@ class IMFMockClient implements IMFClient {
 
     scheduleMockResponse = (recipient: Recipient) =>
         setTimeout(() => {
-            const message = this.generateIMFMessages(1)[0];
-            message.handle = recipient.handles[0];
-            message.alias = recipient.alias;
+            const message = this.generateIMFMessages(recipient, 1)[0];
             message.status = "received";
             this.onEvent!({
                 messages: [message],
