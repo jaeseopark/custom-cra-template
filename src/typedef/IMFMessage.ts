@@ -25,7 +25,6 @@ type IMFMessage = IMFBaseMessage & {
     alias: string;
     status: IMFMessageStatus;
     timestamp: number;
-    isPreloaded: boolean;
 };
 
 export default IMFMessage;

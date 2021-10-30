@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
+import IMFEvent from "typedef/IMFEvent";
 import IMFMessage from "typedef/IMFMessage";
 import Transcript from "typedef/Transcript";
 import { insertAt } from "util/arrays";
@@ -53,10 +54,10 @@ export const transcriptSlice = createSlice({
     name: "transcript",
     initialState,
     reducers: {
-        upsertMessages: (state, action: PayloadAction<IMFMessage[]>) => {
-            action.payload.forEach((message) => {
+        upsertMessages: (state, action: PayloadAction<IMFEvent>) => {
+            action.payload.messages!.forEach((message) => {
                 const transcript = getOrInitTranscript(state, message);
-                if (message.status === "received" && !message.isPreloaded) {
+                if (message.status === "received" && action.payload.type === "MESSAGE_NEW") {
                     transcript.hasUnreadMessages = true;
                     state.lastNotified = Date.now();
                 }

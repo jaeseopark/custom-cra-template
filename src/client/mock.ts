@@ -68,7 +68,7 @@ class IMFMockClient implements IMFClient {
         if (this.onEvent) {
             const recipient = this.pickRandomRecipient();
             const messages = this.generateIMFMessages(recipient, 1);
-            this.onEvent({ messages });
+            this.onEvent({ messages, type: "MESSAGE_NEW" });
         }
 
         setTimeout(this.sendMessagePeriodically, PING_INTERVAL);
@@ -87,9 +87,9 @@ class IMFMockClient implements IMFClient {
                     msg.status = isSometimesTrue(0.5) ? "sent" : "received";
                     msg.id = msg.id - msSinceLastMessage - randomInt(0, DAY_IN_MS);
                     msg.timestamp = msg.id;
-                    msg.isPreloaded = true;
                     return msg;
                 }),
+                type: "MESSAGE_PRELOAD",
             });
         });
     };
@@ -110,9 +110,8 @@ class IMFMockClient implements IMFClient {
             return {
                 timestamp,
                 id: timestamp,
-                service: "iMessage",
+                service: isSometimesTrue(0.9) ? "iMessage" : "SMS",
                 status: "received",
-                isPreloaded: false,
                 alias: recipient.alias,
                 handle: recipient.handles[0],
                 content: {
@@ -140,11 +139,11 @@ class IMFMockClient implements IMFClient {
                     alias: recipient.alias,
                     handle: recipient.handles[0],
                     status: "sent",
-                    isPreloaded: false,
                     timestamp: Date.now(),
                     content: msg.content,
                 },
             ],
+            type: "MESSAGE_NEW",
         });
     };
 
@@ -154,6 +153,7 @@ class IMFMockClient implements IMFClient {
             message.status = "received";
             this.onEvent!({
                 messages: [message],
+                type: "MESSAGE_NEW",
             });
         }, RESPONSE_DELAY);
 }

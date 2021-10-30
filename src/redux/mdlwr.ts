@@ -12,8 +12,13 @@ export const initializeClient = () => (dispatch: Dispatch) => {
     const client = IMFClientFactory.getClient();
     client.listen(
         (event) => {
-            if (event.messages) {
-                dispatch(upsertMessages(event.messages));
+            switch (event.type) {
+                case "MESSAGE_NEW":
+                case "MESSAGE_PRELOAD":
+                    dispatch(upsertMessages(event));
+                    break;
+                default:
+                    break;
             }
         },
         (error) => {
