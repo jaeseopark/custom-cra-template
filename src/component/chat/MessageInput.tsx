@@ -31,6 +31,11 @@ const StyledInputBox = styled(InputBase)`
     }
 `;
 
+type TextChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> & {
+    key: string;
+    shiftKey: boolean;
+};
+
 const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
     const [text, setText] = useState("");
 
@@ -39,17 +44,15 @@ const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
         setText("");
     }, [handle]);
 
-    function handleTextChange(e: React.ChangeEventHandler) {
-        // @ts-ignore
-        if (e.key === ENTER_KEY && !e.shiftKey) {
+    const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const castedEvent = e as TextChangeEvent;
+        if (castedEvent.key === ENTER_KEY && !castedEvent.shiftKey) {
             return;
         }
-        // @ts-ignore
-        setText(e.target.value);
-    }
+        setText(castedEvent.target.value);
+    };
 
-    // @ts-ignore
-    function handleSend(e) {
+    function handleSend(e: React.KeyboardEvent<HTMLDivElement>) {
         // Clicking send doesn't have a key but pressing enter does
         if ((e.key && e.key !== "Enter") || e.shiftKey) {
             return;
@@ -74,10 +77,8 @@ const MessageInput = ({ handle, service }: MessageComposeViewProps) => {
                 className="textInput"
                 placeholder="Message"
                 onKeyPress={handleSend}
-                // @ts-ignore
                 onChange={handleTextChange}
                 value={text}
-                // minRows={4}
                 multiline
             />
         </StyledMessageInput>

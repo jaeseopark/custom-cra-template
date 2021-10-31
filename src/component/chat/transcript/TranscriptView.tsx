@@ -23,6 +23,14 @@ type TranscriptViewProps = {
     markAsRead: () => void;
 };
 
+type ScrollEvent = React.UIEvent<HTMLDivElement, UIEvent> & {
+    target: {
+        scrollHeight: number;
+        scrollTop: number;
+        clientHeight: number;
+    };
+};
+
 const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
     const [isAtBottom, setAtBottom] = useState(true);
     const scrollTargetRef = useRef(null);
@@ -40,10 +48,10 @@ const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
         }
     }, [transcript.messages.length]);
 
-    // @ts-ignore
-    const onScroll = (e) => {
-        const positionDiff = e.target.scrollHeight - e.target.scrollTop;
-        const isAtBottom = positionDiff - IS_BOTTOM_OFFSET_THRESHOLD <= e.target.clientHeight;
+    const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const { target } = e as ScrollEvent;
+        const positionDiff = target.scrollHeight - target.scrollTop;
+        const isAtBottom = positionDiff - IS_BOTTOM_OFFSET_THRESHOLD <= target.clientHeight;
         setAtBottom(isAtBottom);
     };
 
