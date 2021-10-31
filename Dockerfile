@@ -16,12 +16,12 @@ RUN yarn install
 COPY . ./
 RUN yarn build
 
-# move build artifact to the permanent location
+# move build artifact to the permanent app location
 WORKDIR /app
-RUN mv /tmp/install/build .
+RUN mv /tmp/install/build/* .
+RUN mv /tmp/install/entrypoint.sh .
 
-# cleanup temporary files
+# remove temporary files
 RUN rm -rf /tmp/install
 
-# start app
-CMD env | grep IMF && serve -s build
+ENTRYPOINT [ "./entrypoint.sh" ]
