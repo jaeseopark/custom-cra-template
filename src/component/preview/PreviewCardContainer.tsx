@@ -12,7 +12,7 @@ type PreviewCardContainerProps = {
 };
 
 const newToOld = (t1: TranscriptWithAlias, t2: TranscriptWithAlias) =>
-    -1 * ((t1.lastMessage?.id || 0) - (t2.lastMessage?.id || 0));
+    (t2.lastMessage?.id || 0) - (t1.lastMessage?.id || 0);
 
 const PreviewCardContainer = ({ transcripts }: PreviewCardContainerProps) => (
     <StyledPreviewContainer>
