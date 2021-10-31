@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { initializeClient } from "redux/mdlwr";
 import ChatContainer from "component/chat/ChatContainer";
-import PreviewCardContainer from "component/preview/PreviewCardContainer";
-import Search from "component/Search";
-import { APPLE_BIGSUR_GRAY_BACKGROUND, APPLE_BIGSUR_GRAY_OUTLINE, BOX_SHADOW_COLOR } from "style/const";
-import Settings from "component/Settings";
+import { APPLE_BIGSUR_GRAY_BACKGROUND, BOX_SHADOW_COLOR } from "style/const";
+import { selectIsServerInfoReady } from "redux/connectivity/slice";
+import ServerSelectionView from "component/ServerSelectionView";
+import Sidebar from "component/Sidebar";
 
 const APP_MARGIN = 40; // pixels
 
 const StyledApp = styled.div`
     display: flex;
     flex-flow: row nowrap;
-    height: calc(100vh - ${APP_MARGIN}px);
     width: calc(100vw - ${APP_MARGIN}px);
+    height: calc(100vh - ${APP_MARGIN}px);
     box-shadow: 0px 10px 35px ${BOX_SHADOW_COLOR};
     border-radius: 13px;
     overflow: hidden;
@@ -23,31 +23,22 @@ const StyledApp = styled.div`
     background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
 `;
 
-const Sidebar = styled.div`
-    display: flex;
-    flex-flow: column nowrap;
-    width: 350px;
-    padding: 0 10px 0 10px;
-    border-right: 1px solid ${APPLE_BIGSUR_GRAY_OUTLINE};
-    /* resize: horizontal; */
-`;
-
 const App = () => {
     const dispatch = useDispatch();
-    const [selectedAlias, selectAlias] = useState<string>();
+    const isServerInfoReady = useSelector(selectIsServerInfoReady);
 
     useEffect(() => {
         dispatch(initializeClient());
     }, [dispatch]);
 
+    if (!isServerInfoReady) {
+        return <ServerSelectionView />;
+    }
+
     return (
         <StyledApp>
-            <Sidebar>
-                <Settings />
-                <Search />
-                <PreviewCardContainer onClickAlias={selectAlias} selectedAlias={selectedAlias} />
-            </Sidebar>
-            <ChatContainer alias={selectedAlias} />
+            <Sidebar />
+            <ChatContainer />
         </StyledApp>
     );
 };

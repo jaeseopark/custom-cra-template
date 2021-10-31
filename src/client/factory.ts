@@ -3,8 +3,10 @@ import IMFMockClient from "./mock";
 import IMFWebSocketClient from "./websocket";
 
 class IMFClientFactory {
+    static isMock = () => process.env.REACT_APP_IMF_MOCK === "ON";
+
     static getClient = (): IMFClient => {
-        if (process.env.REACT_APP_IMF_MOCK === "ON") {
+        if (this.isMock()) {
             return new IMFMockClient();
         }
 

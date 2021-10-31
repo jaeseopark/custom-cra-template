@@ -18,6 +18,7 @@ type TranscriptState = {
         [personName: string]: Transcript;
     };
     lastNotified: number;
+    selectedAlias?: string;
 };
 
 const initialState: TranscriptState = {
@@ -85,10 +86,13 @@ export const transcriptSlice = createSlice({
             const alias = action.payload;
             state.transcripts[alias].unreadMessageCount = 0;
         },
+        selectAlias: (state, action: PayloadAction<string>) => {
+            state.selectedAlias = action.payload;
+        },
     },
 });
 
-export const { upsertMessages, markTranscriptAsRead } = transcriptSlice.actions;
+export const { upsertMessages, markTranscriptAsRead, selectAlias } = transcriptSlice.actions;
 
 export const selectNames = (state: RootState) => {
     const mayContainDups = Object.values(state.transcript.contactReverseMap);
@@ -105,5 +109,9 @@ export const selectLastNotified = (state: RootState) => state.transcript.lastNot
 
 export const selecteTotalUnreadMessageCount = (state: RootState) =>
     Object.values(state.transcript.transcripts).reduce((acc, t) => acc + t.unreadMessageCount, 0);
+
+export const selectSelectedAlias = (state: RootState) => state.transcript.selectedAlias;
+
+export const isSelectedAlias = (alias: string) => (state: RootState) => selectSelectedAlias(state) === alias;
 
 export default transcriptSlice.reducer;
