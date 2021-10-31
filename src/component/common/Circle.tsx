@@ -32,3 +32,8 @@ export const BlueCircle = styled(Circle)`
     background-color: ${APPLE_BIGSUR_BLUE};
     border-color: ${APPLE_BIGSUR_BLUE_OUTLINE};
 `;
+
+export const GrayCircle = styled(Circle)`
+    background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
+    border-color: ${APPLE_BIGSUR_GRAY_OUTLINE};
+`;

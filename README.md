@@ -2,7 +2,7 @@
 
 react-imf is an iMessage client you can run in your browser. The app is targeted towards hybrid computer users who use both Mac and Windows. You must own an iCloud-enabled device to use as the proxy.
 
-<img src="https://user-images.githubusercontent.com/20038316/139202363-12cc4710-4632-4172-8c3f-f736b9140816.png" />
+<img src="https://user-images.githubusercontent.com/20038316/139573787-503d238b-ab1e-4f83-b376-e9049ea3d22d.png" />
 
 ## Features
 
@@ -43,7 +43,7 @@ yarn start
 |`REACT_APP_IMF_PRELOADED_RECIPIENT_COUNT`|20|<p>_Only in the mock mode_</p>The number of people that will appear in the sidebar.|
 |`REACT_APP_IMF_PRELOADED_MESSAGES_PER_RECIPIENT`|50|<p>_Only in the mock mode_</p>The number of preloaded messages per person.|
 |`REACT_APP_IMF_RESPONSE_DELAY`|2500 (ms)|<p>_Only in the mock mode_</p>How long it will take for someone to respond to your message.|
-|`REACT_APP_IMF_PING_INTERVAL`|10000 (ms)|<p>_Only in the mock mode_</p>The frequency of the random incoming messages.|
+|`REACT_APP_IMF_PING_INTERVAL`|30000 (ms)|<p>_Only in the mock mode_</p>The frequency of the random incoming messages.|
 
 ## Credits
 

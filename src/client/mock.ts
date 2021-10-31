@@ -110,7 +110,7 @@ class IMFMockClient implements IMFClient {
             return {
                 timestamp,
                 id: timestamp,
-                service: isSometimesTrue(0.9) ? "iMessage" : "SMS",
+                service: isSometimesTrue(0.95) ? "iMessage" : "SMS",
                 status: "received",
                 alias: recipient.alias,
                 handle: recipient.handles[0],
