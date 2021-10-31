@@ -1,14 +1,7 @@
-# pull official base image
 FROM node:14-alpine
 
-# set working directory
 WORKDIR /tmp/install
-
-# add `/tmp/install/node_modules/.bin` to $PATH
-ENV PATH /tmp/install/node_modules/.bin:$PATH
 RUN yarn global add serve
-
-# install app dependencies
 COPY package*.json ./
 RUN yarn install
 
@@ -16,12 +9,15 @@ RUN yarn install
 COPY . ./
 RUN yarn build
 
+# convert dos newline characters to unix
+RUN dos2unix entrypoint.sh
+
 # move build artifact to the permanent app location
 WORKDIR /app
-RUN mv /tmp/install/build/* .
-# RUN mv /tmp/install/entrypoint.sh .
+RUN mv /tmp/install/build/*
+RUN mv /tmp/install/entrypoint.sh .
 
 # remove temporary files
 RUN rm -rf /tmp/install
 
-CMD serve -s .
+CMD ./entrypoint.sh
