@@ -32,7 +32,7 @@ const TextInfo = ({ alias, lastMessage }: TextInfoProps) => (
             <Spacer />
             <span>{getHumanTime(lastMessage?.timestamp)}</span>
         </Header>
-        <Snippet lastMessage={lastMessage} />
+        <Snippet text={lastMessage?.content.text} attachment={lastMessage?.content.attachment} />
     </StyledTextInfo>
 );
 

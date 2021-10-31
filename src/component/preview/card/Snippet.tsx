@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import IMFMessage from "typedef/IMFMessage";
+import { IMFMessageContent } from "typedef/IMFMessage";
 
-type SnippetProps = {
-    lastMessage?: IMFMessage;
-};
-
-const StyledSnippet = styled.div`
-    height: 1rem;
+const StyledSpan = styled.span`
+    max-width: 200px;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
 `;
 
 // TODO: check for attachments
-const Snippet = ({ lastMessage }: SnippetProps) => <StyledSnippet>{lastMessage?.content.text}</StyledSnippet>;
+const Snippet = ({ text, attachment }: IMFMessageContent) => {
+    if (attachment) return <span>Attachment</span>;
 
+    return <StyledSpan>{text}</StyledSpan>;
+};
 export default Snippet;
