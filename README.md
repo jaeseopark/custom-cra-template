@@ -31,10 +31,6 @@ Note: the default timezone is [America/Denver](docker-compose.yml#L15). Update i
 ```bash
 yarn install
 yarn start
-
-# or
-
-docker-compose --file docker-compose-dev.yml --build up
 ```
 
 ## Configurations
