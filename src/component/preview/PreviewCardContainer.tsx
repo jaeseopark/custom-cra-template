@@ -5,11 +5,10 @@ import PreviewCard from "component/preview/card/PreviewCard";
 import { APPLE_BIGSUR_GRAY_BACKGROUND } from "style/const";
 import { compareChronologically } from "util/transcripts";
 import Transcript from "typedef/Transcript";
+import AutohideScroll from "component/common/AutohideScroll";
 
-const StyledPreviewContainer = styled.div`
+const StyledPreviewContainer = styled(AutohideScroll)`
     background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
-    overflow-y: scroll;
-    overflow-x: hidden;
 `;
 
 type PreviewCardContainerProps = {
