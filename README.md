@@ -16,7 +16,7 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/react-imf
 
 ### Pre-requisite
 
-[imessageforwarder](https://github.com/jaeseopark/imessageforwarder) must be already running on your Mac. It is recommended that imessageforwarder and react-imf are hosted on the same device. If you are hosting the apps on separate devices, make sure to update [`REACT_APP_IMF_HOST`](docker-compose.yml#L15) accordingly.
+[imessageforwarder](https://github.com/jaeseopark/imessageforwarder) must be already running on your Mac. It is recommended that imessageforwarder and react-imf are hosted on the same device. If you are hosting the apps on separate devices, make sure to update [`REACT_APP_IMF_HOST`](docker-compose.yml#L8) accordingly.
 
 ### Run the app
 
@@ -24,17 +24,13 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/react-imf
 docker-compose up --build -d
 ```
 
-Note: the default timezone is [America/Denver](docker-compose.yml#L13). Update it to match your local timezone.
+Note: the default timezone is [America/Denver](docker-compose.yml#L15). Update it to match your local timezone.
 
 ### Development
 
 ```bash
 yarn install
 yarn start
-
-# or
-
-docker-compose --file docker-compose-dev.yml --build up
 ```
 
 ## Configurations
@@ -42,7 +38,7 @@ docker-compose --file docker-compose-dev.yml --build up
 |Environment Variable|Values|Notes|
 |---|---|---|
 |`REACT_APP_IMF_HOST`|localhost<br>192.168.0.100<br>livingroom.local|The hostname of the imessageforwarder server.|
-|`REACT_APP_IMF_PORT`|5000|The port the imessageforwarder server is listening to.|
+|`REACT_APP_IMF_PORT`|3237|The port the imessageforwarder server is listening to.|
 |`REACT_APP_IMF_MOCK`|ON<br>OFF|Enables the mock mode. This mode leverages [`IMFMockClient`](src/client/mock.ts) to mimic human interactions. When enabled, `REACT_APP_IMF_HOST` and `REACT_APP_IMF_PORT` are no longer needed.|
 |`REACT_APP_IMF_PRELOADED_RECIPIENT_COUNT`|20|<p>_Only in the mock mode_</p>The number of people that will appear in the sidebar.|
 |`REACT_APP_IMF_PRELOADED_MESSAGES_PER_RECIPIENT`|50|<p>_Only in the mock mode_</p>The number of preloaded messages per recipient.|
@@ -52,3 +48,4 @@ docker-compose --file docker-compose-dev.yml --build up
 ## Credits
 
 * Sounds from [Notification Sounds](https://notificationsounds.com/)
+* [Production docker build guide](https://stackoverflow.com/a/68046584) by LucasBordeau

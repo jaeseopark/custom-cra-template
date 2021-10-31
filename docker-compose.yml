@@ -4,16 +4,15 @@ services:
         container_name: react-imf
         build:
             context: .
-            dockerfile: Dockerfile
+            args:
+                - REACT_APP_IMF_HOST=localhost
+                - REACT_APP_IMF_PORT=3237
         networks:
             - bridge
         ports:
-            - 3000:3000
+            - 3238:5000
         environment:
             - TZ=America/Denver
-            - NODE_ENV=production
-            - REACT_APP_IMF_HOST=localhost
-            - REACT_APP_IMF_PORT=5000
 
 networks:
     bridge:
