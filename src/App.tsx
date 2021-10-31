@@ -7,8 +7,9 @@ import ChatContainer from "component/chat/ChatContainer";
 import ConnectivityProvider from "component/ConnectivityProvider";
 import NotificationProvider from "component/NotificationProvider";
 import PreviewCardContainer from "component/preview/PreviewCardContainer";
-import SearchBar from "component/SearchBar";
+import Search from "component/Search";
 import { APPLE_BIGSUR_GRAY_BACKGROUND, APPLE_BIGSUR_GRAY_OUTLINE, BOX_SHADOW_COLOR } from "style/const";
+import Settings from "component/Settings";
 
 const APP_MARGIN = 40; // pixels
 
@@ -44,9 +45,8 @@ const App = () => {
     return (
         <StyledApp>
             <Sidebar>
-                <NotificationProvider />
-                <ConnectivityProvider />
-                <SearchBar />
+                <Settings />
+                <Search />
                 <PreviewCardContainer onClickAlias={selectAlias} selectedAlias={selectedAlias} />
             </Sidebar>
             <ChatContainer alias={selectedAlias} />

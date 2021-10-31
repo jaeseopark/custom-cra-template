@@ -24,7 +24,7 @@ const MessageStream = ({ messages }: MessageStreamProps) => {
         <>
             {messages.reduce((acc, msg) => {
                 if (prevService !== msg.service) {
-                    acc.push(<SectionHeader msg={msg} />);
+                    acc.push(<SectionHeader key={`${msg.id}-header`} msg={msg} />);
                 }
                 const mv = <MessageView key={msg.id} message={msg} />;
                 acc.push(mv);
