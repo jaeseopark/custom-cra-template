@@ -9,6 +9,8 @@ const LONG_TERM_FORMAT = "MMM. d, YYYY";
 
 const getHumanTimeShortTmer = (timestamp: number) => dayjs(timestamp).format(SHORT_TERM_FORMAT);
 const getHumanTimeMediumTerm = (timestamp: number) => dayjs(timestamp).format(MEDIUM_TERM_FORMAT);
+
+// TODO: this needs fixing. returns values like "Oct. 0, 2021"
 const getHumanTimeLongTerm = (timestamp: number) => dayjs(timestamp).format(LONG_TERM_FORMAT);
 
 export const getHumanTime = (timestamp?: number) => {
