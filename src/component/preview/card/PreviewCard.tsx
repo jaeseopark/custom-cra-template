@@ -31,7 +31,7 @@ const PreviewCard = ({ alias, transcript, isSelected, onClickAlias }: Transcript
 
     return (
         <div className={clsCard} onClick={onClick}>
-            <UnreadIndicator isEnabled={transcript.hasUnreadMessages} />
+            <UnreadIndicator isEnabled={transcript.unreadMessageCount > 0} />
             <Initials alias={alias} />
             <TextInfo alias={alias} lastMessage={transcript.lastMessage} />
         </div>

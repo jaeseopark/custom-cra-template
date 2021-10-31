@@ -29,7 +29,7 @@ const initialState: TranscriptState = {
 
 const createTranscript = (): Transcript => ({
     messages: [],
-    hasUnreadMessages: false,
+    unreadMessageCount: 0,
 });
 
 const initTranscript = (state: TranscriptState, msg: IMFMessage): Transcript => {
@@ -58,7 +58,7 @@ export const transcriptSlice = createSlice({
             action.payload.messages!.forEach((message) => {
                 const transcript = getOrInitTranscript(state, message);
                 if (message.status === "received" && action.payload.type === "MESSAGE_NEW") {
-                    transcript.hasUnreadMessages = true;
+                    transcript.unreadMessageCount += 1;
                     state.lastNotified = Date.now();
                 }
 
@@ -85,7 +85,7 @@ export const transcriptSlice = createSlice({
         },
         markTranscriptAsRead: (state, action: PayloadAction<string>) => {
             const alias = action.payload;
-            state.transcripts[alias].hasUnreadMessages = false;
+            state.transcripts[alias].unreadMessageCount = 0;
         },
     },
 });
@@ -104,5 +104,8 @@ export const selectTranscript = (name: string) => (state: RootState) => state.tr
 export const selectOneHandleByName = (name: string) => (state: RootState) => state.transcript.contactMap[name][0];
 
 export const selectLastNotified = (state: RootState) => state.transcript.lastNotified;
+
+export const selecteTotalUnreadMessageCount = (state: RootState) =>
+    Object.values(state.transcript.transcripts).reduce((acc, t) => acc + t.unreadMessageCount, 0);
 
 export default transcriptSlice.reducer;

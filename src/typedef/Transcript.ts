@@ -3,7 +3,7 @@ import IMFMessage from "./IMFMessage";
 type Transcript = {
     messages: IMFMessage[];
     lastMessage?: IMFMessage;
-    hasUnreadMessages: boolean;
+    unreadMessageCount: number;
     // to disply activity labels
     // lastSent: number;
     // lastReceived: number;

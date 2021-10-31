@@ -28,10 +28,10 @@ const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
     const scrollTargetRef = useRef(null);
 
     useEffect(() => {
-        if (isAtBottom && transcript.hasUnreadMessages) {
+        if (isAtBottom && transcript.unreadMessageCount) {
             markAsRead();
         }
-    }, [isAtBottom, markAsRead, transcript.hasUnreadMessages]);
+    }, [isAtBottom, markAsRead, transcript.unreadMessageCount]);
 
     useEffect(() => {
         // Automatically scroll to the bottom when a new message arrives.
@@ -58,7 +58,11 @@ const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
         <StyledTranscriptView onScroll={onScroll}>
             <MessageStream messages={transcript.messages} />
             <ScrollTarget ref={scrollTargetRef} />
-            <QuickscrollButton scroll={scrollToBottom} hasUnreadMessages={transcript.hasUnreadMessages} isAtBottom />
+            <QuickscrollButton
+                scroll={scrollToBottom}
+                hasUnreadMessages={transcript.unreadMessageCount > 0}
+                isAtBottom
+            />
         </StyledTranscriptView>
     );
 };
