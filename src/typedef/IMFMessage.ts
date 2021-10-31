@@ -4,15 +4,17 @@ export type IMFAttachmentType = "photo" | "video";
 
 export type IMFService = "iMessage" | "SMS";
 
+export type IMFMessageContent = {
+    text?: string;
+    attachment?: {
+        type: IMFAttachmentType;
+        data: string; // placeholder
+    };
+};
+
 type IMFBaseMessage = {
     handle: string;
-    content: {
-        text?: string;
-        attachment?: {
-            type: IMFAttachmentType;
-            data: string; // placeholder
-        };
-    };
+    content: IMFMessageContent;
 };
 
 export type IMFOutgoingMessage = IMFBaseMessage & {

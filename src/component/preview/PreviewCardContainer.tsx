@@ -22,8 +22,7 @@ type Compound = {
     transcript: Transcript;
 };
 
-const newToOld = (c1: Compound, c2: Compound) =>
-    -1 * compareChronologically(c1.transcript, c2.transcript);
+const newToOld = (c1: Compound, c2: Compound) => -1 * compareChronologically(c1.transcript, c2.transcript);
 
 const PreviewCardContainer = ({ onClickAlias, selectedAlias }: PreviewCardContainerProps) => {
     const aliases = useSelector(selectNames);
