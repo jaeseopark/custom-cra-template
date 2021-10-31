@@ -5,10 +5,13 @@ type SnippetProps = {
     lastMessage?: IMFMessage;
 };
 
-const StyledSnippet = styled.div``;
+const StyledSnippet = styled.div`
+    height: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
 
 // TODO: check for attachments
-// TODO: trunacte the message
 const Snippet = ({ lastMessage }: SnippetProps) => <StyledSnippet>{lastMessage?.content.text}</StyledSnippet>;
 
 export default Snippet;
