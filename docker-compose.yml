@@ -11,8 +11,8 @@ services:
             - 3238:5000
         environment:
             - TZ=America/Denver
-            - IMF_HOST=localhost
-            - IMF_PORT=3237
+            - REACT_APP_IMF_HOST=localhost
+            - REACT_APP_IMF_PORT=3237
 
 networks:
     bridge:

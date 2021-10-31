@@ -8,8 +8,8 @@ class IMFClientFactory {
             return new IMFMockClient();
         }
 
-        const host = process.env.IMF_HOST!;
-        const port = process.env.IMF_PORT!;
+        const host = process.env.REACT_APP_IMF_HOST!;
+        const port = process.env.REACT_APP_IMF_PORT!;
         return new IMFWebSocketClient(host, port);
     };
 }

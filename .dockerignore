@@ -7,10 +7,4 @@ dist/
 **/.DS_Store
 **/node_modules
 
-Dockerfile
-docker-compose*
-
 .env*
-.dockerignore
-
-tmp/
