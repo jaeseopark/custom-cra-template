@@ -1,23 +1,24 @@
 FROM node:14-alpine
 
-WORKDIR /tmp/install
-RUN yarn global add serve
-COPY package*.json ./
-RUN yarn install
-
-# build app
-COPY . ./
-RUN yarn build
-
-# convert dos newline characters to unix
-RUN dos2unix entrypoint.sh
-
-# move build artifact to the permanent app location
 WORKDIR /app
-RUN mv /tmp/install/build/*
-RUN mv /tmp/install/entrypoint.sh .
 
-# remove temporary files
-RUN rm -rf /tmp/install
+COPY package.json ./
+RUN yarn
 
-CMD ./entrypoint.sh
+COPY src/ ./src/
+COPY public/ ./public/
+COPY tsconfig.json .
+COPY create-env-file.sh ./create-env-file.sh
+
+RUN dos2unix ./create-env-file.sh
+
+ARG REACT_APP_IMF_HOST
+ARG REACT_APP_IMF_PORT
+
+RUN sh ./create-env-file.sh \
+    REACT_APP_IMF_HOST=$REACT_APP_IMF_HOST \
+    REACT_APP_IMF_PORT=$REACT_APP_IMF_PORT
+
+RUN yarn build --production && yarn global add serve
+
+CMD ["serve", "-s", "build"]

@@ -52,3 +52,4 @@ docker-compose --file docker-compose-dev.yml --build up
 ## Credits
 
 * Sounds from [Notification Sounds](https://notificationsounds.com/)
+* [Production docker build guide](https://stackoverflow.com/a/68046584) by LucasBordeau
