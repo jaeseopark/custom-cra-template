@@ -5,9 +5,9 @@
         cursor: default;
     }
 
-    border-radius: 10px;
+    border-radius: 6px;
     display: flex;
-    padding: 5px;
+    padding: 5px 10px 5px 5px;
 
     &.is-selected {
         background-color: color.$apple-bigsur-blue;
