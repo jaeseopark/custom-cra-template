@@ -9,6 +9,7 @@ import NotificationProvider from "component/NotificationProvider";
 import PreviewCardContainer from "component/preview/PreviewCardContainer";
 import SearchBar from "component/SearchBar";
 import { APPLE_BIGSUR_GRAY_BACKGROUND, APPLE_BIGSUR_GRAY_OUTLINE, BOX_SHADOW_COLOR } from "style/const";
+import Settings from "component/Settings";
 
 const APP_MARGIN = 40; // pixels
 
@@ -44,8 +45,7 @@ const App = () => {
     return (
         <StyledApp>
             <Sidebar>
-                <NotificationProvider />
-                <ConnectivityProvider />
+                <Settings />
                 <SearchBar />
                 <PreviewCardContainer onClickAlias={selectAlias} selectedAlias={selectedAlias} />
             </Sidebar>

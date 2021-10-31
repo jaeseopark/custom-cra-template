@@ -45,8 +45,6 @@ const initTranscript = (state: TranscriptState, msg: IMFMessage): Transcript => 
 const getOrInitTranscript = (state: TranscriptState, msg: IMFMessage) => {
     let transcript = state.transcripts[msg.alias];
     if (transcript) return transcript;
-
-    console.log("Could not find transcript for alias:", msg.alias);
     return initTranscript(state, msg);
 };
 

@@ -6,6 +6,7 @@ import { APPLE_BIGSUR_GRAY_OUTLINE } from "style/const";
 import magnifierImgSrc from "asset/magnifier.svg";
 
 const StyledSearchBar = styled.div`
+    margin-top: 0.75rem;
     margin-bottom: 1.5rem;
     border: solid 1px ${APPLE_BIGSUR_GRAY_OUTLINE};
     display: flex;

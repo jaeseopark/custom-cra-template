@@ -10,8 +10,6 @@ const CONNECTIVITY_CHECK_INTERVAL = 500; // ms
 
 const StyledConnectivityProvider = styled.div`
     display: flex;
-    height: 3rem;
-    padding: 1.5rem 0 1.5rem 1rem;
 `;
 
 const Label = styled.span`
