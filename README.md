@@ -16,7 +16,7 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/react-imf
 
 ### Pre-requisite
 
-[imessageforwarder](https://github.com/jaeseopark/imessageforwarder) must be already running on your Mac. It is recommended that imessageforwarder and react-imf are hosted on the same device. If you are hosting the apps on separate devices, make sure to update [`REACT_APP_IMF_HOST`](docker-compose.yml#L8) accordingly.
+[imessageforwarder](https://github.com/jaeseopark/imessageforwarder) must be already running on your Mac. It is recommended that imessageforwarder and react-imf are hosted on the same device.
 
 ### Run the app
 
@@ -37,8 +37,6 @@ yarn start
 
 |Environment Variable|Values|Notes|
 |---|---|---|
-|[`REACT_APP_IMF_HOST`](docker-compose.yml#L8)|localhost<br>192.168.0.100<br>livingroom.local|The hostname of the imessageforwarder server.|
-|[`REACT_APP_IMF_PORT`](docker-compose.yml#L9)|3237|The port the imessageforwarder server is listening to.|
 |[`REACT_APP_IMF_PRELOADED_RECIPIENT_COUNT`](.env.development#L1)|20|<p>_Only in the mock mode_</p>The number of people that will appear in the sidebar.|
 |[`REACT_APP_IMF_PRELOADED_MESSAGES_PER_RECIPIENT`](.env.development#L2)|50|<p>_Only in the mock mode_</p>The number of preloaded messages per person.|
 |[`REACT_APP_IMF_RESPONSE_DELAY`](.env.development#L3)|2500 (ms)|<p>_Only in the mock mode_</p>How long it will take for someone to respond to your message.|
@@ -47,4 +45,3 @@ yarn start
 ## Credits
 
 * Sounds from [Notification Sounds](https://notificationsounds.com/)
-* [Production docker build guide](https://stackoverflow.com/a/68046584) by LucasBordeau
