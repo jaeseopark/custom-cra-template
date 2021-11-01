@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
+const SEP = "-";
 const MANAGE_PRESET = "Manage Preset";
+
+type ErrorMessage = string;
 
 type PresetDropdownProps = {
     presetId: string;
@@ -8,9 +11,17 @@ type PresetDropdownProps = {
     onChange: (value: string) => void;
     value?: string;
     secondaryPreset?: string[]; // default presets that should not be saved to localStorage
+    validateLine?: (line: string) => ErrorMessage | null | undefined;
 };
 
-const PresetDropdown = ({ presetId, defaultPreset, onChange, value, secondaryPreset }: PresetDropdownProps) => {
+const PresetDropdown = ({
+    presetId,
+    defaultPreset,
+    onChange,
+    value,
+    secondaryPreset,
+    validateLine,
+}: PresetDropdownProps) => {
     const [preset, setPreset] = useState("");
 
     useEffect(() => {
@@ -22,6 +33,8 @@ const PresetDropdown = ({ presetId, defaultPreset, onChange, value, secondaryPre
         console.log(value);
 
         if (value === MANAGE_PRESET) {
+            // TODO: open preset edit window
+            // use validateLine
             return;
         }
 
@@ -29,18 +42,17 @@ const PresetDropdown = ({ presetId, defaultPreset, onChange, value, secondaryPre
         onChange(value);
     };
 
-    const getUniqueLines = () => {
-        const set = new Set(
-            preset
-                .split("\n")
-                .concat(defaultPreset)
-                .concat(secondaryPreset || [])
-                .map((line) => line.trim())
-                .filter((line) => line)
+    const getUniqueLines = () =>
+        Array.from(
+            new Set(
+                preset
+                    .split("\n")
+                    .concat(defaultPreset)
+                    .concat(secondaryPreset || [])
+                    .map((line) => line.trim())
+                    .filter((line) => line)
+            )
         );
-        set.add(MANAGE_PRESET);
-        return Array.from(set);
-    };
 
     if (!preset && defaultPreset.length === 0) return null;
 
@@ -49,6 +61,10 @@ const PresetDropdown = ({ presetId, defaultPreset, onChange, value, secondaryPre
     return (
         <select value={value} onChange={innerOnChange}>
             {options}
+            <option key={SEP} disabled>
+                {SEP}
+            </option>
+            <option key={MANAGE_PRESET}>{MANAGE_PRESET}</option>
         </select>
     );
 };

@@ -41,17 +41,28 @@
         }
     }
 
-    .buttons {
-        margin-top: 50px;
+    .interactive-components {
+        margin-top: 40px;
+        height: 40px;
         display: flex;
 
+        * {
+            font-size: 1rem;
+            padding: 4px 12px;
+            border: solid 1px;
+        }
+
+        select {
+            border-radius: 5px;
+            margin-right: 10px;
+            border-color: color.$apple-bigsur-gray-outline;
+        }
+
         button {
+            border-radius: 20px;
+            border-color: color.$apple-bigsur-blue-outline;
             background-color: color.$apple-bigsur-blue;
-            border-radius: 15px;
-            border: solid 1px color.$apple-bigsur-blue-outline;
             color: white;
-            padding: 5px 12px;
-            margin-left: 5px;
             cursor: pointer;
         }
     }

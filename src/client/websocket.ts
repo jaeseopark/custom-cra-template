@@ -40,22 +40,6 @@ class IMFWebSocketClient implements IMFClient {
     isOnline = (): boolean => {
         return this.messageSocket.readyState === WebSocket.OPEN;
     };
-
-    // TODO: maybe?
-    // fetchContacts(): Promise<Person[]> {
-    //     const url = `http://${this.host}:${this.port}/contacts`;
-    //     return (
-    //         fetch(url)
-    //             .then((res) => res.json())
-    //             // .then(addRandomContacts)
-    //             .then((resJson) => {
-    //                 return Object.keys(resJson).map((name) => ({
-    //                     name,
-    //                     handles: [resJson[name]],
-    //                 }));
-    //             })
-    //     );
-    // }
 }
 
 export default IMFWebSocketClient;
