@@ -8,7 +8,7 @@ import "style/ServerSelectionView.scss";
 import logo from "asset/logo400.png";
 import PresetDropdown from "./common/PresetDropdown";
 
-const MOCK = "(Dev) Mock Mode";
+const MOCK = "MOCK";
 
 const Logo = styled.div`
     margin-right: 25px;
