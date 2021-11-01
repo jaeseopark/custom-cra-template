@@ -20,11 +20,30 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/imessagef
 
 ### Run the app
 
-```bash
-docker-compose up --build -d
-```
+1. Install [Docker Compose](https://docs.docker.com/compose/install/).
+1. Save the following text as `docker-compose.yml`:
+    ```yml
+    version: "3.7"
+    services:
+        imf-web:
+            container_name: imf-web
+            image: jaeseoparkdocker/imessageforwarder-web:latest
+            restart: unless-stopped
+            networks:
+                - bridge
+            ports:
+                - 3238:80
+            environment:
+                - TZ=America/Denver # Update this line to match your local timezone.
 
-Note: the default timezone is [America/Denver](docker-compose.yml#L13). Update it to match your local timezone.
+    networks:
+        bridge:
+            driver: bridge
+    ```
+1. Run the following command:
+    ```bash
+    docker-compose up -d
+    ```
 
 ### Development
 

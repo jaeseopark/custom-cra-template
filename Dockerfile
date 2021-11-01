@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:14-alpine as build
 
 WORKDIR /app
 
@@ -10,6 +10,11 @@ COPY public/ ./public/
 COPY tsconfig.json .
 
 RUN yarn build --production && yarn global add serve
-RUN rm -rf src public node_modules
 
-CMD ["serve", "-s", "build"]
+FROM nginx:stable-alpine
+
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
