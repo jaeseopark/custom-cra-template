@@ -1,4 +1,4 @@
-# imf-web
+# imessageforwarder-web (imf-web)
 
 imf-web is an iMessage client you can run in your browser. The app is targeted towards hybrid computer users who use both Mac and Windows. You must own an iCloud-enabled device to use as the proxy.
 
@@ -10,7 +10,7 @@ imf-web is an iMessage client you can run in your browser. The app is targeted t
 * Send and receive iMessage/SMS.
 * Switch between contacts.
 
-For upcoming features, refer to [Issues](https://github.com/jaeseopark/imf-web/issues).
+For upcoming features, refer to [Issues](https://github.com/jaeseopark/imessageforwarder-web/issues).
 
 ## Usage
 
