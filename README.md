@@ -27,8 +27,8 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/imessagef
     services:
         imf-web:
             container_name: imf-web
-            restart: unless-stopped
             image: jaeseoparkdocker/imessageforwarder-web:latest
+            restart: unless-stopped
             networks:
                 - bridge
             ports:
