@@ -25,32 +25,25 @@ const Logo = styled.div`
 
 const ServerSelectionView = () => {
     const [hostAndPort, setHostAndPort] = useState("");
-    const [preset, setPreset] = useState("");
-
-    useEffect(() => {
-        // TODO: read from local storage
-        setPreset("localhost:3237");
-    }, []);
-
     return (
         <VerticallyAlignedDiv className="server-selection">
             <HorizontallyAlignedDiv>
                 <Logo />
-                <div class="title">
+                <div className="title">
                     <span>Messages</span>
-                    <div class="subtitle">Connect to a server to get started</div>
+                    <div className="subtitle">Connect to a server to get started</div>
                 </div>
             </HorizontallyAlignedDiv>
             <HorizontallyAlignedDiv>
                 <PresetDropdown
                     presetId="servers"
-                    defaultPreset={["localhost:3237", "localhost:3000"]}
+                    defaultPreset={["localhost:3237"]}
                     secondaryPreset={[MOCK]}
                     value={hostAndPort}
                     onChange={setHostAndPort}
                 />
                 <div className="buttons">
-                    <button>Connect</button>
+                    <button disabled={!hostAndPort}>Connect</button>
                 </div>
             </HorizontallyAlignedDiv>
         </VerticallyAlignedDiv>
