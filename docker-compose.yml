@@ -3,7 +3,7 @@ services:
     react-imf:
         container_name: react-imf
         restart: unless-stopped
-        build:
+        build: # todo: publish docker image
             context: .
         networks:
             - bridge
