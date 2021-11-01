@@ -1,33 +1,33 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import IMFClientFactory from "client/factory";
-import { IMFServerInfo } from "client/interface";
 import { RootState } from "redux/store";
 
 export type ConnectivityState = {
     isOnline: boolean;
-    serverInfo?: IMFServerInfo;
+    isServerInfoReady: boolean;
 };
 
 const initialState: ConnectivityState = {
     isOnline: false,
+    isServerInfoReady: false,
 };
 
 export const connectivitySlice = createSlice({
     name: "connectivity",
     initialState,
     reducers: {
-        setServerInfo: (state, action: PayloadAction<IMFServerInfo>) => {},
+        markServerInfoAsReady: (state) => {
+            state.isServerInfoReady = true;
+        },
         updateConnectivity: (state, action: PayloadAction<boolean>) => {
             state.isOnline = action.payload;
         },
     },
 });
 
-export const { updateConnectivity } = connectivitySlice.actions;
+export const { updateConnectivity, markServerInfoAsReady } = connectivitySlice.actions;
 
 export const selectConnectivity = (state: RootState) => state.connectivity.isOnline;
 
-export const selectIsServerInfoReady = (state: RootState) =>
-    IMFClientFactory.isMock() || !!state.connectivity.serverInfo;
+export const selectIsServerInfoReady = (state: RootState) => state.connectivity.isServerInfoReady;
 
 export default connectivitySlice.reducer;

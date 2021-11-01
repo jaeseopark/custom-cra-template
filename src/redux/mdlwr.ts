@@ -2,14 +2,16 @@
 import { Dispatch } from "redux";
 import { IMFOutgoingMessage } from "../typedef/IMFMessage";
 import { upsertMessages } from "redux/transcript/slice";
-import { updateConnectivity as updateSliceConnectivity } from "redux/connectivity/slice";
+import { markServerInfoAsReady, updateConnectivity as updateSliceConnectivity } from "redux/connectivity/slice";
 import IMFClientFactory from "client/factory";
-import IMFClient from "client/interface";
+import IMFClient, { IMFServerInfo } from "client/interface";
+
+const CONNECTIVITY_CHECK_INTERVAL = 500; // ms
 
 let imfClient: IMFClient;
 
-export const initializeClient = () => (dispatch: Dispatch) => {
-    const client = IMFClientFactory.getClient();
+export const initializeClient = (serverInfo: IMFServerInfo) => (dispatch: Dispatch) => {
+    const client = IMFClientFactory.getClient(serverInfo);
     client.listen(
         (event) => {
             switch (event.type) {
@@ -26,6 +28,11 @@ export const initializeClient = () => (dispatch: Dispatch) => {
         }
     );
 
+    setInterval(() => {
+        dispatch(updateSliceConnectivity(client.isOnline()));
+    }, CONNECTIVITY_CHECK_INTERVAL);
+
+    dispatch(markServerInfoAsReady());
     imfClient = client;
 };
 
@@ -35,10 +42,4 @@ export const sendMessage = (msg: IMFOutgoingMessage) => {
         else setTimeout(sendToServer, 1000);
     };
     sendToServer();
-};
-
-export const updateConnectivity = () => (dispatch: Dispatch) => {
-    if (imfClient) {
-        dispatch(updateSliceConnectivity(imfClient.isOnline()));
-    }
 };

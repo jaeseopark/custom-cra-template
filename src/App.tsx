@@ -1,8 +1,6 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { initializeClient } from "redux/mdlwr";
 import ChatContainer from "component/chat/ChatContainer";
 import { APPLE_BIGSUR_GRAY_BACKGROUND, BOX_SHADOW_COLOR } from "style/const";
 import { selectIsServerInfoReady } from "redux/connectivity/slice";
@@ -24,15 +22,14 @@ const StyledApp = styled.div`
 `;
 
 const App = () => {
-    const dispatch = useDispatch();
     const isServerInfoReady = useSelector(selectIsServerInfoReady);
 
-    useEffect(() => {
-        dispatch(initializeClient());
-    }, [dispatch]);
-
     if (!isServerInfoReady) {
-        return <ServerSelectionView />;
+        return (
+            <StyledApp>
+                <ServerSelectionView />
+            </StyledApp>
+        );
     }
 
     return (

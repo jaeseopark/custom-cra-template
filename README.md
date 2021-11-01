@@ -39,11 +39,10 @@ yarn start
 |---|---|---|
 |[`REACT_APP_IMF_HOST`](docker-compose.yml#L8)|localhost<br>192.168.0.100<br>livingroom.local|The hostname of the imessageforwarder server.|
 |[`REACT_APP_IMF_PORT`](docker-compose.yml#L9)|3237|The port the imessageforwarder server is listening to.|
-|[`REACT_APP_IMF_MOCK`](.env.development#L1)|ON<br>OFF|Enables the mock mode. This mode leverages [`IMFMockClient`](src/client/mock.ts) to mimic human interactions. When enabled, `REACT_APP_IMF_HOST` and `REACT_APP_IMF_PORT` are no longer needed.|
-|[`REACT_APP_IMF_PRELOADED_RECIPIENT_COUNT`](.env.development#L2)|20|<p>_Only in the mock mode_</p>The number of people that will appear in the sidebar.|
-|[`REACT_APP_IMF_PRELOADED_MESSAGES_PER_RECIPIENT`](.env.development#L3)|50|<p>_Only in the mock mode_</p>The number of preloaded messages per person.|
-|[`REACT_APP_IMF_RESPONSE_DELAY`](.env.development#L4)|2500 (ms)|<p>_Only in the mock mode_</p>How long it will take for someone to respond to your message.|
-|[`REACT_APP_IMF_PING_INTERVAL`](.env.development#L5)|30000 (ms)|<p>_Only in the mock mode_</p>The frequency of the random incoming messages.|
+|[`REACT_APP_IMF_PRELOADED_RECIPIENT_COUNT`](.env.development#L1)|20|<p>_Only in the mock mode_</p>The number of people that will appear in the sidebar.|
+|[`REACT_APP_IMF_PRELOADED_MESSAGES_PER_RECIPIENT`](.env.development#L2)|50|<p>_Only in the mock mode_</p>The number of preloaded messages per person.|
+|[`REACT_APP_IMF_RESPONSE_DELAY`](.env.development#L3)|2500 (ms)|<p>_Only in the mock mode_</p>How long it will take for someone to respond to your message.|
+|[`REACT_APP_IMF_PING_INTERVAL`](.env.development#L4)|30000 (ms)|<p>_Only in the mock mode_</p>The frequency of the random incoming messages.|
 
 ## Credits
 
