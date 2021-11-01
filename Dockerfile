@@ -10,6 +10,6 @@ COPY public/ ./public/
 COPY tsconfig.json .
 
 RUN yarn build --production && yarn global add serve
-RUN rm -rf src public
+RUN rm -rf src public node_modules
 
 CMD ["serve", "-s", "build"]

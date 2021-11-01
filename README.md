@@ -24,7 +24,7 @@ For upcoming features, refer to [Issues](https://github.com/jaeseopark/react-imf
 docker-compose up --build -d
 ```
 
-Note: the default timezone is [America/Denver](docker-compose.yml#L15). Update it to match your local timezone.
+Note: the default timezone is [America/Denver](docker-compose.yml#L13). Update it to match your local timezone.
 
 ### Development
 
