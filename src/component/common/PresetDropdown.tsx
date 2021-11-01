@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PresetDropdownEditor, { Validate } from "./PresetDropdownEditor";
 
 const SEP = "-";
-const MANAGE_PRESET = "Manage Preset";
+const EDIT_PRESET = "Edit Preset";
 
 type PresetDropdownProps = {
     presetId: string;
@@ -40,7 +40,7 @@ const PresetDropdown = ({
     }, []);
 
     const innerOnChange = ({ target: { value } }: any) => {
-        if (value === MANAGE_PRESET) {
+        if (value === EDIT_PRESET) {
             return setEditMode(true);
         }
         localStorage[`preset-${presetId}-lastused`] = value;
@@ -82,7 +82,7 @@ const PresetDropdown = ({
                 <option key={SEP} disabled>
                     {SEP}
                 </option>
-                <option key={MANAGE_PRESET}>{MANAGE_PRESET}</option>
+                <option key={EDIT_PRESET}>{EDIT_PRESET}</option>
             </select>
             <PresetDropdownEditor
                 enabled={isEditMode}

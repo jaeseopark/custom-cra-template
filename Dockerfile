@@ -9,7 +9,7 @@ COPY src/ ./src/
 COPY public/ ./public/
 COPY tsconfig.json .
 
-RUN yarn build --production && yarn global add serve
+RUN yarn build --production
 
 FROM nginx:stable-alpine
 
