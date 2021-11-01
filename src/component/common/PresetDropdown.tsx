@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
+import PresetDropdownEditor, { Validate } from "./PresetDropdownEditor";
 
 const SEP = "-";
 const MANAGE_PRESET = "Manage Preset";
 
-type ErrorMessage = string;
-
 type PresetDropdownProps = {
     presetId: string;
-    defaultPreset: string[]; // some default options. will be used to initialize user's local storage.
+    defaultPreset: string[]; // one or more default options. will be used to initialize user's local storage.
     onChange: (value: string) => void;
     value?: string;
     secondaryPreset?: string[]; // default presets that should not be saved to localStorage
-    validateLine?: (line: string) => ErrorMessage | null | undefined;
+    validate?: Validate;
 };
 
 const PresetDropdown = ({
@@ -20,34 +19,52 @@ const PresetDropdown = ({
     onChange,
     value,
     secondaryPreset,
-    validateLine,
+    validate,
 }: PresetDropdownProps) => {
     const [preset, setPreset] = useState("");
+    const [isEditMode, setEditMode] = useState(false);
 
     useEffect(() => {
-        // TODO: localStorage[presetDropdown][presetId]
+        let localPresetStorage: string = localStorage[`preset-${presetId}`];
+        const lastUsed: string = localStorage[`preset-${presetId}-lastused`];
+
+        if (!localPresetStorage) {
+            localPresetStorage = defaultPreset.join("\n");
+            localStorage[`preset-${presetId}`] = localPresetStorage;
+        }
+
+        setPreset(localPresetStorage);
+        if (lastUsed) {
+            onChange(lastUsed);
+        }
     }, []);
 
     const innerOnChange = ({ target: { value } }: any) => {
-        // TODO: use onChange here
-        console.log(value);
-
         if (value === MANAGE_PRESET) {
-            // TODO: open preset edit window
-            // use validateLine
-            return;
+            return setEditMode(true);
         }
-
-        console.log("callback");
+        localStorage[`preset-${presetId}-lastused`] = value;
         onChange(value);
     };
+
+    const onEditorSave = (preset: string) => {
+        const [firstOption] = preset.split("\n");
+
+        localStorage[`preset-${presetId}`] = preset;
+        localStorage[`preset-${presetId}-lastused`] = firstOption;
+
+        setPreset(preset);
+        onChange(firstOption);
+        setEditMode(false);
+    };
+
+    const onEditorCancel = () => setEditMode(false);
 
     const getUniqueLines = () =>
         Array.from(
             new Set(
                 preset
                     .split("\n")
-                    .concat(defaultPreset)
                     .concat(secondaryPreset || [])
                     .map((line) => line.trim())
                     .filter((line) => line)
@@ -59,13 +76,22 @@ const PresetDropdown = ({
     const options = getUniqueLines().map((line) => <option key={line}>{line}</option>);
 
     return (
-        <select value={value} onChange={innerOnChange}>
-            {options}
-            <option key={SEP} disabled>
-                {SEP}
-            </option>
-            <option key={MANAGE_PRESET}>{MANAGE_PRESET}</option>
-        </select>
+        <>
+            <select value={value} onChange={innerOnChange}>
+                {options}
+                <option key={SEP} disabled>
+                    {SEP}
+                </option>
+                <option key={MANAGE_PRESET}>{MANAGE_PRESET}</option>
+            </select>
+            <PresetDropdownEditor
+                enabled={isEditMode}
+                validate={validate}
+                preset={preset}
+                onSave={onEditorSave}
+                onCancel={onEditorCancel}
+            />
+        </>
     );
 };
 

@@ -10,6 +10,8 @@ import PresetDropdown from "./common/PresetDropdown";
 import { IMFServerInfo } from "client/interface";
 import { useDispatch } from "react-redux";
 import { initializeClient } from "redux/mdlwr";
+import { validateHostAndPort } from "util/network";
+import StyledButton from "./common/StyledButton";
 
 const MOCK = "MOCK";
 
@@ -55,10 +57,11 @@ const ServerSelectionView = () => {
                     secondaryPreset={[MOCK]}
                     value={hostAndPort}
                     onChange={setHostAndPort}
+                    validate={validateHostAndPort}
                 />
-                <button disabled={!serverInfo} onClick={onConnect}>
+                <StyledButton disabled={!serverInfo} onClick={onConnect}>
                     Connect
-                </button>
+                </StyledButton>
             </HorizontallyAlignedDiv>
         </VerticallyAlignedDiv>
     );
