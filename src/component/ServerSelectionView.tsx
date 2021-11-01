@@ -54,7 +54,7 @@ const ServerSelectionView = () => {
                 <PresetDropdown
                     presetId="servers"
                     defaultPreset={["localhost:3237"]}
-                    secondaryPreset={[MOCK]}
+                    secondaryPreset={process.env.NODE_ENV !== "production" ? [MOCK] : undefined}
                     value={hostAndPort}
                     onChange={setHostAndPort}
                     validate={validateHostAndPort}
