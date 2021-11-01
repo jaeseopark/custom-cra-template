@@ -1,6 +1,6 @@
-# react-imf
+# imf-web
 
-react-imf is an iMessage client you can run in your browser. The app is targeted towards hybrid computer users who use both Mac and Windows. You must own an iCloud-enabled device to use as the proxy.
+imf-web is an iMessage client you can run in your browser. The app is targeted towards hybrid computer users who use both Mac and Windows. You must own an iCloud-enabled device to use as the proxy.
 
 <img src="https://user-images.githubusercontent.com/20038316/139573787-503d238b-ab1e-4f83-b376-e9049ea3d22d.png" />
 
@@ -10,13 +10,13 @@ react-imf is an iMessage client you can run in your browser. The app is targeted
 * Send and receive iMessage/SMS.
 * Switch between contacts.
 
-For upcoming features, refer to [Issues](https://github.com/jaeseopark/react-imf/issues).
+For upcoming features, refer to [Issues](https://github.com/jaeseopark/imf-web/issues).
 
 ## Usage
 
 ### Pre-requisite
 
-[imessageforwarder](https://github.com/jaeseopark/imessageforwarder) must be already running on your Mac. It is recommended that imessageforwarder and react-imf are hosted on the same device.
+[imessageforwarder-server](https://github.com/jaeseopark/imessageforwarder-server) must be already running on your Mac. It is recommended that imessageforwarder-server and imf-web are hosted on the same device.
 
 ### Run the app
 

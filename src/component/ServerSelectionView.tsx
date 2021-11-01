@@ -46,7 +46,7 @@ const ServerSelectionView = () => {
             <HorizontallyAlignedDiv>
                 <Logo />
                 <div className="title">
-                    <span>Messages</span>
+                    <span>imf-web</span>
                     <div className="subtitle">Connect to a server to get started</div>
                 </div>
             </HorizontallyAlignedDiv>

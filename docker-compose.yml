@@ -1,7 +1,7 @@
 version: "3.7"
 services:
-    react-imf:
-        container_name: react-imf
+    imf-web:
+        container_name: imf-web
         restart: unless-stopped
         build: # todo: publish docker image
             context: .

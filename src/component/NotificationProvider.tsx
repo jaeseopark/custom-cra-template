@@ -42,7 +42,7 @@ const NotificationProvider = () => {
         favicon.href = totalUnreadMessageCount > 0 ? "/favicon-notify.ico" : "/favicon.ico";
 
         // update document title
-        document.title = (totalUnreadMessageCount > 0 ? `(${totalUnreadMessageCount}) ` : "") + "Messages";
+        document.title = (totalUnreadMessageCount > 0 ? `(${totalUnreadMessageCount}) ` : "") + "imf-web";
     }, [totalUnreadMessageCount]);
 
     const replay = () => {
