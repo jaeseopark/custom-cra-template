@@ -1,12 +1,10 @@
 version: "3.7"
 services:
-    react-imf:
-        container_name: react-imf
-        build:
+    imf-web:
+        container_name: imf-web
+        restart: unless-stopped
+        build: # todo: publish docker image
             context: .
-            args:
-                - REACT_APP_IMF_HOST=localhost
-                - REACT_APP_IMF_PORT=3237
         networks:
             - bridge
         ports:

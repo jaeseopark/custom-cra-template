@@ -8,12 +8,13 @@ import Transcript from "typedef/Transcript";
 import "style/PreviewCard.scss";
 import { BlueCircle, GrayCircle } from "component/common/Circle";
 import { VerticallyAlignedDiv } from "component/common/AlignedDiv";
+import { useDispatch, useSelector } from "react-redux";
+import { isSelectedAlias, selectAlias } from "redux/transcript/slice";
+
+export type TranscriptWithAlias = Transcript & { alias: string };
 
 type TranscriptPreviewProps = {
-    alias: string;
-    transcript: Transcript;
-    isSelected: boolean;
-    onClickAlias: (n: string) => void;
+    transcript: TranscriptWithAlias;
 };
 
 type UnreadIndicatorProps = { isEnabled: boolean; isSelected: boolean };
@@ -28,15 +29,18 @@ const UnreadIndicator = ({ isEnabled, isSelected }: UnreadIndicatorProps) => {
     return <StyledUnreadIndicator>{isEnabled && circle}</StyledUnreadIndicator>;
 };
 
-const PreviewCard = ({ alias, transcript, isSelected, onClickAlias }: TranscriptPreviewProps) => {
+const PreviewCard = ({ transcript }: TranscriptPreviewProps) => {
+    const dispatch = useDispatch();
+    const isSelected = useSelector(isSelectedAlias(transcript.alias));
+
     const clsCard = cls("preview-card", { "is-selected": isSelected });
-    const onClick = () => onClickAlias(alias);
+    const onClick = () => dispatch(selectAlias(transcript.alias));
 
     return (
         <div className={clsCard} onClick={onClick}>
             <UnreadIndicator isEnabled={transcript.unreadMessageCount > 0} isSelected={isSelected} />
-            <Initials alias={alias} />
-            <TextInfo alias={alias} lastMessage={transcript.lastMessage} />
+            <Initials alias={transcript.alias} />
+            <TextInfo alias={transcript.alias} lastMessage={transcript.lastMessage} />
         </div>
     );
 };

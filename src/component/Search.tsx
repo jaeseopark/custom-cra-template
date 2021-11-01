@@ -5,6 +5,10 @@ import { APPLE_BIGSUR_GRAY_OUTLINE } from "style/const";
 // TODO: find a better looking magnifier
 import magnifierImgSrc from "asset/magnifier.svg";
 
+type SearchProps = {
+    updateSearchKey: (s: string) => void;
+};
+
 const StyledSearch = styled.div`
     margin-top: 0.75rem;
     margin-bottom: 1.5rem;
@@ -27,10 +31,10 @@ const Input = styled.input`
     margin-left: 3px;
 `;
 
-const Search = () => (
+const Search = ({ updateSearchKey }: SearchProps) => (
     <StyledSearch>
         <MagnifierIcon src={magnifierImgSrc} />
-        <Input type="text" placeholder="Search" />
+        <Input type="text" placeholder="Search" onChange={(e) => updateSearchKey(e.target.value)} />
     </StyledSearch>
 );
 
