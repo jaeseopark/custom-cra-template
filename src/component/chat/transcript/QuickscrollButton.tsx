@@ -25,7 +25,7 @@ const Label = styled.span`
 `;
 
 const QuickscrollButton = ({ scroll, isAtBottom, hasUnreadMessages }: QuickscrollButtonProps) => {
-    if (!isAtBottom || !hasUnreadMessages) {
+    if (isAtBottom || !hasUnreadMessages) {
         return null;
     }
 
