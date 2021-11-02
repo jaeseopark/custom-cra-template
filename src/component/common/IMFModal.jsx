@@ -3,7 +3,7 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import { APPLE_BIGSUR_GRAY_BACKGROUND, BOX_SHADOW_COLOR } from "style/const";
+import { APPLE_BIGSUR_GRAY_BACKGROUND, LARGE_BOX_SHADOW } from "style/const";
 
 const StyledBox = styled(Box)`
     position: absolute;
@@ -14,7 +14,7 @@ const StyledBox = styled(Box)`
     overflow: hidden;
     border: none;
     border-radius: 12px;
-    box-shadow: 0px 10px 35px ${BOX_SHADOW_COLOR};
+    box-shadow: ${LARGE_BOX_SHADOW};
     background-color: ${APPLE_BIGSUR_GRAY_BACKGROUND};
     padding: 20px;
 `;
