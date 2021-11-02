@@ -1,3 +1,4 @@
+import useWindowFocus from "hook/useWindowFocus";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
@@ -34,12 +35,13 @@ type ScrollEvent = React.UIEvent<HTMLDivElement, UIEvent> & {
 const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
     const [isAtBottom, setAtBottom] = useState(true);
     const scrollTargetRef = useRef(null);
+    const isPageVisible = useWindowFocus();
 
     useEffect(() => {
-        if (isAtBottom && transcript.unreadMessageCount) {
+        if (isPageVisible && isAtBottom && transcript.unreadMessageCount) {
             markAsRead();
         }
-    }, [isAtBottom, markAsRead, transcript.unreadMessageCount]);
+    }, [isPageVisible, isAtBottom, markAsRead, transcript.unreadMessageCount]);
 
     useEffect(() => {
         // Automatically scroll to the bottom when a new message arrives.
@@ -69,7 +71,7 @@ const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
             <QuickscrollButton
                 scroll={scrollToBottom}
                 hasUnreadMessages={transcript.unreadMessageCount > 0}
-                isAtBottom
+                isAtBottom={isAtBottom}
             />
         </StyledTranscriptView>
     );
