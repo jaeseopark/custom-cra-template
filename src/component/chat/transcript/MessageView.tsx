@@ -9,7 +9,7 @@ type MessageViewProps = {
     message: IMFMessage;
 };
 
-const getAttachment = ({ id, mimetype }: IMFAttachment) => {
+const getAttachmentElement = ({ id, mimetype }: IMFAttachment) => {
     if (mimetype.startsWith("image/") && !mimetype.includes("heic")) {
         return <img src={getAttachmentUrl(id)} alt="Attachment" />;
     }
@@ -19,13 +19,19 @@ const getAttachment = ({ id, mimetype }: IMFAttachment) => {
 const MessageView = ({ message }: MessageViewProps) => {
     const clsView = cls("message-view", message.status);
     const clsBubble = cls("message-bubble", message.status, message.service);
-    const hasAttachment = !!message.content.attachment?.id;
 
-    const content = hasAttachment ? getAttachment(message.content.attachment!) : message.content.text;
+    const getAttachment = () => {
+        const hasAttachment = !!message.content.attachment?.mimetype;
+        if (!hasAttachment) return null;
+        return getAttachmentElement(message.content.attachment!);
+    };
 
     return (
         <div className={clsView}>
-            <div className={clsBubble}>{content}</div>
+            <div className={clsBubble}>
+                {getAttachment()}
+                {message.content.text}
+            </div>
         </div>
     );
 };
