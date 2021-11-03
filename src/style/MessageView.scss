@@ -31,4 +31,10 @@
             background-color: color.$apple-bigsur-green;
         }
     }
+
+    img {
+        max-width: 400px;
+        max-height: 200px;
+        border-radius: 15px;
+    }
 }
