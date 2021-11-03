@@ -14,6 +14,7 @@ interface IMFClient {
     listen: (onEvent: IMFEventHandler, onError: IMFErrorHandler) => void;
     sendMessage: (msg: IMFOutgoingMessage) => void;
     isOnline: () => boolean;
+    getAttachmentUrl: (attachmentId: number) => string;
 }
 
 export default IMFClient;

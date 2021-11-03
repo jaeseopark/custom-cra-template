@@ -43,3 +43,5 @@ export const sendMessage = (msg: IMFOutgoingMessage) => {
     };
     sendToServer();
 };
+
+export const getAttachmentUrl = (attachmentId: number) => imfClient.getAttachmentUrl(attachmentId);

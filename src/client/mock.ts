@@ -53,6 +53,18 @@ const generateRecipients = (count: number): Recipient[] =>
         };
     }, count);
 
+const generateMessageContent = (isText: boolean) =>
+    isText
+        ? {
+              text: generateSentence({ min: 1, max: 12 }),
+          }
+        : {
+              attachment: {
+                  id: 1,
+                  mimetype: "image/jpeg",
+              },
+          };
+
 class IMFMockClient implements IMFClient {
     onEvent?: IMFEventHandler;
     onError?: IMFErrorHandler;
@@ -107,6 +119,7 @@ class IMFMockClient implements IMFClient {
     generateIMFMessages = (recipient: Recipient, count: number): IMFMessage[] =>
         initializeWithLength(() => {
             const timestamp = Date.now();
+            const isText = isSometimesTrue(0.95);
             return {
                 timestamp,
                 id: timestamp,
@@ -114,9 +127,7 @@ class IMFMockClient implements IMFClient {
                 status: "received",
                 alias: recipient.alias,
                 handle: recipient.handles[0],
-                content: {
-                    text: generateSentence({ min: 1, max: 12 }),
-                },
+                content: generateMessageContent(isText),
             };
         }, count);
 
@@ -140,7 +151,10 @@ class IMFMockClient implements IMFClient {
                     handle: recipient.handles[0],
                     status: "sent",
                     timestamp: Date.now(),
-                    content: msg.content,
+                    content: {
+                        // TODO: support for attachment
+                        text: msg.content.text,
+                    },
                 },
             ],
             type: "MESSAGE_NEW",
@@ -156,6 +170,8 @@ class IMFMockClient implements IMFClient {
                 type: "MESSAGE_NEW",
             });
         }, RESPONSE_DELAY);
+
+    getAttachmentUrl = (attachmentId: number) => "logo192.png";
 }
 
 export default IMFMockClient;

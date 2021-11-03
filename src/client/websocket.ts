@@ -8,10 +8,12 @@ import IMFClient, { IMFErrorHandler, IMFEventHandler, IMFServerInfo } from "./in
 class IMFWebSocketClient implements IMFClient {
     private messageSocket: ReconnectingWebSocket;
 
+    private serverInfo: IMFServerInfo;
     private onEvent?: IMFEventHandler;
     private onError?: IMFErrorHandler;
 
     constructor(serverInfo: IMFServerInfo) {
+        this.serverInfo = serverInfo;
         const url = `ws://${serverInfo.host}:${serverInfo.port}/`;
         this.messageSocket = new ReconnectingWebSocket(url);
         this.messageSocket.onmessage = ({ data }) => {
@@ -40,6 +42,9 @@ class IMFWebSocketClient implements IMFClient {
     isOnline = (): boolean => {
         return this.messageSocket.readyState === WebSocket.OPEN;
     };
+
+    getAttachmentUrl = (attachmentId: number) =>
+        `http://${this.serverInfo.host}:${this.serverInfo.port}/attachment/${attachmentId}`;
 }
 
 export default IMFWebSocketClient;
