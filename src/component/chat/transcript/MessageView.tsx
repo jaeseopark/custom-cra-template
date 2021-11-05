@@ -42,7 +42,7 @@ const MessageView = ({ message }: MessageViewProps) => {
     const getText = () => {
         const hasText = !!message.content.text;
         if (!hasText) return null;
-        return <div key={message.id}>message.content.text!.trim()</div>;
+        return <div key={message.id}>{message.content.text}</div>;
     };
 
     return (
