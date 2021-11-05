@@ -11,23 +11,32 @@ type MessageViewProps = {
     message: IMFMessage;
 };
 
-const getAttachmentElement = ({ id, mimetype }: IMFAttachment) => {
-    if (mimetype === "image/heic") {
-        return <HeicImg src={getAttachmentUrl(id)} />;
-    } else if (mimetype.startsWith("image/")) {
-        return <img src={getAttachmentUrl(id)} alt="Attachment" />;
+const AttachmentElement = ({ attachment }: { attachment: IMFAttachment }) => {
+    const { mimetype, id, size } = attachment;
+    if (mimetype) {
+        const url = getAttachmentUrl(id);
+        if (mimetype === "image/heic") {
+            return <HeicImg src={url} size={size} />;
+        } else if (mimetype.startsWith("image/")) {
+            return <img src={url} alt="Attachment" />;
+        }
+        return <span>(Unsupported: {mimetype})</span>;
     }
-    return `<Unsupported: ${mimetype}>`;
+    return null;
 };
 
 const MessageView = ({ message }: MessageViewProps) => {
     const clsView = cls("message-view", message.status);
     const clsBubble = cls("message-bubble", message.status, message.service);
 
-    const getAttachment = () => {
-        const hasAttachment = !!message.content.attachment?.mimetype;
+    const getAttachments = () => {
+        const hasAttachment = !!message.content.attachments;
         if (!hasAttachment) return null;
-        return getAttachmentElement(message.content.attachment!);
+        return message.content.attachments!.map((attachment) => (
+            <div key={attachment.id}>
+                <AttachmentElement attachment={attachment} />
+            </div>
+        ));
     };
 
     const getText = () => {
@@ -39,7 +48,7 @@ const MessageView = ({ message }: MessageViewProps) => {
     return (
         <div className={clsView}>
             <div className={clsBubble}>
-                {getAttachment()}
+                {getAttachments()}
                 {getText()}
             </div>
         </div>
