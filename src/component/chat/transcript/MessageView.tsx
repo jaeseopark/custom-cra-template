@@ -19,6 +19,8 @@ const AttachmentElement = ({ attachment }: { attachment: IMFAttachment }) => {
             return <HeicImg src={url} size={size} />;
         } else if (mimetype.startsWith("image/")) {
             return <img src={url} alt="Attachment" />;
+        } else if (mimetype.startsWith("video/")) {
+            return <video src={url} controls />;
         }
         return <span>(Unsupported: {mimetype})</span>;
     }
