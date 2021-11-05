@@ -2,8 +2,9 @@ import cls from "classnames";
 
 import IMFMessage, { IMFAttachment } from "typedef/IMFMessage";
 
-import "style/MessageView.scss";
 import { getAttachmentUrl } from "redux/mdlwr";
+
+import "style/MessageView.scss";
 
 type MessageViewProps = {
     message: IMFMessage;
@@ -26,11 +27,17 @@ const MessageView = ({ message }: MessageViewProps) => {
         return getAttachmentElement(message.content.attachment!);
     };
 
+    const getText = () => {
+        const hasText = !!message.content.text;
+        if (!hasText) return null;
+        return message.content.text!.trim();
+    };
+
     return (
         <div className={clsView}>
             <div className={clsBubble}>
                 {getAttachment()}
-                {message.content.text}
+                {getText()}
             </div>
         </div>
     );
