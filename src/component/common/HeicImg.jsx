@@ -22,7 +22,7 @@ const HeicImg = ({ src, size }) => {
     const [isProcessing, setProcessing] = useState();
     const [error, setError] = useState();
 
-    const showHeic = async () => {
+    const showHeic = () => {
         setProcessing(true);
         return fetch(src)
             .then((res) => res.arrayBuffer())
