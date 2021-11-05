@@ -5,13 +5,16 @@ import IMFMessage, { IMFAttachment } from "typedef/IMFMessage";
 import { getAttachmentUrl } from "redux/mdlwr";
 
 import "style/MessageView.scss";
+import HeicImg from "component/common/HeicImg";
 
 type MessageViewProps = {
     message: IMFMessage;
 };
 
 const getAttachmentElement = ({ id, mimetype }: IMFAttachment) => {
-    if (mimetype.startsWith("image/") && !mimetype.includes("heic")) {
+    if (mimetype === "image/heic") {
+        return <HeicImg src={getAttachmentUrl(id)} />;
+    } else if (mimetype.startsWith("image/")) {
         return <img src={getAttachmentUrl(id)} alt="Attachment" />;
     }
     return `<Unsupported: ${mimetype}>`;
