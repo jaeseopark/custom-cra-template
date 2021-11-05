@@ -9,9 +9,8 @@ const StyledSpan = styled.span`
 `;
 
 // TODO: check for attachments
-const Snippet = ({ text, attachment }: IMFMessageContent) => {
-    if (attachment) return <span>Attachment</span>;
-
+const Snippet = ({ text, attachments }: IMFMessageContent) => {
+    if (attachments) return <span>Attachment</span>;
     return <StyledSpan>{text}</StyledSpan>;
 };
 export default Snippet;
