@@ -6,6 +6,7 @@ import { getAttachmentUrl } from "redux/mdlwr";
 
 import "style/MessageView.scss";
 import HeicImg from "component/common/HeicImg";
+import TinyLinkify from "component/common/TinyLinkify";
 
 type MessageViewProps = {
     message: IMFMessage;
@@ -44,7 +45,11 @@ const MessageView = ({ message }: MessageViewProps) => {
     const getText = () => {
         const hasText = !!message.content.text;
         if (!hasText) return null;
-        return <div key={message.id}>{message.content.text}</div>;
+        return (
+            <div className="text" key={message.id}>
+                <TinyLinkify>{message.content.text!}</TinyLinkify>
+            </div>
+        );
     };
 
     return (

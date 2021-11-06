@@ -3,6 +3,7 @@ import { APPLE_BIGSUR_GRAY_OUTLINE } from "style/const";
 import styled from "styled-components";
 
 import IMFMessage from "typedef/IMFMessage";
+import { getHumanDate } from "util/datetime";
 import MessageView from "./MessageView";
 
 type MessageStreamProps = {
@@ -15,20 +16,28 @@ const StyledSectionHeader = styled(HorizontallyAlignedDiv)`
     color: ${APPLE_BIGSUR_GRAY_OUTLINE};
 `;
 
-const SectionHeader = ({ msg }: { msg: IMFMessage }) => <StyledSectionHeader>{msg.service}</StyledSectionHeader>;
-
 const MessageStream = ({ messages }: MessageStreamProps) => {
+    let prevDayOfMonth = 0;
     let prevService = "";
 
     return (
         <>
             {messages.reduce((acc, msg) => {
+                const dayOfMonth = new Date(msg.timestamp).getDate();
+                if (prevDayOfMonth !== dayOfMonth) {
+                    acc.push(
+                        <StyledSectionHeader key={`${msg.id}-header-date`}>
+                            {getHumanDate(msg.timestamp)}
+                        </StyledSectionHeader>
+                    );
+                }
                 if (prevService !== msg.service) {
-                    acc.push(<SectionHeader key={`${msg.id}-header`} msg={msg} />);
+                    acc.push(<StyledSectionHeader key={`${msg.id}-header-service`}>{msg.service}</StyledSectionHeader>);
                 }
                 const mv = <MessageView key={msg.id} message={msg} />;
                 acc.push(mv);
 
+                prevDayOfMonth = dayOfMonth;
                 prevService = msg.service;
                 return acc;
             }, new Array<JSX.Element>())}
