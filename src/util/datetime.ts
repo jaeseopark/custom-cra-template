@@ -9,15 +9,14 @@ const LONG_TERM_FORMAT = "MMM. D, YYYY";
 
 const getHumanTimeShortTmer = (timestamp: number) => dayjs(timestamp).format(SHORT_TERM_FORMAT);
 const getHumanTimeMediumTerm = (timestamp: number) => dayjs(timestamp).format(MEDIUM_TERM_FORMAT);
-
 const getHumanTimeLongTerm = (timestamp: number) => dayjs(timestamp).format(LONG_TERM_FORMAT);
 
-export const getHumanTime = (timestamp?: number) => {
-    if (!timestamp) return null;
-
-    if (Date.now() - timestamp < DAY_IN_MS) return getHumanTimeShortTmer(timestamp);
-
+export const getHumanDate = (timestamp: number) => {
     if (Date.now() - timestamp < WEEK_IN_MS) return getHumanTimeMediumTerm(timestamp);
-
     return getHumanTimeLongTerm(timestamp);
+};
+
+export const getHumanTime = (timestamp: number) => {
+    if (Date.now() - timestamp < DAY_IN_MS) return getHumanTimeShortTmer(timestamp);
+    return getHumanDate(timestamp);
 };

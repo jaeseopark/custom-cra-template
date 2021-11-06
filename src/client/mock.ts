@@ -3,7 +3,7 @@ import { uniqueNamesGenerator as generateName, Config as GeneratorConfig, names 
 // @ts-ignore
 import generateSentence from "random-sentence";
 
-import IMFMessage, { IMFOutgoingMessage } from "typedef/IMFMessage";
+import IMFMessage, { IMFOutgoingMessage, IMFMessageContent } from "typedef/IMFMessage";
 import IMFClient, { IMFErrorHandler, IMFEventHandler } from "./interface";
 import { initializeWithLength } from "util/arrays";
 import { isSometimesTrue, randomInt } from "util/rand";
@@ -53,18 +53,18 @@ const generateRecipients = (count: number): Recipient[] =>
         };
     }, count);
 
-const generateMessageContent = (isText: boolean) =>
-    isText
-        ? {
-              text: generateSentence({ min: 1, max: 12 }),
-          }
-        : {
-              attachment: {
-                  id: 1,
-                  mimetype: "image/jpeg",
-              },
-          };
-
+const generateMessageContent = (isText: boolean): IMFMessageContent => {
+    if (isText) {
+        const text: string = generateSentence({ min: 1, max: 12 });
+        return { text };
+    }
+    const attachment = {
+        id: 1,
+        mimetype: "image/jpeg",
+        size: 1000000,
+    };
+    return { attachments: [attachment] };
+};
 class IMFMockClient implements IMFClient {
     onEvent?: IMFEventHandler;
     onError?: IMFErrorHandler;
@@ -73,17 +73,17 @@ class IMFMockClient implements IMFClient {
 
     constructor() {
         this.recipients = generateRecipients(PRELOADED_RECIPIENT_COUNT);
-        this.sendMessagePeriodically();
+        this.receiveMessagePeriodically();
     }
 
-    sendMessagePeriodically = () => {
+    receiveMessagePeriodically = () => {
         if (this.onEvent) {
             const recipient = this.pickRandomRecipient();
             const messages = this.generateIMFMessages(recipient, 1);
             this.onEvent({ messages, type: "MESSAGE_NEW" });
         }
 
-        setTimeout(this.sendMessagePeriodically, PING_INTERVAL);
+        setTimeout(this.receiveMessagePeriodically, PING_INTERVAL);
     };
 
     listen = (onEvent: IMFEventHandler, onError: IMFErrorHandler) => {
@@ -152,7 +152,7 @@ class IMFMockClient implements IMFClient {
                     status: "sent",
                     timestamp: Date.now(),
                     content: {
-                        // TODO: support for attachment
+                        // always text beacuse sending attachments is not implemented yet.
                         text: msg.content.text,
                     },
                 },

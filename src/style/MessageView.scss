@@ -32,6 +32,10 @@
         }
     }
 
+    .text {
+        white-space: pre-wrap;
+    }
+
     img, video {
         max-width: 400px;
         max-height: 200px;
