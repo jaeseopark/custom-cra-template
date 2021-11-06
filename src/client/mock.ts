@@ -55,7 +55,11 @@ const generateRecipients = (count: number): Recipient[] =>
 
 const generateMessageContent = (isText: boolean): IMFMessageContent => {
     if (isText) {
-        const text: string = generateSentence({ min: 1, max: 12 });
+        let text: string = generateSentence({ min: 1, max: 12 });
+        const containsHyperlink = isSometimesTrue(0.05);
+        if (containsHyperlink) {
+            text += " https://apple.com";
+        }
         return { text };
     }
     const attachment = {
