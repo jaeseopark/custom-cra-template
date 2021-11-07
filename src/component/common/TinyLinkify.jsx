@@ -7,7 +7,7 @@ const getHostnameText = (text) => {
     return text;
 };
 
-const hostnameDecorator = (decoratedHref, key) => (
+const hostnameDecorator = (decoratedHref, _, key) => (
     <a href={decoratedHref} key={key} target="_blank" rel="noopener noreferrer">
         {getHostnameText(decoratedHref)}
     </a>
