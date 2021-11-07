@@ -1,16 +1,14 @@
-import IMFClient from "./interface";
+import IMFClient, { IMFServerInfo } from "./interface";
 import IMFMockClient from "./mock";
 import IMFWebSocketClient from "./websocket";
 
 class IMFClientFactory {
-    static getClient = (): IMFClient => {
-        if (process.env.REACT_APP_IMF_MOCK === "ON") {
+    static getClient = (serverInfo: IMFServerInfo): IMFClient => {
+        if (serverInfo?.host === "MOCK") {
             return new IMFMockClient();
         }
 
-        const host = process.env.REACT_APP_IMF_HOST!;
-        const port = process.env.REACT_APP_IMF_PORT!;
-        return new IMFWebSocketClient(host, port);
+        return new IMFWebSocketClient(serverInfo);
     };
 }
 

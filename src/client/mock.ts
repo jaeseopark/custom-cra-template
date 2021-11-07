@@ -3,7 +3,7 @@ import { uniqueNamesGenerator as generateName, Config as GeneratorConfig, names 
 // @ts-ignore
 import generateSentence from "random-sentence";
 
-import IMFMessage, { IMFOutgoingMessage } from "typedef/IMFMessage";
+import IMFMessage, { IMFOutgoingMessage, IMFMessageContent } from "typedef/IMFMessage";
 import IMFClient, { IMFErrorHandler, IMFEventHandler } from "./interface";
 import { initializeWithLength } from "util/arrays";
 import { isSometimesTrue, randomInt } from "util/rand";
@@ -53,6 +53,18 @@ const generateRecipients = (count: number): Recipient[] =>
         };
     }, count);
 
+const generateMessageContent = (isText: boolean): IMFMessageContent => {
+    if (isText) {
+        let text: string = generateSentence({ min: 1, max: 12 });
+        return { text };
+    }
+    const attachment = {
+        id: 1,
+        mimetype: "image/jpeg",
+        size: 1000000,
+    };
+    return { attachments: [attachment] };
+};
 class IMFMockClient implements IMFClient {
     onEvent?: IMFEventHandler;
     onError?: IMFErrorHandler;
@@ -61,17 +73,17 @@ class IMFMockClient implements IMFClient {
 
     constructor() {
         this.recipients = generateRecipients(PRELOADED_RECIPIENT_COUNT);
-        this.sendMessagePeriodically();
+        this.receiveMessagePeriodically();
     }
 
-    sendMessagePeriodically = () => {
+    receiveMessagePeriodically = () => {
         if (this.onEvent) {
             const recipient = this.pickRandomRecipient();
             const messages = this.generateIMFMessages(recipient, 1);
-            this.onEvent({ messages });
+            this.onEvent({ messages, type: "MESSAGE_NEW" });
         }
 
-        setTimeout(this.sendMessagePeriodically, PING_INTERVAL);
+        setTimeout(this.receiveMessagePeriodically, PING_INTERVAL);
     };
 
     listen = (onEvent: IMFEventHandler, onError: IMFErrorHandler) => {
@@ -89,6 +101,7 @@ class IMFMockClient implements IMFClient {
                     msg.timestamp = msg.id;
                     return msg;
                 }),
+                type: "MESSAGE_PRELOAD",
             });
         });
     };
@@ -106,16 +119,15 @@ class IMFMockClient implements IMFClient {
     generateIMFMessages = (recipient: Recipient, count: number): IMFMessage[] =>
         initializeWithLength(() => {
             const timestamp = Date.now();
+            const isText = isSometimesTrue(0.95);
             return {
                 timestamp,
                 id: timestamp,
-                service: "iMessage",
+                service: isSometimesTrue(0.95) ? "iMessage" : "SMS",
                 status: "received",
                 alias: recipient.alias,
                 handle: recipient.handles[0],
-                content: {
-                    text: generateSentence({ min: 1, max: 12 }),
-                },
+                content: generateMessageContent(isText),
             };
         }, count);
 
@@ -139,9 +151,13 @@ class IMFMockClient implements IMFClient {
                     handle: recipient.handles[0],
                     status: "sent",
                     timestamp: Date.now(),
-                    content: msg.content,
+                    content: {
+                        // always text beacuse sending attachments is not implemented yet.
+                        text: msg.content.text,
+                    },
                 },
             ],
+            type: "MESSAGE_NEW",
         });
     };
 
@@ -151,8 +167,11 @@ class IMFMockClient implements IMFClient {
             message.status = "received";
             this.onEvent!({
                 messages: [message],
+                type: "MESSAGE_NEW",
             });
         }, RESPONSE_DELAY);
+
+    getAttachmentUrl = (attachmentId: number) => "logo192.png";
 }
 
 export default IMFMockClient;

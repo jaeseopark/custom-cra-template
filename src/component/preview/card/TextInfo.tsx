@@ -14,6 +14,10 @@ const StyledTextInfo = styled.div`
     flex-flow: column nowrap;
     flex-grow: 1;
     margin-left: 5px;
+
+    .alias {
+        font-weight: 600;
+    }
 `;
 
 const Header = styled.div`
@@ -28,11 +32,11 @@ const Spacer = styled.div`
 const TextInfo = ({ alias, lastMessage }: TextInfoProps) => (
     <StyledTextInfo>
         <Header>
-            <span>{alias}</span>
+            <span className="alias">{alias}</span>
             <Spacer />
-            <span>{getHumanTime(lastMessage?.timestamp)}</span>
+            <span>{lastMessage && getHumanTime(lastMessage.timestamp)}</span>
         </Header>
-        <Snippet lastMessage={lastMessage} />
+        <Snippet text={lastMessage?.content.text} attachments={lastMessage?.content.attachments} />
     </StyledTextInfo>
 );
 

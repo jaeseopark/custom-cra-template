@@ -6,34 +6,41 @@ import Initials from "component/preview/card/Initials";
 import Transcript from "typedef/Transcript";
 
 import "style/PreviewCard.scss";
-import { BlueCircle } from "component/common/Circle";
+import { BlueCircle, GrayCircle } from "component/common/Circle";
 import { VerticallyAlignedDiv } from "component/common/AlignedDiv";
+import { useDispatch, useSelector } from "react-redux";
+import { isSelectedAlias, selectAlias } from "redux/transcript/slice";
+
+export type TranscriptWithAlias = Transcript & { alias: string };
 
 type TranscriptPreviewProps = {
-    alias: string;
-    transcript: Transcript;
-    isSelected: boolean;
-    onClickAlias: (n: string) => void;
+    transcript: TranscriptWithAlias;
 };
+
+type UnreadIndicatorProps = { isEnabled: boolean; isSelected: boolean };
 
 const StyledUnreadIndicator = styled(VerticallyAlignedDiv)`
     min-width: 15px;
     width: 15px;
 `;
 
-const UnreadIndicator = ({ isEnabled }: { isEnabled: boolean }) => (
-    <StyledUnreadIndicator>{isEnabled && <BlueCircle />}</StyledUnreadIndicator>
-);
+const UnreadIndicator = ({ isEnabled, isSelected }: UnreadIndicatorProps) => {
+    const circle = isSelected ? <GrayCircle /> : <BlueCircle />;
+    return <StyledUnreadIndicator>{isEnabled && circle}</StyledUnreadIndicator>;
+};
 
-const PreviewCard = ({ alias, transcript, isSelected, onClickAlias }: TranscriptPreviewProps) => {
+const PreviewCard = ({ transcript }: TranscriptPreviewProps) => {
+    const dispatch = useDispatch();
+    const isSelected = useSelector(isSelectedAlias(transcript.alias));
+
     const clsCard = cls("preview-card", { "is-selected": isSelected });
-    const onClick = () => onClickAlias(alias);
+    const onClick = () => dispatch(selectAlias(transcript.alias));
 
     return (
         <div className={clsCard} onClick={onClick}>
-            <UnreadIndicator isEnabled={transcript.hasUnreadMessages} />
-            <Initials alias={alias} />
-            <TextInfo alias={alias} lastMessage={transcript.lastMessage} />
+            <UnreadIndicator isEnabled={transcript.unreadMessageCount > 0} isSelected={isSelected} />
+            <Initials alias={transcript.alias} />
+            <TextInfo alias={transcript.alias} lastMessage={transcript.lastMessage} />
         </div>
     );
 };

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
+import IMFEvent from "typedef/IMFEvent";
 import IMFMessage from "typedef/IMFMessage";
 import Transcript from "typedef/Transcript";
 import { insertAt } from "util/arrays";
@@ -16,17 +17,20 @@ type TranscriptState = {
     transcripts: {
         [personName: string]: Transcript;
     };
+    lastNotified: number;
+    selectedAlias?: string;
 };
 
 const initialState: TranscriptState = {
     contactMap: {},
     contactReverseMap: {},
     transcripts: {},
+    lastNotified: 0,
 };
 
 const createTranscript = (): Transcript => ({
     messages: [],
-    hasUnreadMessages: false,
+    unreadMessageCount: 0,
 });
 
 const initTranscript = (state: TranscriptState, msg: IMFMessage): Transcript => {
@@ -42,8 +46,6 @@ const initTranscript = (state: TranscriptState, msg: IMFMessage): Transcript => 
 const getOrInitTranscript = (state: TranscriptState, msg: IMFMessage) => {
     let transcript = state.transcripts[msg.alias];
     if (transcript) return transcript;
-
-    console.log("Could not find transcript for alias:", msg.alias);
     return initTranscript(state, msg);
 };
 
@@ -51,15 +53,15 @@ export const transcriptSlice = createSlice({
     name: "transcript",
     initialState,
     reducers: {
-        upsertMessages: (state, action: PayloadAction<IMFMessage[]>) => {
-            action.payload.forEach((message) => {
+        upsertMessages: (state, action: PayloadAction<IMFEvent>) => {
+            action.payload.messages!.forEach((message) => {
                 const transcript = getOrInitTranscript(state, message);
-                if (message.status === "received") {
-                    transcript.hasUnreadMessages = true;
+                if (message.status === "received" && action.payload.type === "MESSAGE_NEW") {
+                    transcript.unreadMessageCount += 1;
+                    state.lastNotified = Date.now();
                 }
 
-                const shouldAppend =
-                    !transcript.lastMessage || transcript.lastMessage!.id < message.id;
+                const shouldAppend = !transcript.lastMessage || transcript.lastMessage!.id < message.id;
                 if (shouldAppend) {
                     transcript.messages.push(message);
                     transcript.lastMessage = message;
@@ -82,12 +84,15 @@ export const transcriptSlice = createSlice({
         },
         markTranscriptAsRead: (state, action: PayloadAction<string>) => {
             const alias = action.payload;
-            state.transcripts[alias].hasUnreadMessages = false;
+            state.transcripts[alias].unreadMessageCount = 0;
+        },
+        selectAlias: (state, action: PayloadAction<string>) => {
+            state.selectedAlias = action.payload;
         },
     },
 });
 
-export const { upsertMessages, markTranscriptAsRead } = transcriptSlice.actions;
+export const { upsertMessages, markTranscriptAsRead, selectAlias } = transcriptSlice.actions;
 
 export const selectNames = (state: RootState) => {
     const mayContainDups = Object.values(state.transcript.contactReverseMap);
@@ -96,10 +101,17 @@ export const selectNames = (state: RootState) => {
 
 export const selectTranscripts = (state: RootState) => state.transcript.transcripts;
 
-export const selectTranscript = (name: string) => (state: RootState) =>
-    state.transcript.transcripts[name];
+export const selectTranscript = (name: string) => (state: RootState) => state.transcript.transcripts[name];
 
-export const selectOneHandleByName = (name: string) => (state: RootState) =>
-    state.transcript.contactMap[name][0];
+export const selectOneHandleByName = (name: string) => (state: RootState) => state.transcript.contactMap[name][0];
+
+export const selectLastNotified = (state: RootState) => state.transcript.lastNotified;
+
+export const selecteTotalUnreadMessageCount = (state: RootState) =>
+    Object.values(state.transcript.transcripts).reduce((acc, t) => acc + t.unreadMessageCount, 0);
+
+export const selectSelectedAlias = (state: RootState) => state.transcript.selectedAlias;
+
+export const isSelectedAlias = (alias: string) => (state: RootState) => selectSelectedAlias(state) === alias;
 
 export default transcriptSlice.reducer;

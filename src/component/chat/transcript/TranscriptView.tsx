@@ -1,9 +1,10 @@
+import useWindowFocus from "hook/useWindowFocus";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import Transcript from "typedef/Transcript";
-import MessageView from "./MessageView";
-import QuickscrollButton from "./QucikscrollButton";
+import MessageStream from "./MessageStream";
+import QuickscrollButton from "./QuickscrollButton";
 
 const IS_BOTTOM_OFFSET_THRESHOLD = 1; // px
 
@@ -23,15 +24,24 @@ type TranscriptViewProps = {
     markAsRead: () => void;
 };
 
+type ScrollEvent = React.UIEvent<HTMLDivElement, UIEvent> & {
+    target: {
+        scrollHeight: number;
+        scrollTop: number;
+        clientHeight: number;
+    };
+};
+
 const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
     const [isAtBottom, setAtBottom] = useState(true);
     const scrollTargetRef = useRef(null);
+    const isPageVisible = useWindowFocus();
 
     useEffect(() => {
-        if (isAtBottom && transcript.hasUnreadMessages) {
+        if (isPageVisible && isAtBottom && transcript.unreadMessageCount) {
             markAsRead();
         }
-    }, [isAtBottom, markAsRead, transcript.hasUnreadMessages]);
+    }, [isPageVisible, isAtBottom, markAsRead, transcript.unreadMessageCount]);
 
     useEffect(() => {
         // Automatically scroll to the bottom when a new message arrives.
@@ -40,10 +50,10 @@ const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
         }
     }, [transcript.messages.length]);
 
-    // @ts-ignore
-    const onScroll = (e) => {
-        const positionDiff = e.target.scrollHeight - e.target.scrollTop;
-        const isAtBottom = positionDiff - IS_BOTTOM_OFFSET_THRESHOLD <= e.target.clientHeight;
+    const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const { target } = e as ScrollEvent;
+        const positionDiff = target.scrollHeight - target.scrollTop;
+        const isAtBottom = positionDiff - IS_BOTTOM_OFFSET_THRESHOLD <= target.clientHeight;
         setAtBottom(isAtBottom);
     };
 
@@ -56,11 +66,13 @@ const TranscriptView = ({ transcript, markAsRead }: TranscriptViewProps) => {
 
     return (
         <StyledTranscriptView onScroll={onScroll}>
-            {transcript.messages.map((msg) => (
-                <MessageView key={msg.id} message={msg} />
-            ))}
+            <MessageStream messages={transcript.messages} />
             <ScrollTarget ref={scrollTargetRef} />
-            <QuickscrollButton scroll={scrollToBottom} hasUnreadMessages={transcript.hasUnreadMessages} isAtBottom />
+            <QuickscrollButton
+                scroll={scrollToBottom}
+                hasUnreadMessages={transcript.unreadMessageCount > 0}
+                isAtBottom={isAtBottom}
+            />
         </StyledTranscriptView>
     );
 };

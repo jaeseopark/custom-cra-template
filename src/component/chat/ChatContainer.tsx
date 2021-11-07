@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { markTranscriptAsRead, selectTranscript } from "redux/transcript/slice";
+import { markTranscriptAsRead, selectSelectedAlias, selectTranscript } from "redux/transcript/slice";
 import MessageInput from "./MessageInput";
 import TranscriptView from "component/chat/transcript/TranscriptView";
 import ChatHeader from "./ChatHeader";
@@ -25,21 +25,16 @@ const ChatContainer = ({ alias }: ChatContainerProps) => {
     return (
         <StyledChatContainer>
             <ChatHeader name={alias} />
-            <TranscriptView
-                transcript={transcript}
-                markAsRead={() => dispatch(markTranscriptAsRead(alias))}
-            />
-            <MessageInput
-                handle={transcript.lastMessage.handle}
-                service={transcript.lastMessage.service}
-            />
+            <TranscriptView transcript={transcript} markAsRead={() => dispatch(markTranscriptAsRead(alias))} />
+            <MessageInput handle={transcript.lastMessage.handle} service={transcript.lastMessage.service} />
         </StyledChatContainer>
     );
 };
 
-const WithInputValidation = ({ alias }: { alias?: string }) => {
+const ChatContainerWithAliasValidation = () => {
+    const alias = useSelector(selectSelectedAlias);
     if (!alias) return null;
     return <ChatContainer alias={alias} />;
 };
 
-export default WithInputValidation;
+export default ChatContainerWithAliasValidation;
