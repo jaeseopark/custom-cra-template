@@ -1,66 +1,18 @@
-# imessageforwarder-web (imf-web)
+# iMessageee
 
-imf-web is an iMessage client you can run in your browser. The app is targeted towards hybrid computer users who use both Mac and Windows. You must own an iCloud-enabled device to use as the proxy.
+Send and receive iMessage right in your browser. Made for hybrid users who own both Mac and Windows.
 
 <img src="https://user-images.githubusercontent.com/20038316/139573787-503d238b-ab1e-4f83-b376-e9049ea3d22d.png" />
 
 ## Features
 
-* Continue where you left off on your Mac.
-* Send and receive iMessage/SMS.
-* Switch between contacts.
+-   Continue where you left off on your Mac.
+-   Send and receive iMessage/SMS.
+-   Switch between contacts.
 
-For upcoming features, refer to [Issues](https://github.com/jaeseopark/imessageforwarder-web/issues).
-
-## Usage
-
-### Pre-requisite
-
-[imessageforwarder-server](https://github.com/jaeseopark/imessageforwarder-server) must be already running on your Mac. It is recommended that imessageforwarder-server and imf-web are hosted on the same device.
-
-### Run the app
-
-1. Install [Docker Compose](https://docs.docker.com/compose/install/).
-1. Save the following text as `docker-compose.yml`:
-    ```yml
-    version: "3.7"
-    services:
-        imf-web:
-            container_name: imf-web
-            image: jaeseoparkdocker/imessageforwarder-web:latest
-            restart: unless-stopped
-            networks:
-                - bridge
-            ports:
-                - 3238:80
-            environment:
-                - TZ=America/Denver # Update this line to match your local timezone.
-
-    networks:
-        bridge:
-            driver: bridge
-    ```
-1. Run the following command:
-    ```bash
-    docker-compose up -d
-    ```
-
-### Development
-
-```bash
-yarn install
-yarn start
-```
-
-## Configurations
-
-|Environment Variable|Values|Notes|
-|---|---|---|
-|[`REACT_APP_IMF_PRELOADED_RECIPIENT_COUNT`](.env.development#L1)|20|<p>_Only in the mock mode_</p>The number of people that will appear in the sidebar.|
-|[`REACT_APP_IMF_PRELOADED_MESSAGES_PER_RECIPIENT`](.env.development#L2)|50|<p>_Only in the mock mode_</p>The number of preloaded messages per person.|
-|[`REACT_APP_IMF_RESPONSE_DELAY`](.env.development#L3)|2500 (ms)|<p>_Only in the mock mode_</p>How long it will take for someone to respond to your message.|
-|[`REACT_APP_IMF_PING_INTERVAL`](.env.development#L4)|30000 (ms)|<p>_Only in the mock mode_</p>The frequency of the random incoming messages.|
+For upcoming features, refer to [Issues](https://github.com/jaeseopark/imessageee/issues).
 
 ## Credits
 
-* Sounds from [Notification Sounds](https://notificationsounds.com/)
+-   Sounds from [Notification Sounds](https://notificationsounds.com/)
+-   <a href="https://iconscout.com/3ds/macos-messages" target="_blank">MacOs Messages 3D Illustration</a> by <a href="https://iconscout.com/contributors/vikiiing">Vikiiing</a> on <a href="https://iconscout.com">Iconscout</a>

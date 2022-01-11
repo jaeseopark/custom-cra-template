@@ -1,0 +1,29 @@
+@use "style/color";
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        margin-top: 50px;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+button {
+    font-size: 1rem;
+    padding: 4px 12px;
+}
+
+.landing-page {
+    .title {
+        font-size: 3.5rem;
+        letter-spacing: -0.1rem;
+    }
+
+    .interactive-components {
+        margin-top: 40px;
+        height: 40px;
+        display: flex;
+    }
+}
