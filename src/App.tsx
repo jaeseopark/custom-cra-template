@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import ChatContainer from "component/chat/ChatContainer";
 import { selectIsServerInfoReady } from "redux/connectivity/slice";
-import ServerSelectionView from "component/ServerSelectionView";
+import LandingPage from "component/LandingPage";
 import Sidebar from "component/Sidebar";
 import ShadowedShell from "component/common/ShadowedShell";
 
@@ -15,6 +15,11 @@ const StyledApp = styled(ShadowedShell)`
     width: calc(100vw - ${APP_MARGIN}px);
     height: calc(100vh - ${APP_MARGIN}px);
     margin: ${APP_MARGIN / 2}px;
+
+    .animated {
+        animation-name: fade-in;
+        animation-duration: 800ms;
+    }
 `;
 
 const App = () => {
@@ -23,7 +28,7 @@ const App = () => {
     if (!isServerInfoReady) {
         return (
             <StyledApp>
-                <ServerSelectionView />
+                <LandingPage />
             </StyledApp>
         );
     }
