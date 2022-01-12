@@ -7,14 +7,13 @@ import IMFMessage, { IMFOutgoingMessage, IMFMessageContent } from "typedef/IMFMe
 import IMFClient, { IMFErrorHandler, IMFEventHandler } from "./interface";
 import { initializeWithLength } from "util/arrays";
 import { isSometimesTrue, randomInt } from "util/rand";
-import { getEnvAsNumber } from "util/env";
 
 const DAY_IN_MS = 86400000; // 1000ms * 60s * 60m * 24h
 
-const PRELOADED_RECIPIENT_COUNT = getEnvAsNumber("REACT_APP_IMF_PRELOADED_RECIPIENT_COUNT");
-const PRELOADED_MESSAGES_PER_RECIPIENT = getEnvAsNumber("REACT_APP_IMF_PRELOADED_MESSAGES_PER_RECIPIENT");
-const RESPONSE_DELAY = getEnvAsNumber("REACT_APP_IMF_RESPONSE_DELAY"); // ms
-const PING_INTERVAL = getEnvAsNumber("REACT_APP_IMF_PING_INTERVAL"); // ms
+const PRELOADED_RECIPIENT_COUNT = 20;
+const PRELOADED_MESSAGES_PER_RECIPIENT = 50;
+const RESPONSE_DELAY = 2500; // ms
+const PING_INTERVAL = 30000; // ms
 
 const RANDOM_NAME_CONFIG: GeneratorConfig = {
     dictionaries: [names],
